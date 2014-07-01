@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h4>Register</h4>
+<form action="" method="post" name="login">
+	{{form.hidden_tag()}}
+	<p>
+		{{form.username.label}}
+		{{form.username}}
+	</p>
+	<p>
+		{{form.password.label}}
+		{{form.password}}
+	</p>
+	<p>
+		{{form.password_again.label}}
+		{{form.password_again}}
+	</p>
+	<p>
+		{{form.mail.label}}
+		{{form.mail}}
+	</p>
+	<p><input type="submit" value="Register"></p>
+</form>
+{% endblock %}
