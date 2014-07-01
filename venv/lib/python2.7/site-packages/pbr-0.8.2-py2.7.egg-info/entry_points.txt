@@ -1,3 +1,0 @@
-[distutils.setup_keywords]
-pbr = pbr.core:pbr
-
