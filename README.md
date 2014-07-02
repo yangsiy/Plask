@@ -24,7 +24,7 @@ flask-wtf
 $ python run.py
 ```
 
-The system will running on 
+The system will be running on 
 ``
 http://localhost:5000
 ``
