@@ -2,4 +2,8 @@
 
 from app import app
 
-app.run(debug = True)
+server_port = 80
+server_ip = '0.0.0.0'
+
+app.run(host = server_ip, port = server_port, debug = True)
+
