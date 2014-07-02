@@ -28,3 +28,6 @@ The system will running on
 ``
 http://localhost:5000
 ``
+
+#License
+MIT
