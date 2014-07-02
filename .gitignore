@@ -1,3 +1,11 @@
 *.pyc
 venv
 venv/*
+
+#Fan files
+test_run.py
+
+#eclipse files
+.project
+.pydevproject
+.settings/
