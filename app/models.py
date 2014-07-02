@@ -33,3 +33,13 @@ class Questionnaire(db.Model):
 	create_time = db.Column(db.DateTime)
 	schema = db.Column(db.PickleType)
 	author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+	releases = db.relationship("Release", backref='questionnaire', lazy='dynamic')
+
+class Release(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	ques_id = db.Column(db.Integer, db.ForeignKey('questionnaire.id'))
+	start_time = db.Column(db.DateTime)
+	end_time = db.Column(db.DateTime)
+	security = db.Column(db.PickleType)
+	isclose = db.Column(db.Boolean)
