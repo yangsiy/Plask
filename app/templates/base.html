@@ -1,3 +1,56 @@
-<h3>This is the base page</h3>
-<hr>
-{% block content %}{% endblock %}
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>{{ page }}</title>
+    <meta name="author" content="site.author.name" charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/base.js') }}"></script>
+</head>
+<body>
+<!-- navbar -->
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/index.html" style="color: #ffffff">Plask</a>
+        </div>
+
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="/home.html">Home</a>
+                </li>
+                <li>
+                    <a href="/about.html">About</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container maindiv">
+
+    {% block content %}{% endblock %}
+
+</div>
+
+<a id="scrollUp" href="#top" title="" style="position: fixed; z-index: 2147483647"></a>
+<!-- footer -->
+<footer>
+    <p>&copy; 2014 Plask</p>
+</footer>
+</body>
+</html>
