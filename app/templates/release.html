@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h4>Release</h4>
+<form action="" method="post" name="release">
+	{{form.hidden_tag()}}
+	<p>
+		{{form.start_time.label}}
+		{{form.start_time}}
+	</p>
+	<p>
+		{{form.close_time.label}}
+		{{form.close_time}}
+	</p>
+	<p>
+		{{form.is_allow_anonymous.label}}
+		{{form.is_allow_anonymous}}
+	</p>
+	<p>
+		{{form.limit_num_participants.label}}
+		{{form.limit_num_participants}}
+	</p>
+	<p>
+		{{form.limit_num_ip.label}}
+		{{form.limit_num_ip}}
+	</p>
+	<p>
+		{{form.special_participants.label}}
+		{{form.special_participants}}
+	</p>
+	<p><input type="submit" value="Release"></p>
+</form>
+{% endblock %}
