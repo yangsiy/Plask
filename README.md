@@ -6,7 +6,7 @@ A simple online questionnaire survey system
 
 Dependencies needed for running run.py(at the moment):
 
-flask
+Flask
 
 flask-login
 
@@ -25,6 +25,6 @@ $ python run.py
 ```
 
 The system will running on 
-```
+``
 http://localhost:5000
-```
+``
