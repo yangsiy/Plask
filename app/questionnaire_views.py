@@ -21,7 +21,7 @@ def create():
                           )
         db.session.add(q)
         db.session.commit()
-        url_for('create_question',q_id=q.id)
+        return redirect(url_for('create_question',q_id=q.id))
     
     return render_template('questionnaire_create.html')
     
@@ -67,7 +67,7 @@ def create_question(q_id):
 
         db.session.add(q)
         db.session.commit()
-        flash("There be the URL?")
+        return "success!"
         
     return render_template('questionnaire_create_question.html')
 
