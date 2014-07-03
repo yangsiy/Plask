@@ -1,20 +1,32 @@
 #-*- coding:utf-8 -*- 
 
-from flask import request,render_template,g, flash
+from flask import request,render_template,g, flash, url_for
 from flask.ext.login import current_user,login_required
 from app import app,db
 import pickle
 from datetime import datetime
+from models import Questionnaire
 
-@app.route('/questionnaire/create')
+
+@app.route('/questionnaire/create', methods = ['GET', 'POST'])
 @login_required
 def create():
-    pass
+    if request.method == 'POST':
+        q_title = request.form['title']
+        q_subject = request.form['subject']
+        q_description = request.form['description']
+        q = Questionnaire(title = q_title,
+                          subject = q_subject,
+                          description = q_description,
+                          )
+        db.session.add(q)
+        db.session.commit()
+        url_for('create_question',q_id=q.id)
     
 
-@app.route('/questionnaire/create_question')
+@app.route('/questionnaire/<int:q_id>/create_question',methods = ['GET','POST'])
 @login_required
-def create_question():
+def create_question(q_id):
     def get_questions():
         questions = []
         current_index = 0
@@ -44,17 +56,14 @@ def create_question():
                 
         
     if request.method == 'POST':
-        #TODO: read Title, Subject and Description
+        q = Questionnaire.query.get(q_id)
         questions = get_questions()
         dumped_questions = pickle.dumps(questions, protocol = 2)
-        questionnaire = Questionnaire(title = title,
-                                      subject = subject,
-                                      description = description,
-                                      schema = dumped_questions,
-                                      create_time = datetime.now(),
-                                      author_id = g.user.id
-                                      )
-        db.session.add(questionnaire)
+        q.schema = dumped_questions
+        q.create_time = datetime.now()
+        q.author_id = g.user.id
+
+        db.session.add(q)
         db.session.commit()
         flash("There be the URL?")
         
