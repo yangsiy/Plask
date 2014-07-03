@@ -1,6 +1,6 @@
 #-*- coding:utf-8 -*- 
 
-from flask import request,render_template,g, flash, url_for
+from flask import request,render_template,g, flash, url_for, redirect
 from flask.ext.login import current_user,login_required
 from app import app,db
 import pickle
@@ -34,7 +34,7 @@ def create_question(q_id):
         current_index = 0
         while True:
             ques_form = 'ques_' + str(current_index)  #example: ques_1
-            if ques_form in request.form:
+            if ques_form+'.type' in request.form:
                 current_question = {
                                     "type": request.form[ques_form + '.type'],  #example:ques_7.type 1单选 2多选3TF4大题（似乎）
                                     "description": request.form[ques_form + '.description'],    #example:ques_9.description
@@ -56,9 +56,10 @@ def create_question(q_id):
             else: break
         return options
                 
-        
+    q = Questionnaire.query.get(q_id)
+    if q == None:
+        return "ERROR!"
     if request.method == 'POST':
-        q = Questionnaire.query.get(q_id)
         questions = get_questions()
         dumped_questions = pickle.dumps(questions, protocol = 2)
         q.schema = dumped_questions
@@ -68,7 +69,7 @@ def create_question(q_id):
         db.session.add(q)
         db.session.commit()
         return "success!"
-        
+    
     return render_template('questionnaire_create_question.html')
 
 
