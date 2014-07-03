@@ -23,6 +23,8 @@ def create():
         db.session.commit()
         url_for('create_question',q_id=q.id)
     
+    return render_template('questionnaire_create.html')
+    
 
 @app.route('/questionnaire/<int:q_id>/create_question',methods = ['GET','POST'])
 @login_required
@@ -67,7 +69,7 @@ def create_question(q_id):
         db.session.commit()
         flash("There be the URL?")
         
-    return render_template('questionnaire_create.html')
+    return render_template('questionnaire_create_question.html')
 
 
             
