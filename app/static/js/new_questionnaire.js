@@ -53,7 +53,7 @@ function add_question(type){
 	else if(type==1){
 		new_option_ul.innerHTML="<li><input type=\"button\" value=\"添加选项\" onclick=\"add_option(this,1)\"/></li>"+
 		"<li><input type=\"checkbox\"/><input type=\"text\" id=\"ques_"+
-		count+".option_0\" name=\"ques_"+count+"1.option_0\" value=\"选项一\"/>"+
+		count+".option_0\" name=\"ques_"+count+".option_0\" value=\"选项一\"/>"+
 		"<input type=\"button\" value=\"删除\" onclick=\"delete_option(this)\"></li>"+
 		"<li><input type=\"checkbox\"/><input type=\"text\" id=\"ques_"+
 		count+".option_1\" name=\"ques_"+count+".option_1\" value=\"选项二\"/>"+
