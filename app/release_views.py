@@ -12,12 +12,41 @@ import pickle
 def release(questionnaire_id):
     def get_security():
       security = []
-      security.append(request.form['is_allow_anonymous'])
-      security.append(request.form['limit_num_participants'])
-      security.append(request.form['limit_num_ip'])
 
-      special_participants = request.form['special_participants'].split(',')
+      if 'is_allow_anonymous' not in request.form:
+        is_allow_anonymous = 0
+      else:
+        is_allow_anonymous = 1
+
+      if 'limit_num_participants' not in request.form:
+        limit_num_participants = 0
+      else:
+        if request.form['limit_num_participants'] == '':
+          limit_num_participants = 0
+        else:
+          limit_num_participants = int(request.form['limit_num_participants'])
+
+      if 'limit_num_ip' not in request.form:
+        limit_num_ip = 0
+      else:
+        if request.form['limit_num_ip'] == '':
+          limit_num_ip = 0
+        else:
+          limit_num_ip = int(request.form['limit_num_ip'])
+
+      if 'special_participants' not in request.form:
+        special_participants = []
+      else:
+        if request.form['special_participants'] == '':
+          special_participants = []
+        else:
+          special_participants = request.form['special_participants'].split(',')
+
+      security.append(is_allow_anonymous)
+      security.append(limit_num_participants)
+      security.append(limit_num_ip)
       security.append(special_participants)
+      print security
       return security
 
     if request.method == 'POST':
@@ -35,7 +64,7 @@ def release(questionnaire_id):
         db.session.add(release)
         db.session.commit()
         flash("Release successfully")
-        return redirect(url_for('questionnaire/<int:questionnaire_id>'))
+        return redirect(url_for('questionnaire'))
 
     flash("Start time is later then end time")
     
