@@ -4,6 +4,7 @@ from flask import request,render_template,g, flash
 from flask.ext.login import current_user,login_required
 from app import app,db
 import pickle
+from datetime import datetime
 
 @app.route('/questionnaire/create')
 @login_required
@@ -50,6 +51,8 @@ def create_question():
                                       subject = subject,
                                       description = description,
                                       schema = dumped_questions,
+                                      create_time = datetime.now(),
+                                      author_id = g.user.id
                                       )
         db.session.add(questionnaire)
         db.session.commit()
