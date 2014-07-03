@@ -6,6 +6,7 @@ run.py
 
 #Fan files
 test_run.py
+app/templates/test_radio.html
 
 #eclipse files
 .project
