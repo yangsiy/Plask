@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-datetimepicker.css') }}">
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-datetimepicker.js') }}"></script>
+<script type="text/javascript">
+    $(".form_datetime").datetimepicker({
+        format: "yyyy-MM-dd hh:mm:ss",
+        autoclose: 1
+    });
+</script>
+
+<h4>Release</h4>
+<form action="" method="post" name="release">
+    {{form.hidden_tag()}}
+    <dl class="dl-horizontal">
+        <dt>Start time</dt>
+        <dd class="input-append date form_datetime">
+            <input type="text" class="input-medium"
+                   id="start_time" name="start_time"
+                   required>
+            <span class="add-on"><i class="icon-th"></i></span>
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal">
+        <dt>End time</dt>
+        <dd class="input-append date form_datetime">
+            <input type="text" class="input-medium"
+                   id="end_time" name="end_time"
+                    >
+            <span class="add-on"><i class="icon-th"></i></span>
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal">
+        <dt>Allow anonymous</dt>
+        <dd class="input-append date form_datetime">
+            <input type="text" class="input-medium"
+                   id="is_allow_anonymous" name="is_allow_anonymous"
+                    >
+            <span class="add-on"><i class="icon-th"></i></span>
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal">
+        <dt>limit_num_participants</dt>
+        <dd>
+            <input type="text" class="input-xlarge"
+                   id="limit_num_participants" name="limit_num_participants"
+                    >
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal">
+        <dt>limit_num_ip</dt>
+        <dd>
+            <input type="text" class="input-xlarge"
+                   id="limit_num_ip" name="limit_num_ip"
+                    >
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal">
+        <dt>special_participants</dt>
+        <dd>
+            <textarea rows="8"
+                      id="special_participants" name="special_participants"
+                      placeholder="enter username split by comma"></textarea>
+        </dd>
+    </dl>
+
+    <p><input type="submit" value="Release"></p>
+</form>
+{% endblock %}
