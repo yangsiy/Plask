@@ -3,9 +3,64 @@
 from flask import request,render_template, flash, url_for, redirect
 from flask.ext.login import login_required
 from app import app, db
-from models import Release
+from models import Release, Questionnaire
 from datetime import datetime
 import pickle
+
+@app.route('/questionnaire/<int:questionnaire_id>')
+@login_required
+def questionnaire(questionnaire_id):
+    q = Questionnaire.query.get(questionnaire_id)
+    if q == None:
+      pass
+    else:
+      title = q.title
+      subject = q.subject
+      description = q.description
+
+      release = None
+      count = 0
+      for r in q.releases:
+        count += 1
+        if r.isclose == 0:
+          release = r
+          break
+
+      start_time = None
+      end_time = None
+      is_allow_anonymous = None
+      limit_num_participants = None
+      limit_num_ip = None
+      special_participants = None
+      if release:
+        start_time = r.start_time
+        end_time = r.end_time
+        security = pickle.loads(r.security)
+        is_allow_anonymous = security[0]
+        limit_num_participants = security[1]
+        limit_num_ip = security[2]
+        special_participants = ', '.join(security[3])
+        if count > 1:
+          state = 'In reopening'
+        else:
+          state = 'In releasing'
+      else:
+        if count > 1:
+          state = 'Closed'
+        else:
+          state = 'In creating'
+
+    return render_template('questionnaire.html',
+        title = title,
+        subject = subject,
+        description = description,
+        state = state,
+        start_time = start_time,
+        end_time = end_time,
+        is_allow_anonymous = is_allow_anonymous,
+        limit_num_participants = limit_num_participants,
+        limit_num_ip = limit_num_ip,
+        special_participants = special_participants)
 
 @app.route('/questionnaire/<int:questionnaire_id>/release', methods = ['GET', 'POST'])
 @login_required
@@ -35,10 +90,10 @@ def release(questionnaire_id):
           limit_num_ip = int(request.form['limit_num_ip'])
 
       if 'special_participants' not in request.form:
-        special_participants = []
+        special_participants = None
       else:
         if request.form['special_participants'] == '':
-          special_participants = []
+          special_participants = None
         else:
           special_participants = request.form['special_participants'].split(',')
 
@@ -46,7 +101,6 @@ def release(questionnaire_id):
       security.append(limit_num_participants)
       security.append(limit_num_ip)
       security.append(special_participants)
-      print security
       return security
 
     if request.method == 'POST':
@@ -64,7 +118,7 @@ def release(questionnaire_id):
         db.session.add(release)
         db.session.commit()
         flash("Release successfully")
-        return redirect(url_for('questionnaire'))
+        return redirect(url_for('questionnaire', questionnaire_id = questionnaire_id))
 
     flash("Start time is later then end time")
     
