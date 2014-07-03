@@ -11,11 +11,11 @@ import pickle
 def release():
     def get_sercurity():
       sercurity = []
-      sercurity.append(form.is_allow_anonymous.data)
-      sercurity.append(form.limit_num_participants.data)
-      sercurity.append(form.limit_num_ip.data)
+      sercurity.append(request.form['is_allow_anonymous'])
+      sercurity.append(request.form['limit_num_participants'])
+      sercurity.append(request.form['limit_num_ip'])
 
-      special_participants = form.special_participants.data.split(',')
+      special_participants = request.form['special_participants'].split(',')
       sercurity.append(special_participants)
       return sercurity
 
@@ -27,8 +27,8 @@ def release():
         security = get_security()
         dumped_security = pickle.dumps(security, protocol = 2)
         release = Release(ques_id = questionnaire_id,
-                          start_time = form.start_time.data,
-                          end_time = form.end_time.data,
+                          start_time = request.form['start_time'],
+                          end_time = request.form['end_time'],
                           security = dumped_security,
                           isclose = false)
         db.session.add(release)
