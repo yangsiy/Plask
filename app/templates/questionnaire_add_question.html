@@ -1,0 +1,19 @@
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>new_questionnaire</title>
+<head>
+	<script type="text/javascript" src="/static/js/new_questionnaire.js"></script>
+	<script type="text/javascript" src="/static/js/jquery.js"></script>
+</head>
+<body>
+	<input type="button" onclick="add_question(0)" value="Single choice"/>
+	<input type="button" onclick="add_question(1)" value="Multiple choice"/>
+	<input type="button" onclick="add_question(2)" value="True or false"/>
+	<input type="button" onclick="add_question(3)" value="Essay"/>
+	<form method="POST">
+	<div id="ques_list">
+	</div>
+	<input type="submit" value="submit"/>
+	</form>
+</body>
+</html>
