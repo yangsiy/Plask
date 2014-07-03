@@ -3,39 +3,13 @@
 {% block content %}
 <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-datetimepicker.css') }}">
 <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-datetimepicker.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-datetimepicker.uk.js') }}"></script>
-<script type="text/javascript">
-    $('.form_datetime').datetimepicker({
-        language:  'uk',
-        weekStart: 1,
-        todayBtn:  1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 2,
-        forceParse: 0,
-        showMeridian: 1
-    });
-    // $(".form_datetime").datetimepicker({
-    //     format: "yyyy-MM-dd hh:mm:ss",
-    //     autoclose: 1
-    // });
-</script>
-            <div class="form-group">
-                <label for="dtp_input1" class="col-md-2 control-label">DateTime Picking</label>
-                <div class="input-group date form_datetime col-md-5" data-date="1979-09-16T05:25:07Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
-                    <input class="form-control" size="16" type="text" value="" readonly>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
-                </div>
-                <input type="hidden" id="dtp_input1" value="" /><br/>
-            </div>
-            
+
 <h4>Release</h4>
 <form action="" method="post" name="release">
     <dl class="dl-horizontal form-group">
         <dt>Start time</dt>
-        <dd class="input-group date form_datetime">
-            <input type="text" class="input-medium form-control"
+        <dd class="input-group date form_datetime col-md-2" data-date-format="yyyy-mm-dd hh:ii:ss">
+            <input type="text" class="form-control"
                    id="start_time" name="start_time"
                    required>
             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -44,26 +18,25 @@
 
     <dl class="dl-horizontal form-group">
         <dt>End time</dt>
-        <dd class="input-group date form_datetime">
-            <input type="text" class="input-medium form-control"
+        <dd class="input-group date form_datetime col-md-2" data-date-format="yyyy-mm-dd hh:ii:ss">
+            <input type="text" class="form-control"
                    id="end_time" name="end_time"
-                    >
+                   required>
             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
         </dd>
     </dl>
 
     <dl class="dl-horizontal">
         <dt>Allow anonymous</dt>
-        <dd class="input-append date form_datetime">
-            <input type="checkbox" class="input-medium"
+        <dd>
+            <input type="checkbox"
                    id="is_allow_anonymous" name="is_allow_anonymous"
                     >
-            <span class="add-on"><i class="icon-th"></i></span>
         </dd>
     </dl>
 
     <dl class="dl-horizontal">
-        <dt>limit_num_participants</dt>
+        <dt>Limit number of deliveries for each participant</dt>
         <dd>
             <input type="text" class="input-xlarge"
                    id="limit_num_participants" name="limit_num_participants"
@@ -72,7 +45,7 @@
     </dl>
 
     <dl class="dl-horizontal">
-        <dt>limit_num_ip</dt>
+        <dt>Limit number of deliveries for IP address</dt>
         <dd>
             <input type="text" class="input-xlarge"
                    id="limit_num_ip" name="limit_num_ip"
@@ -89,6 +62,20 @@
         </dd>
     </dl>
 
-    <p><input type="submit" value="Release"></p>
+    <button class="btn btn-large btn-default" type="submit">Release
+    </button>
 </form>
+
+<script type="text/javascript">
+    $('.form_datetime').datetimepicker({
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+</script>
+
 {% endblock %}
