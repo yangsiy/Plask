@@ -1,11 +1,7 @@
-<html>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>new_questionnaire</title>
-<head>
-	<script type="text/javascript" src="/static/js/new_questionnaire.js"></script>
-	<script type="text/javascript" src="/static/js/jquery.js"></script>
-</head>
-<body>
+{% extends "workflow.html" %}
+
+{% block content_step %}
+	<h1 class="page-header">Step 2/2 : Add Questions</h1>
 	<input type="button" onclick="add_question(0)" value="Single choice"/>
 	<input type="button" onclick="add_question(1)" value="Multiple choice"/>
 	<input type="button" onclick="add_question(2)" value="True or false"/>
@@ -15,5 +11,4 @@
 	</div>
 	<input type="submit" value="submit"/>
 	</form>
-</body>
-</html>
+{% endblock %}

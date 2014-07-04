@@ -1,6 +1,6 @@
 #-*- coding:utf-8 -*- 
 
-from flask import request,render_template, flash, url_for, redirect
+from flask import request,render_template, flash, url_for, redirect, g
 from flask.ext.login import login_required
 from app import app, db
 from models import Release, Questionnaire
@@ -60,7 +60,8 @@ def questionnaire(questionnaire_id):
         is_allow_anonymous = is_allow_anonymous,
         limit_num_participants = limit_num_participants,
         limit_num_ip = limit_num_ip,
-        special_participants = special_participants)
+        special_participants = special_participants,
+        q_id = questionnaire_id)
 
 @app.route('/questionnaire/<int:questionnaire_id>/release', methods = ['GET', 'POST'])
 @login_required
@@ -118,7 +119,11 @@ def release(questionnaire_id):
         db.session.add(release)
         db.session.commit()
         flash("Release successfully")
-        return redirect(url_for('questionnaire', questionnaire_id = questionnaire_id))
+        #return redirect(url_for('questionnaire', questionnaire_id = questionnaire_id))
+        return render_template('release_success.html',
+                g = g,
+                q_id = questionnaire_id,
+                message = 'Questionnaire Created Successfully')
 
     flash("Start time is later then end time")
     

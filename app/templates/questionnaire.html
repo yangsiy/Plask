@@ -71,16 +71,20 @@
 </dl>
 {% endif %}
 
-<button class="btn btn-large btn-default" type="submit">
 {% if state == 'In creating' %}
-Release
+    <button class="btn btn-large btn-default" onclick="location.href='{{url_for('release', questionnaire_id=q_id)}}'">
+        Release
+    </button>
 {% endif %}
 {% if state == 'In closed' %}
-Reopen
+    <button class="btn btn-large btn-default" type="submit">
+        Reopen
+    </button>
 {% endif %}
 {% if state == 'In releasing' or state == 'In reopening' %}
-Close
+    <button class="btn btn-large btn-default" type="submit">
+        Close
+    </button>
 {% endif %}
-</button>
 
 {% endblock %}

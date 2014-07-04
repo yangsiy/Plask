@@ -23,7 +23,8 @@ def create():
         db.session.commit()
         return redirect(url_for('create_question',q_id=q.id))
     
-    return render_template('questionnaire_create.html')
+    return render_template('questionnaire_create.html',
+            g = g)
     
 
 @app.route('/questionnaire/<int:q_id>/create_question',methods = ['GET','POST'])
@@ -68,9 +69,13 @@ def create_question(q_id):
 
         db.session.add(q)
         db.session.commit()
-        return "success!"
+        return render_template('create_success.html',
+                g = g,
+                message = 'Questionnaire Created Successfully',
+                q_id = q_id)
     
-    return render_template('questionnaire_create_question.html')
+    return render_template('questionnaire_create_question.html',
+            g = g)
 
 @app.route('/questionnaire/<int:q_id>/fill',methods = ['GET','POST'])
 def fill(q_id):
@@ -114,4 +119,6 @@ def fill(q_id):
                                           )
                         db.session.add(p_ans)
         db.session.commit()
-        return "Thank you!"
+        return render_template('fill_success.html',
+                g = g,
+                message = 'Thank you for your paticipation')

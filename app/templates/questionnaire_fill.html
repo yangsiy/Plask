@@ -1,11 +1,6 @@
-<html>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>new_questionnaire</title>
-<head>
-	<script type="text/javascript" src="/static/js/new_questionnaire.js"></script>
-	<script type="text/javascript" src="/static/js/jquery.js"></script>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block content %}
 	<h2>{{title}}</h2>
 	<h3>{{subject}}</h3>
 	<h5>{{description}}</h5>
@@ -52,5 +47,4 @@
 	</div>
 	<input type="submit" value="submit"/>
 	</form>
-</body>
-</html>
+{% endblock %}

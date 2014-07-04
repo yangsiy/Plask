@@ -1,0 +1,6 @@
+{% extends "message.html" %}
+
+{% block message_action %}
+	<p>URL:XXX</p>
+	<input type="button" onclick="location.href='{{url_for('questionnaire', questionnaire_id=q_id)}}'" value="Questionnaire Dashboard"/>
+{% endblock %}

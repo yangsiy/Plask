@@ -1,16 +1,19 @@
-<html>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>new_questionnaire</title>
-<head>
-	<script type="text/javascript" src="/static/js/new_questionnaire.js"></script>
-	<script type="text/javascript" src="/static/js/jquery.js"></script>
-</head>
-<body>
+{% extends "workflow.html" %}
+
+{% block content_step %}
+	<h1 class="page-header">Step 1/2 : Basic Information</h1>
 	<form method="POST">
-	<input id="title" name="title" type="text"/>
-	<input id="subject" name="subject" type="text"/>
-	<input id="description" name="description" type="text"/>
-	<input type="submit" value="submit"/>
+	<p>Title
+		<input id="title" name="title" type="text"/>
+	</p>
+	<p>Subject
+		<input id="subject" name="subject" type="text"/>
+	</p>
+	<p>Description
+		<input id="description" name="description" type="text"/>
+	</p>
+	<p>
+		<input type="submit" value="submit"/>
+	</p>
 	</form>
-</body>
-</html>
+{% endblock %}
