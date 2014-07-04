@@ -8,12 +8,13 @@
   {% endif %}
 {% endwith %}
 
-<h3>Administdator</h3>
+<h3>Administrator</h3>
 <hr/>
 
 <h4>All users</h4>
 
-<table class="table">
+<table class="table table-striped">
+  <thead>
   <tr>
     <th>
       <span>Username</span>
@@ -25,7 +26,9 @@
       <span>Operation</span>
     </th>
   </tr>
+  </thead>
 
+  <tbody>
   {% for u in users %}
   <tr>
   <td>
@@ -43,20 +46,22 @@
 
   <td>
     {% if u.isClosed %}
-      <a class="btn btn-success" href="/administrator/{{ g.user.username }}/unban/{{ u.id }}">Unban</a>
+      <a class="btn btn-xs btn-success" href="/administrator/{{ g.user.username }}/unban/{{ u.id }}">Unban</a>
     {% else %}
-      <a class="btn btn-danger" href="/administrator/{{ g.user.username }}/ban/{{ u.id }}">Ban</a>
+      <a class="btn btn-xs btn-danger" href="/administrator/{{ g.user.username }}/ban/{{ u.id }}">Ban</a>
     {% endif %}
   </td>
   </tr>
   {% endfor %}
+  </tbody>
 </table>
 
 <br/>
 
 <h4>All questionnaires</h4>
 
-<table class="table">
+<table class="table table-striped">
+  <thead>
   <tr>
     <th>
       <span>Title</span>
@@ -68,7 +73,9 @@
       <span>Operation</span>
     </th>
   </tr>
+  </thead>
 
+  <tbody>
   {% for q in questionnaires %}
   <tr>
   <td>
@@ -85,13 +92,14 @@
 
   <td>
     {% if q.isClosed %}
-      <a class="btn btn-success">Unban</a>
+      <a class="btn btn-xs btn-success">Unban</a>
     {% else %}
-      <a class="btn btn-danger">Ban</a>
+      <a class="btn btn-xs btn-danger">Ban</a>
     {% endif %}
   </td>
   </tr>
   {% endfor %}
+  </tbody>
 </table>
 
 {% endblock %}
