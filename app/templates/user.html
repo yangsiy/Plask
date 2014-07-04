@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block content %}
+<script type="text/javascript" src="{{ url_for('static', filename='js/js/new_questionnaire.js') }}"></script>
+
+
+
+	<form method="POST">
+
+
+    
+
+    <div ><h1>Questionnaire Created:<a class="btn btn-primary btn-lg pull-right" role="button" href="{{url_for('create')}}">Create Questionnaire</a></h1></div>
+
+
+
+	
+	<div id="ques_list_created">
+		<table id="proj_list" class="table">
+			<tbody val="ttt">
+			<tr class="thead_td" class="row fluid">
+
+			<td  class="sequence" id="proj_title"><h4>Title</h4></td>
+			<td  class="sequence" id="proj_created"><h4>Create Time</h4></td>
+
+			<td  class="sequenceup" id="proj_start"><h4>Start Time</h4></td>
+			<td  class="sequenceup" id="proj_end"><h4>End Time</h4></td>
+
+
+			<td ><h4>Status</h4></td>
+			<td  class="alignc"><h4>Reply Number</h4></td>
+			<td ><h4>Manipulation</h4></td>
+			</tr>
+
+
+
+
+
+			{% for i in ques_list_created %}
+
+
+			<tr id="{{i.id}}">
+
+			<td>
+			<span id="title" class="title">
+
+			<a href="{{url_for('questionnaire', questionnaire_id=i.id)}}">{{i.title}}</a>
+
+			</span>
+			</td>
+			<td>{{i.create_time}}</td>
+			<td>{{i.start_time}}</td>
+			<td>{{i.end_time}}</td>
+			<td>
+				{{i.status}}
+			</td>
+			<td class="alignc" id="rspd_count_53b14bc8f7405b3c14ecd22e" pid="53b14bc8f7405b3c14ecd22e">{{i.reply_sum}}</td>
+			<td>
+
+
+
+			<a href="#" class="previewb" target="_blank" title="preview"><span class="glyphicon glyphicon-search"></span></a>
+			<a href="#" class="analysis" title="analysis"><span class="glyphicon glyphicon-stats"></span></a>
+
+			<a href="#"  class="editor" title="modify" ><span class="glyphicon glyphicon-edit"></span></a>
+
+			<a href="#" class="deletebtn ml2" title="delete"><span class="glyphicon glyphicon-trash"></span></a>
+
+
+
+
+
+			</td>
+
+
+
+
+
+			</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	
+	<br/>
+	    <h1>Questionnaire You Answered:</h1>
+	<div id="ques_list_filled">
+		<table id="proj_list" class="table">
+			<tbody val="ttt">
+			<tr class="row fluid">
+
+			<td  class="col-md-4" id="proj_title"><h4>Title</h4></td>
+
+			<td  class="col-md-4" id="proj_updated"><h4>Fill Time</h4></td>
+
+
+			<td  class="col-md-4"><h4>Status</h4></td>
+			<td  class="col-md-4"><h4>Manipulation</h4></td>
+			</tr>
+
+			{% for i in ques_list_filled%}
+			<tr id="{{i.id}}" class="row fluid">
+
+			<td class="col-md-4">
+			<span id="title" class="title">
+
+			<a href="{{url_for('questionnaire', questionnaire_id=i.id)}}">{{i.title}}</a>
+
+			</span>
+			</td>
+			<td class="col-md-4">{{i.filled_time}}</td>
+			<td>
+			{{i.status}}
+			</td>
+			<td class="col-md-4 center">
+
+			<a href="" class="editor center"  title="preview"><span class="glyphicon glyphicon-search"></span></a>
+
+			<a href="#" class="analysis center" title="analysis"><span class="glyphicon glyphicon-stats"></span></a>
+			</td>
+
+			</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	</form>
+{% endblock %}
+
+
+

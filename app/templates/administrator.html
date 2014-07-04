@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="alert alert-info">{{ messages[-1] }}</div>
+  {% endif %}
+{% endwith %}
+
+<h3>Administrator</h3>
+<hr/>
+
+<h4>All users</h4>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>
+      <span>Username</span>
+    </th>
+    <th>
+      <span>Status</span>
+    </th>
+    <th>
+      <span>Operation</span>
+    </th>
+  </tr>
+  </thead>
+
+  <tbody>
+  {% for u in users %}
+  <tr>
+  <td>
+    <a href="/user/{{ u.username }}">{{ u.username }}
+    </a>
+  </td>
+
+  <td>
+      {% if u.isClosed %}
+        <span style="color:red">Banned</span>
+      {% else %}
+        <span>Normal</span>
+      {% endif %}
+  </td>
+
+  <td>
+    {% if u.isClosed %}
+      <a class="btn btn-xs btn-success" href="/administrator/{{ g.user.username }}/unban/{{ u.id }}">Unban</a>
+    {% else %}
+      <a class="btn btn-xs btn-danger" href="/administrator/{{ g.user.username }}/ban/{{ u.id }}">Ban</a>
+    {% endif %}
+  </td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<br/>
+
+<h4>All questionnaires</h4>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>
+      <span>Title</span>
+    </th>
+    <th>
+      <span>Status</span>
+    </th>
+    <th>
+      <span>Operation</span>
+    </th>
+  </tr>
+  </thead>
+
+  <tbody>
+  {% for q in questionnaires %}
+  <tr>
+  <td>
+    <a href="/questionnaire/{{ q.id }}">{{ q.title }}</a>
+  </td>
+
+  <td>
+      {% if q.isClosed %}
+        <span style="color:red">Banned</span>
+      {% else %}
+        <span>Normal</span>
+      {% endif %}
+  </td>
+
+  <td>
+    {% if q.isClosed %}
+      <a class="btn btn-xs btn-success">Unban</a>
+    {% else %}
+      <a class="btn btn-xs btn-danger">Ban</a>
+    {% endif %}
+  </td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "message.html" %}
+
+{% block message_action %}
+	{% if g.user %}
+		<input type="button" onclick="location.href='#'" value="User Dashboard"/>
+	{% else %}
+		<input type="button" onclick="location.href='{{url_for('register')}}'" value="Register"/>
+	{% endif %}
+{% endblock %}

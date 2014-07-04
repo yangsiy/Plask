@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block head %}
+  <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/workflow.css') }}">
+  <script type="text/javascript" src="/static/js/new_questionnaire.js"></script>
+{% endblock %}
+
+{% block content %}
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+              <li>
+                <p>Step1: Basic Information</p>
+              </li>
+              <li>
+                <p>Step2: Add Questions</p>
+              </li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          {% block content_step %}{% endblock %}
+        </div>
+      </div>
+{% endblock %}

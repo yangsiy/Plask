@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="alert alert-info">{{ messages[-1] }}</div>
+  {% endif %}
+{% endwith %}
+
+<h1>Questionnaire Information</h1>
+
+<br/>
+
+<div class="row-fluid">
+    <dl class="dl-horizontal col-md-6">
+        <dt>Title</dt>
+        <dd>{{ title }}</dd>
+    </dl>
+
+    <dl class="dl-horizontal col-md-6">
+        <dt>State</dt>
+        <dd>{{ state }}</dd>
+    </dl>
+</div>
+
+<div class="row-fluid">
+    <dl class="dl-horizontal col-md-6">
+        <dt>Subject</dt>
+        <dd>{{ subject }}</dd>
+    </dl>
+
+    <dl class="dl-horizontal col-md-6">
+        <dt>Description</dt>
+        <dd>{{ description }}</dd>
+    </dl>
+</div>
+
+<hr/>
+<br/>
+
+<h1>Release Information</h1>
+
+<br/>
+
+{% if state == 'In creating' %}
+<p>No release yet.</p>
+{% endif %}
+
+{% if state == 'Closed' %}
+<p>The questionnaire is closed.</p>
+{% endif %}
+
+{% if state == 'In releasing' or state == 'In reopening' %}
+<dl class="dl-horizontal">
+    <dt>Start time</dt>
+    <dd>{{ start_time }}</dd>
+</dl>
+<dl class="dl-horizontal">
+    <dt>End time</dt>
+    <dd>{{ end_time }}</dd>
+</dl>
+<dl class="dl-horizontal">
+    <dt>Allow anonymous</dt>
+    <dd>{{ is_allow_anonymous }}</dd>
+</dl>
+<dl class="dl-horizontal">
+    <dt>Limit number of deliveries for each participant</dt>
+    <dd>{{ limit_num_participants }}</dd>
+</dl>
+<dl class="dl-horizontal">
+    <dt>Limit number of deliveries for IP address</dt>
+    <dd>{{ limit_num_ip }}</dd>
+</dl>
+<dl class="dl-horizontal">
+    <dt>Special participants</dt>
+    <dd>{{ special_participants }}</dd>
+</dl>
+{% endif %}
+
+{% if state == 'In creating' %}
+<a class="btn btn-large btn-default" href="{{ questionnaire_id }}/release">Release</a>
+{% endif %}
+{% if state == 'Closed' %}
+<a class="btn btn-large btn-default" href="{{ questionnaire_id }}/release">Reopen</a>
+{% endif %}
+{% if state == 'In releasing' or state == 'In reopening' %}
+<a class="btn btn-large btn-default" href="{{ questionnaire_id }}/close">Close</a>
+{% endif %}
+
+{% endblock %}

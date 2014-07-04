@@ -1,17 +1,34 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h4>Sign In</h4>
-<form action="" method="post" name="login">
+<div class="col-md-offset-4">
+<h1>Sign In</h1>
+<br/>
+
+<form method="post">
 	{{form.hidden_tag()}}
-	<p>
-		{{form.username.label}}
-		{{form.username}}
-	</p>
-	<p>
-		{{form.password.label}}
-		{{form.password}}
-	</p>
-	<p><input type="submit" value="Sign In"></p>
+
+    <div class="form-group row">
+        <label for="username" class="control-label col-md-2">{{form.username.label}}</label>
+        <div class="col-md-4">
+        	{{form.username(class_='form-control')}}
+        </div>
+    </div>
+		
+		
+	<div class="form-group row">
+        <label for="password" class="control-label col-md-2">{{form.password.label}}</label>
+        <div class="col-md-4">
+        	{{form.password(class_='form-control')}}
+        </div>
+    </div>
+
+	<div class="form-group row">
+        <div class="col-md-offset-2 col-md-4">
+            <button class="btn btn-primary" type="submit">Sign In
+            </button>
+        </div>
+    </div>
 </form>
+</div>
 {% endblock %}

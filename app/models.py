@@ -9,6 +9,7 @@ class User(db.Model):
 	isClosed = db.Column(db.Boolean)
 
 	questionnaires = db.relationship("Questionnaire", backref='user', lazy='dynamic')
+	quesanswers = db.relationship("QuesAnswer", backref='user', lazy='dynamic')
 
 	def is_authenticated(self):
 		return True
@@ -35,6 +36,7 @@ class Questionnaire(db.Model):
 	author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 	releases = db.relationship("Release", backref='questionnaire', lazy='dynamic')
+	quesanswers = db.relationship("QuesAnswer", backref='questionnaire', lazy='dynamic')
 
 class Release(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
@@ -43,3 +45,18 @@ class Release(db.Model):
 	end_time = db.Column(db.DateTime)
 	security = db.Column(db.PickleType)
 	isclose = db.Column(db.Boolean)
+
+class QuesAnswer(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	ques_id = db.Column(db.Integer, db.ForeignKey('questionnaire.id'))
+	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+	ip = db.Column(db.String(50))
+	date = db.Column(db.DateTime)
+
+	probanswers = db.relationship("ProbAnswer", backref='ques_answer', lazy='dynamic')
+
+class ProbAnswer(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	ques_ans_id = db.Column(db.Integer, db.ForeignKey('ques_answer.id'))
+	prob_id = db.Column(db.Integer)
+	ans = db.Column(db.Text)
