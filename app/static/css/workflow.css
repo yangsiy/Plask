@@ -12,6 +12,20 @@
     border-right: 1px solid #eee;
 }
 
+.sidebar-right {
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    right: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: #f5f5f5;
+    border-left: 1px solid #eee;
+}
+
 /* Sidebar navigation */
 .nav-sidebar {
   margin-top: 35px;

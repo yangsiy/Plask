@@ -1,68 +1,65 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block head %}
 <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-datetimepicker.css') }}">
 <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-datetimepicker.js') }}"></script>
+{% endblock %}
 
-<h4>Release</h4>
+{% block content %}
+
+<h1>Release</h1>
+<br/>
+
 <form action="" method="post" name="release">
-    <dl class="dl-horizontal form-group">
-        <dt>Start time</dt>
-        <dd class="input-group date form_datetime col-md-2" data-date-format="yyyy-mm-dd hh:ii:ss">
+    <div class="form-group row">
+        <label for="start_time" class="control-label col-md-3">Start time</label>
+        <div class="input-group date form_datetime col-md-5" data-date-format="yyyy-mm-dd hh:ii:ss">
             <input type="text" class="form-control"
                    id="start_time" name="start_time"
                    required>
             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-        </dd>
-    </dl>
+        </div>
+    </div>
 
-    <dl class="dl-horizontal form-group">
-        <dt>End time</dt>
-        <dd class="input-group date form_datetime col-md-2" data-date-format="yyyy-mm-dd hh:ii:ss">
+    <div class="form-group row">
+        <label for="end_time" class="control-label col-md-3">End time</label>
+        <div class="input-group date form_datetime col-md-5" data-date-format="yyyy-mm-dd hh:ii:ss">
             <input type="text" class="form-control"
                    id="end_time" name="end_time"
                    required>
             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-        </dd>
-    </dl>
+        </div>
+    </div>
 
-    <dl class="dl-horizontal">
-        <dt>Allow anonymous</dt>
-        <dd>
-            <input type="checkbox"
-                   id="is_allow_anonymous" name="is_allow_anonymous"
-                    >
-        </dd>
-    </dl>
+    <div class="form-group row">
+        <label for="is_allow_anonymous" class="control-label col-md-3">Allow anonymous</label>
+        <div class="input-group col-md-5">
+            <input type="checkbox" id="is_allow_anonymous" name="is_allow_anonymous" checked>
+        </div>
+    </div>
 
-    <dl class="dl-horizontal">
-        <dt>Limit number of deliveries for each participant</dt>
-        <dd>
-            <input type="text" class="input-xlarge"
-                   id="limit_num_participants" name="limit_num_participants"
-                    >
-        </dd>
-    </dl>
+    <div class="form-group row">
+        <label for="limit_num_participants" class="control-label col-md-3">Limit number of deliveries for each participant</label>
+        <div class="input-group col-md-5">
+            <input type="text" class="form-control" id="limit_num_participants" name="limit_num_participants" placeholder="Leave blank if no limits">
+        </div>
+    </div>
 
-    <dl class="dl-horizontal">
-        <dt>Limit number of deliveries for IP address</dt>
-        <dd>
-            <input type="text" class="input-xlarge"
-                   id="limit_num_ip" name="limit_num_ip"
-                    >
-        </dd>
-    </dl>
+    <div class="form-group row">
+        <label for="limit_num_ip" class="control-label col-md-3">Limit number of deliveries for IP address</label>
+        <div class="input-group col-md-5">
+            <input type="text" class="form-control" id="limit_num_ip" name="limit_num_ip" placeholder="Leave blank if no limits">
+        </div>
+    </div>
 
-    <dl class="dl-horizontal">
-        <dt>special_participants</dt>
-        <dd>
-            <textarea rows="8"
-                      id="special_participants" name="special_participants"
-                      placeholder="enter username split by comma"></textarea>
-        </dd>
-    </dl>
+    <div class="form-group row">
+        <label for="special_participants" class="control-label col-md-3">Special_participants</label>
+        <div class="input-group col-md-5">
+            <textarea rows="8" class="form-control" id="special_participants" name="special_participants" placeholder="Enter username split by comma"></textarea>
+        </div>
+    </div>
 
-    <button class="btn btn-large btn-default" type="submit">Release
+    <button class="btn btn-primary col-md-offset-3" type="submit">Release
     </button>
 </form>
 
