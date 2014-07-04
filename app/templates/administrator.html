@@ -8,24 +8,90 @@
   {% endif %}
 {% endwith %}
 
-<h3>Administrator</h3>
+<h3>Administdator</h3>
 <hr/>
 
 <h4>All users</h4>
 
-<ul class="nav nav-tabs">
-    {% for u in users %}
-    <li><a href="/user/{{ u.username }}">{{ u.username }}</a></li>
-    {% endfor %}
-</ul>
+<table class="table">
+  <tr>
+    <th>
+      <span>Username</span>
+    </th>
+    <th>
+      <span>Status</span>
+    </th>
+    <th>
+      <span>Operation</span>
+    </th>
+  </tr>
+
+  {% for u in users %}
+  <tr>
+  <td>
+    <a href="/user/{{ u.username }}">{{ u.username }}
+    </a>
+  </td>
+
+  <td>
+      {% if u.isClosed %}
+        <span style="color:red">Banned</span>
+      {% else %}
+        <span>Normal</span>
+      {% endif %}
+  </td>
+
+  <td>
+    {% if u.isClosed %}
+      <a class="btn btn-success" href="/administrator/{{ g.user.username }}/unban/{{ u.id }}">Unban</a>
+    {% else %}
+      <a class="btn btn-danger" href="/administrator/{{ g.user.username }}/ban/{{ u.id }}">Ban</a>
+    {% endif %}
+  </td>
+  </tr>
+  {% endfor %}
+</table>
 
 <br/>
 
 <h4>All questionnaires</h4>
-<ul class="nav nav-stacked">
-    {% for q in questionnaires %}
-    <li><a href="/questionnaire/{{ q.id }}">{{ q.title }}</a></li>
-    {% endfor %}
-</ul>
+
+<table class="table">
+  <tr>
+    <th>
+      <span>Title</span>
+    </th>
+    <th>
+      <span>Status</span>
+    </th>
+    <th>
+      <span>Operation</span>
+    </th>
+  </tr>
+
+  {% for q in questionnaires %}
+  <tr>
+  <td>
+    <a href="/questionnaire/{{ q.id }}">{{ q.title }}</a>
+  </td>
+
+  <td>
+      {% if q.isClosed %}
+        <span style="color:red">Banned</span>
+      {% else %}
+        <span>Normal</span>
+      {% endif %}
+  </td>
+
+  <td>
+    {% if q.isClosed %}
+      <a class="btn btn-success">Unban</a>
+    {% else %}
+      <a class="btn btn-danger">Ban</a>
+    {% endif %}
+  </td>
+  </tr>
+  {% endfor %}
+</table>
 
 {% endblock %}
