@@ -156,11 +156,11 @@ function move_question(obj,direction){
   next_question_description.id="ques_"+count+".description";
   next_question_description.name="ques_"+count+".description";
 
+  var option_count=0;
+  var current_option=document.getElementById("ques_"+count+".option_"+option_count);
+  var next_option=document.getElementById("ques_"+next_count+".option_"+option_count);
   if(current_type<2){
     if(next_type<2){
-      var option_count=0;
-      var current_option=document.getElementById("ques_"+count+".option_"+option_count);
-      var next_option=document.getElementById("ques_"+next_count+".option_"+option_count);
       while(current_option!=null&&next_option!=null){
         current_option.id="ques_"+next_count+".option_"+option_count;
         current_option.name="ques_"+next_count+".option_"+option_count;
@@ -203,8 +203,9 @@ function move_question(obj,direction){
 }
 
 function add_option(obj,type){
-  var ul=obj.parentNode.parentNode;
-  var count=ul.parentNode.id[5];
+  var count=obj.parentNode.parentNode.id[5];
+  var ul=obj.parentNode.nextSibling;
+  console.log(ul);
   var ocount=0;
   var radio;
   if(type==0)radio="radio";
@@ -212,7 +213,9 @@ function add_option(obj,type){
   while(document.getElementById("ques_"+count+".option_"+ocount)!=null)ocount++;
   var li=document.createElement("li");
 	li.innerHTML="<input type=\"text\" id=\"ques_"+
-    count+".option_0\" name=\"ques_"+count+".option_0\" value=\"new option\"/>"+
+    count+".option_"+ocount+"\" name=\"ques_"+count+".option_"+ocount+"\" value=\"new option\"/>"+
+    "<span class=\"btn glyphicon glyphicon-arrow-up\" onclick=\"move_option(this,0)\"></span>"+
+	"<span class=\"btn glyphicon glyphicon-arrow-down\" onclick=\"move_option(this,1)\"></span>"+
     "<span class=\"btn glyphicon glyphicon-trash\" onclick=\"delete_option(this)\"></span>";
 	ul.appendChild(li);
 }
