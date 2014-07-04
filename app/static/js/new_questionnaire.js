@@ -7,12 +7,17 @@ function add_question(type){
   new_question_div.name="ques_"+count+".div";
   new_question_div.setAttribute("class", "form-group row well");
 
+
+  var new_question_div_head=document.createElement("div");
+  new_question_div_head.setAttribute("class", "row");
+  new_question_div.appendChild(new_question_div_head)
+
   var new_question_type=document.createElement("input");
   new_question_type.id="ques_"+count+".type";
   new_question_type.name="ques_"+count+".type";
   new_question_type.type="Hidden";
   new_question_type.value=type;
-  new_question_div.appendChild(new_question_type);
+  new_question_div_head.appendChild(new_question_type);
 
   var new_question_description=document.createElement("input");
   new_question_description.id="ques_"+count+".description";
@@ -20,54 +25,52 @@ function add_question(type){
   new_question_description.type="text";
   new_question_description.setAttribute("class", "col-md-6");
   new_question_description.placeholder="Enter the question description";
-  new_question_div.appendChild(new_question_description);
+  new_question_div_head.appendChild(new_question_description);
   
   var new_question_delete=document.createElement("span");
   new_question_delete.setAttribute("class", "pull-right btn glyphicon glyphicon-trash");
   new_question_delete.setAttribute("onclick","delete_question(this)");
-  new_question_div.appendChild(new_question_delete);
+  new_question_div_head.appendChild(new_question_delete);
 
   var new_question_down=document.createElement("span");
   new_question_down.setAttribute("class", "pull-right btn glyphicon glyphicon glyphicon-arrow-down");
   new_question_down.setAttribute("onclick","move_question(this,1)");
-  new_question_div.appendChild(new_question_down);
+  new_question_div_head.appendChild(new_question_down);
 
   var new_question_up=document.createElement("span");
   new_question_up.setAttribute("class", "pull-right btn glyphicon glyphicon glyphicon-arrow-up");
   new_question_up.setAttribute("onclick","move_question(this,0)");
-  new_question_div.appendChild(new_question_up);
-
-
+  new_question_div_head.appendChild(new_question_up);
 
   var new_option_ul=document.createElement("ul");
   new_question_div.appendChild(new_option_ul);
 
   if(type==0){
     new_option_ul.innerHTML="<li><span class=\"btn glyphicon glyphicon-plus\" onclick=\"add_option(this,0)\"></span></li>" +
-    "<li><input type=\"radio\"/><input type=\"text\" id=\"ques_"+
+    "<li><input type=\"text\" id=\"ques_"+
     count+".option_0\" name=\"ques_"+count+".option_0\" value=\"选项一\"/>"+
     "<span class=\"btn glyphicon glyphicon-trash\" onclick=\"delete_option(this)\"></span></li>"+
-    "<li><input type=\"radio\"/><input type=\"text\" id=\"ques_"+
+    "<li><input type=\"text\" id=\"ques_"+
     count+".option_1\" name=\"ques_"+count+".option_1\" value=\"选项二\"/>"+
     "<span class=\"btn glyphicon glyphicon-trash\" onclick=\"delete_option(this)\"></span></li>";
   }
   else if(type==1){
     new_option_ul.innerHTML="<li><span class=\"btn glyphicon glyphicon-plus\" onclick=\"add_option(this,1)\"></span></li>" +
-    "<li><input type=\"checkbox\"/><input type=\"text\" id=\"ques_"+
+    "<li><input type=\"text\" id=\"ques_"+
     count+".option_0\" name=\"ques_"+count+".option_0\" value=\"选项一\"/>"+
     "<span class=\"btn glyphicon glyphicon-trash\" onclick=\"delete_option(this)\"></span></li>"+
-    "<li><input type=\"checkbox\"/><input type=\"text\" id=\"ques_"+
+    "<li><input type=\"text\" id=\"ques_"+
     count+".option_1\" name=\"ques_"+count+".option_1\" value=\"选项二\"/>"+
     "<span class=\"btn glyphicon glyphicon-trash\" onclick=\"delete_option(this)\"></span></li>";
   }
   else if(type==2){
-    new_option_ul.innerHTML="<li></li>" +
-    "<li><input type=\"radio\"/><label>是</label></li>"+
-    "<li><input type=\"radio\"/><label>否</label></li>";
+    new_option_ul.innerHTML=
+    "<li><label>是</label></li>"+
+    "<li><label>否</label></li>";
   }
   else if(type==3){
-    new_option_ul.innerHTML="<li></li>" +
-    "<li><input type=\"text\" readonly=\"true\"/></li>";
+    new_option_ul.innerHTML=
+    "";
   }
 
   base_div.appendChild(new_question_div);
