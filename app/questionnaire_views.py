@@ -74,7 +74,7 @@ def create_question(q_id):
     return render_template('questionnaire_create_question.html')
 
 @app.route('/questionnaire/<int:q_id>/fill',methods = ['GET','POST'])
-def fill(r_id):
+def fill(q_id):
     q = Questionnaire.query.get(q_id)
     if not q:
         return "ERROR!"
