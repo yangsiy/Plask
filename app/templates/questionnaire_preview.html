@@ -1,0 +1,59 @@
+<!-- <html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>new_questionnaire</title> -->
+<!-- <head>
+	<script type="text/javascript" src="/static/js/new_questionnaire.js"></script>
+	<script type="text/javascript" src="/static/js/jquery.js"></script>
+</head> -->
+{% extends "base.html" %}
+
+{% block content %}
+<body>
+	<form method="POST">
+	<div id="ques_list">
+	{% for i in range(0,schema|length) %}
+		<div>
+			<label>{{i+1}}.</label><label>{{schema[i].des}}</label>
+			{% if schema[i].type==0 %}
+			<ul>
+			{% for j in range(0,schema[i].opt|length) %}
+				<li>
+					<input type="radio" value="{{j}}"/>
+					<label>{{schema[i].opt[j]}}</label>
+				</li>
+			{% endfor %}
+			</ul>
+			{% elif schema[i].type==1 %}
+			<ul>
+			{% for j in range(0,schema[i].opt|length) %}
+				<li>
+					<input type="checkbox" value="1"/>
+					<label>{{schema[i].opt[j]}}</label>
+				</li>
+			{% endfor %}
+			</ul>
+			{% elif schema[i].type==2 %}
+			<ul>
+				<li>
+					<input type="radio" value="1"/>
+					<label>true</label>
+				</li>
+				<li>
+					<input type="radio" value="0"/>
+					<label>false</label>
+				</li>
+			</ul>
+			{% elif schema[i].type==3 %}
+			<br/><input type="text"/>
+			{% endif %}
+		</div>
+	{% endfor %}
+	</div>
+	<input class="btn btn-primary btn" type="button" value="submit"/>
+	
+	<input class="btn btn-default" type="button" value="modify"/>
+	</form>
+
+		{% endblock %}
+<!-- </body>
+</html> -->

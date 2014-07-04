@@ -26,7 +26,7 @@ function add_question(type){
   new_question_description.setAttribute("class", "col-md-6");
   new_question_description.placeholder="Enter the question description";
   new_question_div_head.appendChild(new_question_description);
-  
+ 
   var new_question_delete=document.createElement("span");
   new_question_delete.setAttribute("class", "pull-right btn glyphicon glyphicon-trash");
   new_question_delete.setAttribute("onclick","delete_question(this)");
@@ -41,43 +41,49 @@ function add_question(type){
   new_question_up.setAttribute("class", "pull-right btn glyphicon glyphicon glyphicon-arrow-up");
   new_question_up.setAttribute("onclick","move_question(this,0)");
   new_question_div_head.appendChild(new_question_up);
+ 
+  if (type <2) {
+	  var new_question_add=document.createElement("span");
+	  new_question_add.setAttribute("class", "pull-right btn glyphicon glyphicon-plus");
+	  new_question_add.setAttribute("onclick","add_option(this,"+type+")");
+	  new_question_div_head.appendChild(new_question_add);
+	}
 
   var new_option_ul=document.createElement("ul");
   new_question_div.appendChild(new_option_ul);
 
   if(type==0){
-    new_option_ul.innerHTML="<li><span class=\"btn glyphicon glyphicon-plus\" onclick=\"add_option(this,0)\"></span></li>" +
+    new_option_ul.innerHTML=
     "<li><input type=\"text\" id=\"ques_"+
-    count+".option_0\" name=\"ques_"+count+".option_0\" value=\"选项一\"/>"+
+    count+".option_0\" name=\"ques_"+count+".option_0\" value=\"new option\"/>"+
+    "<span class=\"btn glyphicon glyphicon-arrow-up\" onclick=\"move_option(this,0)\"></span>"+
+	"<span class=\"btn glyphicon glyphicon-arrow-down\" onclick=\"move_option(this,1)\"></span>"+
     "<span class=\"btn glyphicon glyphicon-trash\" onclick=\"delete_option(this)\"></span></li>"+
     "<li><input type=\"text\" id=\"ques_"+
-    count+".option_1\" name=\"ques_"+count+".option_1\" value=\"选项二\"/>"+
+    count+".option_1\" name=\"ques_"+count+".option_1\" value=\"new option\"/>"+
+    "<span class=\"btn glyphicon glyphicon-arrow-up\" onclick=\"move_option(this,0)\"></span>"+
+	"<span class=\"btn glyphicon glyphicon-arrow-down\" onclick=\"move_option(this,1)\"></span>"+
     "<span class=\"btn glyphicon glyphicon-trash\" onclick=\"delete_option(this)\"></span></li>";
   }
   else if(type==1){
-    new_option_ul.innerHTML="<li><span class=\"btn glyphicon glyphicon-plus\" onclick=\"add_option(this,1)\"></span></li>" +
+    new_option_ul.innerHTML=
     "<li><input type=\"text\" id=\"ques_"+
-    count+".option_0\" name=\"ques_"+count+".option_0\" value=\"选项一\"/>"+
+    count+".option_0\" name=\"ques_"+count+".option_0\" value=\"new option\"/>"+
+    "<span class=\"btn glyphicon glyphicon-arrow-up\" onclick=\"move_option(this,0)\"></span>"+
+	"<span class=\"btn glyphicon glyphicon-arrow-down\" onclick=\"move_option(this,1)\"></span>"+
     "<span class=\"btn glyphicon glyphicon-trash\" onclick=\"delete_option(this)\"></span></li>"+
     "<li><input type=\"text\" id=\"ques_"+
-    count+".option_1\" name=\"ques_"+count+".option_1\" value=\"选项二\"/>"+
+    count+".option_1\" name=\"ques_"+count+".option_1\" value=\"new option\"/>"+
+    "<span class=\"btn glyphicon glyphicon-arrow-up\" onclick=\"move_option(this,0)\"></span>"+
+	"<span class=\"btn glyphicon glyphicon-arrow-down\" onclick=\"move_option(this,1)\"></span>"+
     "<span class=\"btn glyphicon glyphicon-trash\" onclick=\"delete_option(this)\"></span></li>";
-  }
-  else if(type==2){
-    new_option_ul.innerHTML=
-    "<li><label>是</label></li>"+
-    "<li><label>否</label></li>";
-  }
-  else if(type==3){
-    new_option_ul.innerHTML=
-    "";
   }
 
   base_div.appendChild(new_question_div);
 }
 
 function delete_question(obj){
-  count=obj.parentNode.id[5];
+  count=obj.parentNode.parentNode.id[5];
   var current_question=document.getElementById("ques_"+count+".div");
   current_question.parentNode.removeChild(current_question);
   count++;
@@ -114,7 +120,7 @@ function delete_question(obj){
 }
 
 function move_question(obj,direction){
-  var count=obj.parentNode.id[5];
+  var count=obj.parentNode.parentNode.id[5];
   var next_count=count;
   if(direction==1){
     next_count++;
@@ -192,6 +198,8 @@ function move_question(obj,direction){
         next_option=document.getElementById("ques_"+next_count+".option_"+option_count);
       }
   }
+  if(direction==0)$(current_question_div).insertBefore($(next_question_div));
+	else $(next_question_div).insertBefore($(current_question_div));
 }
 
 function add_option(obj,type){
@@ -202,15 +210,17 @@ function add_option(obj,type){
   if(type==0)radio="radio";
   else radio="checkbox";
   while(document.getElementById("ques_"+count+".option_"+ocount)!=null)ocount++;
-  ul.innerHTML+="<li><input type=\""+radio+"\"/><input type=\"text\" id=\"ques_"+
-    count+".option_"+ocount+"\" name=\"ques_"+count+".option_"+ocount+"\" value=\"选项一\"/>"+
-    "<span class=\"btn glyphicon glyphicon-trash\" onclick=\"delete_option(this)\"></span></li>";
+  var li=document.createElement("li");
+	li.innerHTML="<input type=\"text\" id=\"ques_"+
+    count+".option_0\" name=\"ques_"+count+".option_0\" value=\"new option\"/>"+
+    "<span class=\"btn glyphicon glyphicon-trash\" onclick=\"delete_option(this)\"></span>";
+	ul.appendChild(li);
 }
 
 function delete_option(obj){
   var li=obj.parentNode;
   var ul=li.parentNode;
-  var option=$(obj).prev();
+  var option=$(obj).prev().prev().prev();
   var ques_count=option.attr("id")[5];
   var option_count=option.attr("id")[14];
   ul.removeChild(li);
@@ -223,5 +233,31 @@ function delete_option(obj){
     option_count++;
     current_option=document.getElementById("ques_"+ques_count+".option_"+option_count);
   }
+  if(direction==0)$(current_li).insertBefore($(next_li));
+	else $(next_li).insertBefore($(current_li));
+}
 
+function move_option(obj,direction){
+	var option=$(obj).prev();
+	if(direction==1)option=option.prev();
+	var ques_count=option.attr("id")[5];
+	var option_count=option.attr("id")[14];
+	var next_count=option_count;
+	if(direction==1){
+		next_count++;
+	}
+	else{
+		next_count--;
+	} 
+	var current_option=document.getElementById("ques_"+ques_count+".option_"+option_count);
+	var next_option=document.getElementById("ques_"+ques_count+".option_"+next_count);
+	if(current_option==null||next_option==null)return;
+	current_option.id="ques_"+ques_count+".option_"+next_count;
+	current_option.name="ques_"+ques_count+".option_"+next_count;
+	next_option.id="ques_"+ques_count+".option_"+option_count;
+	next_option.name="ques_"+ques_count+".option_"+option_count;
+	var current_li=$(current_option.parentNode);
+	var next_li=$(next_option.parentNode);
+	if(direction==0)$(current_li).insertBefore($(next_li));
+	else $(next_li).insertBefore($(current_li));
 }
