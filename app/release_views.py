@@ -31,7 +31,7 @@ def questionnaire(questionnaire_id):
       is_allow_anonymous = None
       limit_num_participants = None
       limit_num_ip = None
-      special_participants = None
+      special_participants = ''
       if release:
         start_time = r.start_time
         end_time = r.end_time
@@ -39,18 +39,20 @@ def questionnaire(questionnaire_id):
         is_allow_anonymous = security[0]
         limit_num_participants = security[1]
         limit_num_ip = security[2]
-        special_participants = ', '.join(security[3])
+        if security[3]:
+          special_participants = ', '.join(security[3])
         if count > 1:
           state = 'In reopening'
         else:
           state = 'In releasing'
       else:
-        if count > 1:
+        if count > 0:
           state = 'Closed'
         else:
           state = 'In creating'
 
     return render_template('questionnaire.html',
+        questionnaire_id = questionnaire_id,
         title = title,
         subject = subject,
         description = description,
@@ -92,10 +94,11 @@ def release(questionnaire_id):
       if 'special_participants' not in request.form:
         special_participants = None
       else:
-        if request.form['special_participants'] == '':
+        data = request.form['special_participants'].replace(' ', "")
+        if data == '':
           special_participants = None
         else:
-          special_participants = request.form['special_participants'].split(',')
+          special_participants = data.split(',')
 
       security.append(is_allow_anonymous)
       security.append(limit_num_participants)
@@ -121,5 +124,23 @@ def release(questionnaire_id):
         return redirect(url_for('questionnaire', questionnaire_id = questionnaire_id))
 
     flash("Start time is later then end time")
-    
     return render_template('release.html')
+
+@app.route('/questionnaire/<int:questionnaire_id>/close', methods = ['GET'])
+@login_required
+def close(questionnaire_id):
+    q = Questionnaire.query.get(questionnaire_id)
+    release = None
+    for r in q.releases:
+      if r.isclose == 0:
+        release = r
+        break
+    if release == None:
+      flash("The release has been closed")
+    else:
+      release.isclose = 1
+      db.session.add(release)
+      db.session.commit()
+      flash("Close successfully")
+  
+    return redirect(url_for('questionnaire', questionnaire_id = questionnaire_id))

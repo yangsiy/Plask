@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="alert alert-info">{{ messages[-1] }}</div>
+  {% endif %}
+{% endwith %}
+
 <h3>Questionnaire Information</h3>
 
 <br/>
@@ -71,15 +78,14 @@
 </dl>
 {% endif %}
 
-<button class="btn btn-large btn-default" type="submit">
 {% if state == 'In creating' %}
-Release
+<a class="btn btn-large btn-default" href="{{ questionnaire_id }}/release">Release</a>
 {% endif %}
-{% if state == 'In closed' %}
-Reopen
+{% if state == 'Closed' %}
+<a class="btn btn-large btn-default" href="{{ questionnaire_id }}/release">Reopen</a>
 {% endif %}
 {% if state == 'In releasing' or state == 'In reopening' %}
-Close
+<a class="btn btn-large btn-default" href="{{ questionnaire_id }}/close">Close</a>
 {% endif %}
 </button>
 
