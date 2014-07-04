@@ -5,8 +5,7 @@ from flask.ext.login import current_user,login_required
 from app import app,db
 import pickle
 from datetime import datetime
-from models import Questionnaire
-from _bsddb import DB_AFTER
+from models import Questionnaire, QuesAnswer, ProbAnswer
 
 
 @app.route('/questionnaire/create', methods = ['GET', 'POST'])
@@ -80,7 +79,12 @@ def fill(q_id):
         return "ERROR!"
     
     if request.method == 'GET':
-        return render_template('questionnaire_fill.html', questionnaire = q)
+        schema = pickle.loads(q.schema)
+        return render_template('questionnaire_fill.html', 
+            schema = schema,
+            title = q.title,
+            subject = q.subject,
+            description = q.description)
     
     elif request.method == 'POST':
         questions = pickle.loads(q.schema)  
@@ -97,13 +101,13 @@ def fill(q_id):
                 #single-selection, true/false ,or essay question
                 p_ans = ProbAnswer(ques_ans_id = ans.id,
                                     prob_id = prob_id,
-                                    ans = request.form['ques_' + prob_id + '.ans'],  #example: ques_3.ans 2(that is, C)
+                                    ans = request.form['ques_' + str(prob_id) + '.ans'],  #example: ques_3.ans 2(that is, C)
                                     )
                 db.session.add(p_ans)
             elif questions[prob_id]['type'] == '1':
                 #multi-selection
                 for choice_id in range(len(questions[prob_id]["options"])):
-                    if 'ques_' + prob_id + '.ans_' + choice_id in request.form: #example: ques_4.ans_7 which is a checkbox
+                    if 'ques_' + str(prob_id) + '.ans_' + str(choice_id) in request.form: #example: ques_4.ans_7 which is a checkbox
                         p_ans = ProbAnswer(ques_ans_id = ans.id,
                                            prob_id = prob_id,
                                            ans = str(choice_id),  
@@ -111,6 +115,3 @@ def fill(q_id):
                         db.session.add(p_ans)
         db.session.commit()
         return "Thank you!"
-    
-    
-            

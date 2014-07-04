@@ -53,10 +53,10 @@ class QuesAnswer(db.Model):
 	ip = db.Column(db.String(50))
 	date = db.Column(db.DateTime)
 
-	probanswers = db.relationship("ProbAnswer", backref='quesanswer', lazy='dynamic')
+	probanswers = db.relationship("ProbAnswer", backref='ques_answer', lazy='dynamic')
 
 class ProbAnswer(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
-	ques_ans_id = db.Column(db.Integer, db.ForeignKey('quesanswer.id'))
+	ques_ans_id = db.Column(db.Integer, db.ForeignKey('ques_answer.id'))
 	prob_id = db.Column(db.Integer)
 	ans = db.Column(db.Text)

@@ -6,30 +6,34 @@
 	<script type="text/javascript" src="/static/js/jquery.js"></script>
 </head>
 <body>
+	<h2>{{title}}</h2>
+	<h3>{{subject}}</h3>
+	<h5>{{description}}</h5>
+	<hr>
 	<form method="POST">
 	<div id="ques_list">
 	{% for i in range(0,schema|length) %}
 		<div id="ques_{{i}}.div">
-			<label>{{i+1}}.</label><label id="ques_{{i}}.description">{{schema[i].des}}</label>
-			{% if schema[i].type==0 %}
+			<label>{{i+1}}.</label><label id="ques_{{i}}.description">{{schema[i].description}}</label>
+			{% if schema[i].type=='0' %}
 			<ul>
-			{% for j in range(0,schema[i].opt|length) %}
+			{% for j in range(0,schema[i].options|length) %}
 				<li>
 					<input type="radio" name="ques_{{i}}.ans" value="{{j}}"/>
-					<label>{{schema[i].opt[j]}}</label>
+					<label>{{schema[i].options[j]}}</label>
 				</li>
 			{% endfor %}
 			</ul>
-			{% elif schema[i].type==1 %}
+			{% elif schema[i].type=='1' %}
 			<ul>
-			{% for j in range(0,schema[i].opt|length) %}
+			{% for j in range(0,schema[i].options|length) %}
 				<li>
 					<input type="checkbox" name="ques_{{i}}.ans_{{j}}" value="1"/>
-					<label>{{schema[i].opt[j]}}</label>
+					<label>{{schema[i].options[j]}}</label>
 				</li>
 			{% endfor %}
 			</ul>
-			{% elif schema[i].type==2 %}
+			{% elif schema[i].type=='2' %}
 			<ul>
 				<li>
 					<input type="radio" name="ques_{{i}}.ans" value="1"/>
@@ -40,7 +44,7 @@
 					<label>false</label>
 				</li>
 			</ul>
-			{% elif schema[i].type==3 %}
+			{% elif schema[i].type=='3' %}
 			<br/><input type="text" name="ques_{{i}}.ans"/>
 			{% endif %}
 		</div>
