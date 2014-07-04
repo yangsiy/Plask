@@ -12,4 +12,4 @@ lm = LoginManager()
 lm.init_app(app)
 lm.login_view = 'login'
 
-from app import user_auth_views, questionnaire_views, release_views, models
+from app import user_auth_views, questionnaire_views, release_views, administrator_views, models
