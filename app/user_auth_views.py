@@ -25,13 +25,16 @@ def before_request():
 @app.route('/')
 @login_required
 def index():
-	return 'Hello, World!'
+	return redirect(url_for('login'))
 
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
 	if g.user is not None and g.user.is_authenticated():
-		return redirect(url_for('index'))
+		if g.user.isAdmin == True:
+			return redirect(url_for('administrator', username = g.user.username))
+		else:
+			return redirect(url_for('user', username = g.user.username))
 
 	form = LoginForm()
 	
@@ -40,7 +43,10 @@ def login():
 		if (user is not None and user.password == form.password.data):
 			login_user(user);
 			flash("Login successfully")
-			return redirect(url_for('index'))
+			if user.isAdmin == True:
+				return redirect(url_for('administrator', username = user.username))
+			else:
+				return redirect(url_for('user', username = user.username))
 		form.password.data = ''
 		flash("Login failed")
 	

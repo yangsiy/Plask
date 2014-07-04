@@ -10,7 +10,7 @@
 
     
 
-    <div ><h1>Questionnaire You Created:<a class="btn btn-primary btn-lg pull-right" role="button">Create a new questionnaire</a></h1></div>
+    <div ><h1>Questionnaire Created:<a class="btn btn-primary btn-lg pull-right" role="button" href="{{url_for('create')}}">Create Questionnaire</a></h1></div>
 
 
 
@@ -20,16 +20,16 @@
 			<tbody val="ttt">
 			<tr class="thead_td" class="row fluid">
 
-			<td  class="sequence" id="proj_title"><h4>title</h4></td>
-			<td  class="sequence" id="proj_created"><h4>create time</h4></td>
+			<td  class="sequence" id="proj_title"><h4>Title</h4></td>
+			<td  class="sequence" id="proj_created"><h4>Create Time</h4></td>
 
-			<td  class="sequenceup" id="proj_start"><h4>start time</h4></td>
-			<td  class="sequenceup" id="proj_end"><h4>end time</h4></td>
+			<td  class="sequenceup" id="proj_start"><h4>Start Time</h4></td>
+			<td  class="sequenceup" id="proj_end"><h4>End Time</h4></td>
 
 
-			<td ><h4>status</h4></td>
-			<td  class="alignc"><h4>reply number</h4></td>
-			<td ><h4>manipulation</h4></td>
+			<td ><h4>Status</h4></td>
+			<td  class="alignc"><h4>Reply Number</h4></td>
+			<td ><h4>Manipulation</h4></td>
 			</tr>
 
 
@@ -44,7 +44,7 @@
 			<td>
 			<span id="title" class="title">
 
-			{{i.title}}
+			<a href="{{url_for('questionnaire', questionnaire_id=i.id)}}">{{i.title}}</a>
 
 			</span>
 			</td>
@@ -89,14 +89,13 @@
 			<tbody val="ttt">
 			<tr class="row fluid">
 
-			<td  class="col-md-4" id="proj_title"><h4>title</h4></td>
-			<td  class="col-md-4" id="proj_created"><h4>alive time</h4></td>
+			<td  class="col-md-4" id="proj_title"><h4>Title</h4></td>
 
-			<td  class="col-md-4" id="proj_updated"><h4>fill time</h4></td>
+			<td  class="col-md-4" id="proj_updated"><h4>Fill Time</h4></td>
 
 
-			<td  class="col-md-4"><h4>status</h4></td>
-			<td  class="col-md-4"><h4>manipulation</h4></td>
+			<td  class="col-md-4"><h4>Status</h4></td>
+			<td  class="col-md-4"><h4>Manipulation</h4></td>
 			</tr>
 
 			{% for i in ques_list_filled%}
@@ -105,11 +104,10 @@
 			<td class="col-md-4">
 			<span id="title" class="title">
 
-			{{i.title}}
+			<a href="{{url_for('questionnaire', questionnaire_id=i.id)}}">{{i.title}}</a>
 
 			</span>
 			</td>
-			<td class="col-md-4">{{i.start_time}}</td>
 			<td class="col-md-4">{{i.filled_time}}</td>
 			<td>
 			{{i.status}}
