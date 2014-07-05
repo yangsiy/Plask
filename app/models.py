@@ -37,6 +37,9 @@ class Questionnaire(db.Model):
 
 	releases = db.relationship("Release", backref='questionnaire', lazy='dynamic')
 	quesanswers = db.relationship("QuesAnswer", backref='questionnaire', lazy='dynamic')
+	
+	def retrive_last_release(self):
+		return list(self.releases)[-1] if list(self.releases) else None
 
 class Release(db.Model):
 	id = db.Column(db.Integer, primary_key=True)

@@ -10,9 +10,11 @@ from models import User, Questionnaire
 def user(username):
     created = Questionnaire.query.filter_by(author_id = g.user.id).all()
     created = list(created)
-    releases = [list(x.releases)[-1] if list(x.releases) else None for x in created]
+    releases = [x.retrive_last_release() for x in created]
     
-    ques = g.user.quesanswers
+    ques_answers = list(g.user.quesanswers)
+    print str(ques_answers)
+    '''
     quess = []
     for each in ques:
         if each.ques_id not in quess:
@@ -20,8 +22,9 @@ def user(username):
     answerd = []
     for each in quess:
         answerd.append(Questionnaire.query.get(each))
+    '''
     return render_template('user.html',
             g = g,
             ques_list_created = created,
             ques_list_releases = releases,
-            ques_list_filled = answerd)
+            ques_ans_list = ques_answers)
