@@ -9,6 +9,9 @@ from models import User, Questionnaire
 @login_required
 def user(username):
     created = Questionnaire.query.filter_by(author_id = g.user.id).all()
+    created = list(created)
+    releases = [list(x.releases)[-1] if list(x.releases) else None for x in created]
+    
     ques = g.user.quesanswers
     quess = []
     for each in ques:
@@ -20,4 +23,5 @@ def user(username):
     return render_template('user.html',
             g = g,
             ques_list_created = created,
+            ques_list_releases = releases,
             ques_list_filled = answerd)

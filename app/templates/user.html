@@ -36,25 +36,24 @@
 
 
 
-			{% for i in ques_list_created %}
+			{% for i in range(0,ques_list_created|length) %}
 
-
-			<tr id="{{i.id}}">
+			<tr id="{{ques_list_created[i].id}}">
 
 			<td>
 			<span id="title" class="title">
 
-			<a href="{{url_for('questionnaire', questionnaire_id=i.id)}}">{{i.title}}</a>
+			<a href="{{url_for('questionnaire', questionnaire_id=ques_list_created[i].id)}}">{{ques_list_created[i].title}}</a>
 
 			</span>
 			</td>
-			<td>{{i.create_time}}</td>
-			<td>{{i.start_time}}</td>
-			<td>{{i.end_time}}</td>
+			<td>{{ques_list_created[i].create_time.strftime("%Y-%m-%d %H:%M")}}</td>
+			<td>{{ques_list_releases[i].start_time.strftime("%Y-%m-%d %H:%M") if ques_list_releases[i] else "Not yet"}}</td>
+			<td>{{ques_list_releases[i].end_time.strftime("%Y-%m-%d %H:%M") if ques_list_releases[i] else "Not yet"}}</td>
 			<td>
-				{{i.status}}
+				{{ques_list_created[i].status}}
 			</td>
-			<td class="alignc" id="rspd_count_53b14bc8f7405b3c14ecd22e" pid="53b14bc8f7405b3c14ecd22e">{{i.reply_sum}}</td>
+			<td class="alignc" id="rspd_count_53b14bc8f7405b3c14ecd22e" pid="53b14bc8f7405b3c14ecd22e">{{ques_list_created[i].reply_sum}}</td>
 			<td>
 
 
@@ -108,7 +107,7 @@
 
 			</span>
 			</td>
-			<td class="col-md-4">{{i.filled_time}}</td>
+			<td class="col-md-4">{{i.date.strftime("%Y-%m-%d %H:%M")}}</td>
 			<td>
 			{{i.status}}
 			</td>
