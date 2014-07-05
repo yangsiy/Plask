@@ -1,6 +1,6 @@
 {% extends "message.html" %}
 
 {% block message_action %}
-	<p>URL: <a href="http://marco.chinacloudapp.cn/questionnaire/{{q_id}}/fill">http://marco.chinacloudapp.cn/questionnaire/{{q_id}}/fill</a></p>
+	<p>URL: <a href="http://192.168.43.164:5000/questionnaire/{{q_id}}/fill">http://192.168.43.164:5000/questionnaire/{{q_id}}/fill</a></p>
 	<input type="button" onclick="location.href='{{url_for('questionnaire', questionnaire_id=q_id)}}'" value="Questionnaire Dashboard"/>
 {% endblock %}

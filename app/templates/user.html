@@ -10,7 +10,10 @@
 
     
 
-    <div ><h1>Questionnaire Created:<a class="btn btn-primary btn-lg pull-right" role="button" href="{{url_for('create')}}">Create Questionnaire</a></h1></div>
+    <div ><h1>Questionnaire Created:
+    	{%if not g.user.isAdmin %}
+    	<a class="btn btn-primary btn-lg pull-right" role="button" href="{{url_for('create')}}">Create Questionnaire</a>
+    	{% endif %}</h1></div>
 
 
 
@@ -83,7 +86,7 @@
 	</div>
 	
 	<br/>
-	    <h1>Questionnaire You Answered:</h1>
+	    <h1>Questionnaire Answered:</h1>
 	<div id="ques_list_filled">
 		<table id="proj_list" class="table">
 			<tbody val="ttt">

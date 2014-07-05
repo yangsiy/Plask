@@ -8,8 +8,9 @@ from models import User, Questionnaire
 @app.route('/user/<string:username>')
 @login_required
 def user(username):
-    created = Questionnaire.query.filter_by(author_id = g.user.id).all()
-    ques = g.user.quesanswers
+    user = User.query.filter_by(username = username)[0]
+    created = Questionnaire.query.filter_by(author_id = user.id).all()
+    ques = user.quesanswers
     quess = []
     for each in ques:
         if each.ques_id not in quess:
