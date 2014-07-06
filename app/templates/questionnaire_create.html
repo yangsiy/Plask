@@ -2,18 +2,30 @@
 
 {% block content_step %}
 	<h1 class="page-header">Step 1/2 : Basic Information</h1>
-	<form method="POST">
-	<p>Title
-		<input id="title" name="title" type="text"/>
-	</p>
-	<p>Subject
-		<input id="subject" name="subject" type="text"/>
-	</p>
-	<p>Description
-		<input id="description" name="description" type="text"/>
-	</p>
-	<p>
-		<input type="submit" value="submit"/>
-	</p>
+	<form action="" method="post" class="form-horizontal">
+		<div class="form-group">
+			<label for="title" class="control-label col-md-2">Title</label>
+			<div class="col-md-5">
+				<input class="form-control" id="title" name="title" type="text"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="subject" class="control-label col-md-2">Subject</label>
+			<div class="col-md-5">
+				<input class="form-control" id="subject" name="subject" type="text"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="description" class="control-label col-md-2">Description</label>
+			<div class="col-md-5">
+				<textarea rows="8" class="form-control" id="description" name="description"></textarea>
+			</div>
+		</div>
+		<div class="form-group row">
+	        <div class="col-md-offset-2 col-md-5">
+	            <button class="btn btn-primary" type="submit">Create
+	            </button>
+	        </div>
+    	</div>
 	</form>
 {% endblock %}
