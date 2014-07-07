@@ -1,6 +1,23 @@
 {% extends "message.html" %}
 
 {% block message_action %}
-	<p>URL: <a href="http://192.168.43.164:5000/questionnaire/{{q_id}}/fill">http://192.168.43.164:5000/questionnaire/{{q_id}}/fill</a></p>
+	<!--<p>URL: <a id="Url_Change" href="http://192.168.43.164:5000/questionnaire/{{q_id}}/fill">http://192.168.43.164:5000/questionnaire/{{q_id}}/fill</a></p>-->
+	
+	<script>
+	window.onload=function(){
+	
+	    var test="http://"+document.location.host;
+	    test+="/questionnaire/{{q_id}}/fill";
+        
+		document.getElementById("Url_Change").setAttribute("href",test);
+
+		document.getElementById("Url_Change").innerHTML=test;
+	}
+	</script>
+
+    <p>URL: <a id="Url_Change" href="http://192.168.43.164:5000/questionnaire/{{q_id}}/fill">http://192.168.43.164:5000/questionnaire/{{q_id}}/fill</a></p>
+	
 	<input type="button" onclick="location.href='{{url_for('questionnaire', questionnaire_id=q_id)}}'" value="Questionnaire Dashboard"/>
 {% endblock %}
+
+
