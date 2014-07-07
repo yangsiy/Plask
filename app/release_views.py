@@ -36,20 +36,12 @@ def questionnaire(questionnaire_id):
         start_time = r.start_time
         end_time = r.end_time
         security = pickle.loads(r.security)
-        is_allow_anonymous = security[0]
-        limit_num_participants = security[1]
-        limit_num_ip = security[2]
-        if security[3]:
-          special_participants = ', '.join(security[3])
-        if count > 1:
-          state = 'In reopening'
-        else:
-          state = 'In releasing'
-      else:
-        if count > 0:
-          state = 'Closed'
-        else:
-          state = 'In creating'
+        is_allow_anonymous = security['anonymous']
+        limit_num_participants = security['limit_per_user']
+        limit_num_ip = security['limit_per_ip']
+        if security['limit_participants']:
+          special_participants = ', '.join(security['limit_participants'])
+      state = q.get_status()
 
     return render_template('questionnaire.html',
         questionnaire_id = questionnaire_id,
@@ -69,42 +61,50 @@ def questionnaire(questionnaire_id):
 @login_required
 def release(questionnaire_id):
     def get_security():
-      security = []
+      def to_int(string):
+        try: return int(string)
+        except ValueError: return None
+        
+      security = {}
 
       if 'is_allow_anonymous' not in request.form:
-        is_allow_anonymous = 0
+        is_allow_anonymous = False
       else:
-        is_allow_anonymous = 1
+        is_allow_anonymous = True
 
       if 'limit_num_participants' not in request.form:
-        limit_num_participants = 0
+        limit_num_participants = None
       else:
-        if request.form['limit_num_participants'] == '':
-          limit_num_participants = 0
+        if not request.form['limit_num_participants']:
+          limit_num_participants = None
         else:
-          limit_num_participants = int(request.form['limit_num_participants'])
+          limit_num_participants = to_int(request.form['limit_num_participants'])
 
       if 'limit_num_ip' not in request.form:
-        limit_num_ip = 0
+        limit_num_ip = None
       else:
-        if request.form['limit_num_ip'] == '':
-          limit_num_ip = 0
+        if not request.form['limit_num_ip']:
+          limit_num_ip = None
         else:
-          limit_num_ip = int(request.form['limit_num_ip'])
+          limit_num_ip = to_int(request.form['limit_num_ip'])
 
       if 'special_participants' not in request.form:
         special_participants = None
       else:
-        data = request.form['special_participants'].replace(' ', "")
-        if data == '':
+        data = request.form['special_participants']
+        if not data:
           special_participants = None
         else:
           special_participants = data.split(',')
+          for i in special_participants:
+            i = i.strip()
+              
 
-      security.append(is_allow_anonymous)
-      security.append(limit_num_participants)
-      security.append(limit_num_ip)
-      security.append(special_participants)
+      security['anonymous'] = is_allow_anonymous
+      security['limit_per_user'] = limit_num_participants
+      security['limit_per_ip'] = limit_num_ip
+      security['limit_participants'] = special_participants
+      
       return security
 
     if request.method == 'POST':
