@@ -8,10 +8,72 @@
   {% endif %}
 {% endwith %}
 
-<h3>Administrator</h3>
+<h1>Administrator</h1>
 <hr/>
 
-<h4>All users</h4>
+<h2>The number of the questionnaires per day in a week:</h2>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>
+      <span>Date</span>
+    </th>
+    <th>
+      <span>Number</span>
+    </th>
+  </tr>
+  </thead>
+
+  <tbody>
+  {% for (d, n) in questionnaires_week %}
+  <tr>
+  <td>
+    {{ d }}
+  </td>
+
+  <td>
+    {{ n }}
+  </td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<br/>
+
+<h2>The number of answer sheets per day in a week:</h2>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>
+      <span>Date</span>
+    </th>
+    <th>
+      <span>Number</span>
+    </th>
+  </tr>
+  </thead>
+
+  <tbody>
+  {% for (d, n) in answer_week %}
+  <tr>
+  <td>
+    {{ d }}
+  </td>
+
+  <td>
+    {{ n }}
+  </td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<br/>
+
+<h2>All users</h2>
 
 <table class="table table-striped">
   <thead>
@@ -60,7 +122,7 @@
 
 <br/>
 
-<h4>All questionnaires</h4>
+<h2>All questionnaires</h2>
 
 <table class="table table-striped">
   <thead>
