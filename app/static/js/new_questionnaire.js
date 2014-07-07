@@ -6,6 +6,8 @@ function add_question(type){
   new_question_div.id="ques_"+count+".div";
   new_question_div.name="ques_"+count+".div";
   new_question_div.setAttribute("class", "form-group row well");
+  new_question_div.setAttribute("onmouseover","show_buttons(this,0)");
+  new_question_div.setAttribute("onmouseout","hide_buttons(this,0)");
 
 
   var new_question_div_head=document.createElement("div");
@@ -27,63 +29,57 @@ function add_question(type){
   new_question_description.placeholder="Enter the question description";
   new_question_div_head.appendChild(new_question_description);
  
+  var new_question_div_button=document.createElement("div");
+  new_question_div_button.setAttribute("class","ques_button");
+  new_question_div_button.style.display="none";
+  new_question_div_head.appendChild(new_question_div_button);
+
   var new_question_delete=document.createElement("span");
   new_question_delete.setAttribute("class", "pull-right btn glyphicon glyphicon-trash");
   new_question_delete.setAttribute("onclick","delete_question(this)");
-  new_question_div_head.appendChild(new_question_delete);
+  new_question_div_button.appendChild(new_question_delete);
 
   var new_question_down=document.createElement("span");
   new_question_down.setAttribute("class", "pull-right btn glyphicon glyphicon glyphicon-arrow-down");
   new_question_down.setAttribute("onclick","move_question(this,1)");
-  new_question_div_head.appendChild(new_question_down);
+  new_question_div_button.appendChild(new_question_down);
 
   var new_question_up=document.createElement("span");
   new_question_up.setAttribute("class", "pull-right btn glyphicon glyphicon glyphicon-arrow-up");
   new_question_up.setAttribute("onclick","move_question(this,0)");
-  new_question_div_head.appendChild(new_question_up);
+  new_question_div_button.appendChild(new_question_up);
  
   if (type <2) {
 	  var new_question_add=document.createElement("span");
 	  new_question_add.setAttribute("class", "pull-right btn glyphicon glyphicon-plus");
 	  new_question_add.setAttribute("onclick","add_option(this,"+type+")");
-	  new_question_div_head.appendChild(new_question_add);
+	  new_question_div_button.appendChild(new_question_add);
 	}
 
   var new_option_ul=document.createElement("ul");
   new_question_div.appendChild(new_option_ul);
 
-  if(type==0){
+  if(type<2){
     new_option_ul.innerHTML=
-    "<li><input type=\"text\" id=\"ques_"+
+    "<li onmouseover=\"show_buttons(this,1)\" onmouseout=\"hide_buttons(this,1)\"><input type=\"text\" id=\"ques_"+
     count+".option_0\" name=\"ques_"+count+".option_0\" value=\"new option\"/>"+
+    "<div class=\"pull-right option_button\" style=\"display:none\">"+
     "<span class=\"btn glyphicon glyphicon-arrow-up\" onclick=\"move_option(this,0)\"></span>"+
 	"<span class=\"btn glyphicon glyphicon-arrow-down\" onclick=\"move_option(this,1)\"></span>"+
-    "<span class=\"btn glyphicon glyphicon-trash\" onclick=\"delete_option(this)\"></span></li>"+
-    "<li><input type=\"text\" id=\"ques_"+
+    "<span class=\"btn glyphicon glyphicon-trash\" onclick=\"delete_option(this)\"></span></div></li>"+
+    "<li onmouseover=\"show_buttons(this,1)\" onmouseout=\"hide_buttons(this,1)\"><input type=\"text\" id=\"ques_"+
     count+".option_1\" name=\"ques_"+count+".option_1\" value=\"new option\"/>"+
+    "<div class=\"pull-right option_button\" style=\"display:none\">"+
     "<span class=\"btn glyphicon glyphicon-arrow-up\" onclick=\"move_option(this,0)\"></span>"+
 	"<span class=\"btn glyphicon glyphicon-arrow-down\" onclick=\"move_option(this,1)\"></span>"+
-    "<span class=\"btn glyphicon glyphicon-trash\" onclick=\"delete_option(this)\"></span></li>";
-  }
-  else if(type==1){
-    new_option_ul.innerHTML=
-    "<li><input type=\"text\" id=\"ques_"+
-    count+".option_0\" name=\"ques_"+count+".option_0\" value=\"new option\"/>"+
-    "<span class=\"btn glyphicon glyphicon-arrow-up\" onclick=\"move_option(this,0)\"></span>"+
-	"<span class=\"btn glyphicon glyphicon-arrow-down\" onclick=\"move_option(this,1)\"></span>"+
-    "<span class=\"btn glyphicon glyphicon-trash\" onclick=\"delete_option(this)\"></span></li>"+
-    "<li><input type=\"text\" id=\"ques_"+
-    count+".option_1\" name=\"ques_"+count+".option_1\" value=\"new option\"/>"+
-    "<span class=\"btn glyphicon glyphicon-arrow-up\" onclick=\"move_option(this,0)\"></span>"+
-	"<span class=\"btn glyphicon glyphicon-arrow-down\" onclick=\"move_option(this,1)\"></span>"+
-    "<span class=\"btn glyphicon glyphicon-trash\" onclick=\"delete_option(this)\"></span></li>";
+    "<span class=\"btn glyphicon glyphicon-trash\" onclick=\"delete_option(this)\"></span></div></li>";
   }
 
   base_div.appendChild(new_question_div);
 }
 
 function delete_question(obj){
-  count=obj.parentNode.parentNode.id[5];
+  count=obj.parentNode.parentNode.parentNode.id[5];
   var current_question=document.getElementById("ques_"+count+".div");
   current_question.parentNode.removeChild(current_question);
   count++;
@@ -120,7 +116,7 @@ function delete_question(obj){
 }
 
 function move_question(obj,direction){
-  var count=obj.parentNode.parentNode.id[5];
+  var count=obj.parentNode.parentNode.parentNode.id[5];
   var next_count=count;
   if(direction==1){
     next_count++;
@@ -203,7 +199,7 @@ function move_question(obj,direction){
 }
 
 function add_option(obj,type){
-  var count=obj.parentNode.parentNode.id[5];
+  var count=obj.parentNode.parentNode.parentNode.id[5];
   var ul=obj.parentNode.nextSibling;
   console.log(ul);
   var ocount=0;
@@ -212,20 +208,23 @@ function add_option(obj,type){
   else radio="checkbox";
   while(document.getElementById("ques_"+count+".option_"+ocount)!=null)ocount++;
   var li=document.createElement("li");
+  li.setAttribute("onmouseover","show_buttons(this,1)");
+  li.setAttribute("onmouseout","hide_buttons(this,1)");
 	li.innerHTML="<input type=\"text\" id=\"ques_"+
     count+".option_"+ocount+"\" name=\"ques_"+count+".option_"+ocount+"\" value=\"new option\"/>"+
+    "<div class=\"pull-right option_button\">"+
     "<span class=\"btn glyphicon glyphicon-arrow-up\" onclick=\"move_option(this,0)\"></span>"+
 	"<span class=\"btn glyphicon glyphicon-arrow-down\" onclick=\"move_option(this,1)\"></span>"+
-    "<span class=\"btn glyphicon glyphicon-trash\" onclick=\"delete_option(this)\"></span>";
+    "<span class=\"btn glyphicon glyphicon-trash\" onclick=\"delete_option(this)\"></span></div>";
 	ul.appendChild(li);
 }
 
 function delete_option(obj){
-  var li=obj.parentNode;
+  var option=obj.parentNode.previousSibling;
+  var li=option.parentNode;
   var ul=li.parentNode;
-  var option=$(obj).prev().prev().prev();
-  var ques_count=option.attr("id")[5];
-  var option_count=option.attr("id")[14];
+  var ques_count=option.id[5];
+  var option_count=option.id[14];
   ul.removeChild(li);
 
   option_count++;
@@ -236,15 +235,12 @@ function delete_option(obj){
     option_count++;
     current_option=document.getElementById("ques_"+ques_count+".option_"+option_count);
   }
-  if(direction==0)$(current_li).insertBefore($(next_li));
-	else $(next_li).insertBefore($(current_li));
 }
 
 function move_option(obj,direction){
-	var option=$(obj).prev();
-	if(direction==1)option=option.prev();
-	var ques_count=option.attr("id")[5];
-	var option_count=option.attr("id")[14];
+	var option=obj.parentNode.previousSibling;
+	var ques_count=option.id[5];
+	var option_count=option.id[14];
 	var next_count=option_count;
 	if(direction==1){
 		next_count++;
@@ -261,6 +257,23 @@ function move_option(obj,direction){
 	next_option.name="ques_"+ques_count+".option_"+option_count;
 	var current_li=$(current_option.parentNode);
 	var next_li=$(next_option.parentNode);
-	if(direction==0)$(current_li).insertBefore($(next_li));
-	else $(next_li).insertBefore($(current_li));
+	if(direction==0)current_li.insertBefore(next_li);
+	else next_li.insertBefore(current_li);
+}
+
+function show_buttons(obj,type){
+  var str;
+  if(type==0)str=".ques_button";
+  else str=".option_button";
+  $(str,obj).each(function(){
+    $(this).show()
+  });
+}
+function hide_buttons(obj,type){
+  var str;
+  if(type==0)str=".ques_button";
+  else str=".option_button";
+  $(str,obj).each(function(){
+    $(this).hide()
+  });
 }
