@@ -31,7 +31,7 @@ def index():
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
 	if g.user is not None and g.user.is_authenticated():
-		if g.user.isAdmin == True:
+		if g.user.is_admin == True:
 			return redirect(url_for('administrator', username = g.user.username))
 		else:
 			return redirect(url_for('user', username = g.user.username))
@@ -40,10 +40,10 @@ def login():
 	
 	if form.validate_on_submit():
 		user = User.query.filter_by(username = form.username.data).first()
-		if (user is not None and user.password == form.password.data):
-			login_user(user);
+		if (user is not None and user.password == form.password.data and not user.is_ban):
+			login_user(user)
 			flash("Login successfully")
-			if user.isAdmin == True:
+			if user.is_admin == True:
 				return redirect(url_for('administrator', username = user.username))
 			else:
 				return redirect(url_for('user', username = user.username))

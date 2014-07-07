@@ -7,8 +7,13 @@ run.py
 #Fan files
 test_run.py
 app/templates/test_radio.html
+myrun.py
 
 #eclipse files
 .project
 .pydevproject
 .settings/
+
+*.db
+db_repository
+db_repository/*
