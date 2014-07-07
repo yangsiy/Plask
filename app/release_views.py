@@ -36,20 +36,12 @@ def questionnaire(questionnaire_id):
         start_time = r.start_time
         end_time = r.end_time
         security = pickle.loads(r.security)
-        is_allow_anonymous = security[0]
-        limit_num_participants = security[1]
-        limit_num_ip = security[2]
-        if security[3]:
-          special_participants = ', '.join(security[3])
-        if count > 1:
-          state = 'In reopening'
-        else:
-          state = 'In releasing'
-      else:
-        if count > 0:
-          state = 'Closed'
-        else:
-          state = 'In creating'
+        is_allow_anonymous = security['anonymous']
+        limit_num_participants = security['limit_per_user']
+        limit_num_ip = security['limit_per_ip']
+        if security['limit_participants']:
+          special_participants = ', '.join(security['limit_participants'])
+      state = q.get_status()
 
     return render_template('questionnaire.html',
         questionnaire_id = questionnaire_id,
