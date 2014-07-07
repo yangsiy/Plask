@@ -95,7 +95,10 @@ def release(questionnaire_id):
         if not data:
           special_participants = None
         else:
-          special_participants = data.split(',').strip()
+          special_participants = data.split(',')
+          for i in special_participants:
+            i = i.strip()
+              
 
       security['anonymous'] = is_allow_anonymous
       security['limit_per_user'] = limit_num_participants
