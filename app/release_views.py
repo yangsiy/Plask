@@ -14,6 +14,9 @@ def questionnaire(questionnaire_id):
     if q == None:
       pass
     else:
+      if q.get_status() == 'Banned':
+        return render_template('message.html',
+                message = 'Sorry, the questionnaire is banned')
       title = q.title
       subject = q.subject
       description = q.description
