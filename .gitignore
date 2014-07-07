@@ -7,6 +7,7 @@ run.py
 #Fan files
 test_run.py
 app/templates/test_radio.html
+myrun.py
 
 #eclipse files
 .project
@@ -16,3 +17,4 @@ app/templates/test_radio.html
 *.db
 db_repository
 db_repository/*
+
