@@ -14,21 +14,20 @@ def user(username):
     user = users[0]
     created = Questionnaire.query.filter_by(author_id = user.id).all()
     created = list(created)
-    releases = [x.retrive_last_release() for x in created]
+    releases = [list(x.releases)[-1] if list(x.releases) else None for x in created]  #retrive last release for each ques
     
-    ques_answers = list(user.quesanswers)
-    print str(ques_answers)
-    '''
-    quess = []
-    for each in ques:
-        if each.ques_id not in quess:
-            quess.append(each.ques_id)
-    answerd = []
-    for each in quess:
-        answerd.append(Questionnaire.query.get(each))
-    '''
+    #only show last answers
+    ques_answers = []
+    ques_ans = {}
+    for qa in user.quesanswers:
+        ques_ans[qa.ques_id] = qa
+    for q_id in ques_ans:
+        ques_answers.append(ques_ans[q_id])
+        
+    
     return render_template('user.html',
             g = g,
+            user = user,
             ques_list_created = created,
             ques_list_releases = releases,
             ques_ans_list = ques_answers)

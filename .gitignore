@@ -12,3 +12,5 @@ app/templates/test_radio.html
 .project
 .pydevproject
 .settings/
+
+app.db

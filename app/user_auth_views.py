@@ -41,7 +41,7 @@ def login():
 	if form.validate_on_submit():
 		user = User.query.filter_by(username = form.username.data).first()
 		if (user is not None and user.password == form.password.data):
-			login_user(user);
+			login_user(user)
 			flash("Login successfully")
 			if user.is_admin == True:
 				return redirect(url_for('administrator', username = user.username))
