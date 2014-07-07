@@ -82,7 +82,46 @@ def fill(q_id):
     q = Questionnaire.query.get(q_id)
     if not q:
         return "ERROR!"
+
+    #begin access control
+    if q.get_status() == 'Banned':
+        return render_template('message.html',
+                message = 'Sorry, the questionnaire is banned')
+    if q.get_status() == 'Closed':
+        return render_template('message.html',
+                message = 'Sorry, the questionnaire is closed')
+    if q.get_status() == 'In creating':
+        return render_template('message.html',
+                message = 'Sorry, the questionnaire is not ready yet')
     
+    release = q.get_last_release()
+    security = pickle.loads(release.security)
+
+    if not security['anonymous'] and g.user is None:
+        return render_template('message.html',
+                message = 'Sorry, you can not access the questionnaire')
+    
+    if security['limit_per_user'] and g.user:
+        limit = security['limit_per_user']
+        already = QuesAnswer.query.filter_by(user_id = g.user.id).filter_by(ques_id = q_id).count()
+        if already >= limit:
+            return render_template('message.html',
+                    message = 'Sorry, you can not access the questionnaire')
+    
+    if security['limit_per_ip']:
+        limit = security['limit_per_ip']
+        ip = request.remote_addr
+        already = QuesAnswer.query.filter_by(ip = ip).filter_by(ques_id = q_id).count()
+        if already >= limit:
+            return render_template('message.html',
+                    message = 'Sorry, you can not access the questionnaire')
+    
+    if security['limit_participants']:
+        if not g.user or g.user.username not in security['limit_participants']:
+            return render_template('message.html',
+                    message = 'Sorry, you can not access the questionnaire')
+    #end access control
+
     if request.method == 'GET':
         schema = pickle.loads(q.schema)
         return render_template('questionnaire_fill.html', 

@@ -40,6 +40,28 @@ class Questionnaire(db.Model):
 	releases = db.relationship("Release", backref='questionnaire', lazy='dynamic')
 	quesanswers = db.relationship("QuesAnswer", backref='questionnaire', lazy='dynamic')
 
+	def get_status(self):
+		if self.is_ban:
+			return 'Banned'
+		releases = list(self.releases)
+		if not releases:
+			return 'In creating'
+		release = releases[-1]
+		if release.get_status():
+			if len(releases) > 1:
+				return 'In reopening'
+			else:
+				return 'In releasing'
+		return 'Closed'
+
+	def get_last_release(self):
+		releases = list(self.releases)
+		if not releases:
+			return None
+		else:
+			return releases[-1]
+
+
 class Release(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	ques_id = db.Column(db.Integer, db.ForeignKey('questionnaire.id'))
@@ -47,6 +69,13 @@ class Release(db.Model):
 	end_time = db.Column(db.DateTime)
 	security = db.Column(db.PickleType)
 	is_closed = db.Column(db.Boolean)
+
+	def get_status(self):
+		current_time = datetime.now()
+		if current_time >= self.start_time and current_time <= self.end_time and not self.is_closed:
+			return True
+		else:
+			return False
 
 class QuesAnswer(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
