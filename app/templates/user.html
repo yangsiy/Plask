@@ -22,8 +22,8 @@
 
 	
 	<div id="ques_list_created">
-		<table id="proj_list" class="table">
-			<tbody val="ttt">
+		<table id="proj_list" class="table table-striped">
+			<thead>
 			<tr class="thead_td" class="row fluid">
 
 			<td  class="sequence" id="proj_title"><h4>Title</h4></td>
@@ -37,11 +37,11 @@
 			<td  class="alignc"><h4>Replies</h4></td>
 			<td ><h4>Manipulation</h4></td>
 			</tr>
+			</thead>
 
 
 
-
-
+			<tbody val="ttt">
 			{% for i in range(0,ques_list_created|length) %}
 
 			<tr id="{{ques_list_created[i].id}}">
@@ -90,8 +90,8 @@
 	<br/>
 	    <h1>Questionnaire Answered:</h1>
 	<div id="ques_list_filled">
-		<table id="proj_list" class="table">
-			<tbody val="ttt">
+		<table id="proj_list" class="table table-striped">
+			<thead>
 			<tr class="row fluid">
 
 			<td  class="col-md-4" id="proj_title"><h4>Title</h4></td>
@@ -102,7 +102,8 @@
 			<td  class="col-md-4"><h4>Status</h4></td>
 			<td  class="col-md-4"><h4>Manipulation</h4></td>
 			</tr>
-
+			</thead>
+			<tbody val="ttt">
 			{% for ans in ques_ans_list%}
 			<tr id="{{ans.questionnaire.id}}" class="row fluid">
 
