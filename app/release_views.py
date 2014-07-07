@@ -22,7 +22,7 @@ def questionnaire(questionnaire_id):
       count = 0
       for r in q.releases:
         count += 1
-        if r.isclose == 0:
+        if not r.is_closed:
           release = r
           break
 
@@ -118,7 +118,7 @@ def release(questionnaire_id):
                           start_time = datetime.strptime(start_time, '%Y-%m-%d %H:%M:%S'),
                           end_time = datetime.strptime(end_time, '%Y-%m-%d %H:%M:%S'),
                           security = dumped_security,
-                          isclose = False)
+                          is_closed = False)
         db.session.add(release)
         db.session.commit()
         flash("Release successfully")
@@ -137,13 +137,13 @@ def close(questionnaire_id):
     q = Questionnaire.query.get(questionnaire_id)
     release = None
     for r in q.releases:
-      if r.isclose == 0:
+      if r.is_closed == 0:
         release = r
         break
     if release == None:
       flash("The release has been closed")
     else:
-      release.isclose = 1
+      release.is_closed = 1
       db.session.add(release)
       db.session.commit()
       flash("Close successfully")
