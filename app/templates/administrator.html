@@ -37,18 +37,20 @@
   </td>
 
   <td>
-      {% if u.isClosed %}
-        <span style="color:red">Banned</span>
-      {% else %}
-        <span>Normal</span>
-      {% endif %}
+    {% if u.is_ban %}
+      <span style="color:red">Banned</span>
+    {% else %}
+      <span>Normal</span>
+    {% endif %}
   </td>
 
   <td>
-    {% if u.isClosed %}
-      <a class="btn btn-xs btn-success" href="/administrator/{{ g.user.username }}/unban/{{ u.id }}">Unban</a>
-    {% else %}
-      <a class="btn btn-xs btn-danger" href="/administrator/{{ g.user.username }}/ban/{{ u.id }}">Ban</a>
+    {% if not u.is_admin %}
+      {% if u.is_ban %}
+        <a class="btn btn-xs btn-success" href="/administrator/unban_user/{{ u.id }}">Unban</a>
+      {% else %}
+        <a class="btn btn-xs btn-danger" href="/administrator/ban_user/{{ u.id }}">Ban</a>
+      {% endif %}
     {% endif %}
   </td>
   </tr>
@@ -67,6 +69,9 @@
       <span>Title</span>
     </th>
     <th>
+      <span>Create time</span>
+    </th>
+    <th>
       <span>Status</span>
     </th>
     <th>
@@ -83,18 +88,22 @@
   </td>
 
   <td>
-      {% if q.isClosed %}
-        <span style="color:red">Banned</span>
-      {% else %}
-        <span>Normal</span>
-      {% endif %}
+    <p>{{ q.create_time.strftime("%Y-%m-%d %H:%M:%S") }}</p>
   </td>
 
   <td>
-    {% if q.isClosed %}
-      <a class="btn btn-xs btn-success">Unban</a>
+    {% if q.is_ban %}
+      <span style="color:red">Banned</span>
     {% else %}
-      <a class="btn btn-xs btn-danger">Ban</a>
+      <span>Normal</span>
+    {% endif %}
+  </td>
+
+  <td>
+    {% if q.is_ban %}
+      <a class="btn btn-xs btn-success" href="/administrator/unban_questionnaire/{{ q.id }}">Unban</a>
+    {% else %}
+      <a class="btn btn-xs btn-danger" href="/administrator/ban_questionnaire/{{ q.id }}">Ban</a>
     {% endif %}
   </td>
   </tr>
