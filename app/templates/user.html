@@ -4,15 +4,19 @@
 <script type="text/javascript" src="{{ url_for('static', filename='js/js/new_questionnaire.js') }}"></script>
 
 
-
+    
 	<form method="POST">
 
-
+    {% if g.user == user %}
+        <h3>Welcome, {{user.username}}</h3>
+    {% else %}
+        <h3>{{user.username}}({{user.mail}})</h3>
+    {% endif %}
     
 
     <div ><h1>Questionnaire Created:
-    	{%if not g.user.isAdmin %}
-    	<a class="btn btn-primary btn-lg pull-right" role="button" href="{{url_for('create')}}">Create Questionnaire</a>
+    	{%if g.user == user %}
+    	    <a class="btn btn-primary btn-lg pull-right" role="button" href="{{url_for('create')}}">Create Questionnaire</a>
     	{% endif %}</h1></div>
 
 
@@ -92,7 +96,7 @@
 
 			<td  class="col-md-4" id="proj_title"><h4>Title</h4></td>
 
-			<td  class="col-md-4" id="proj_updated"><h4>Fill Time</h4></td>
+			<td  class="col-md-4" id="proj_updated"><h4>Last Answer</h4></td>
 
 
 			<td  class="col-md-4"><h4>Status</h4></td>
