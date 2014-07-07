@@ -5,8 +5,8 @@ class User(db.Model):
 	username = db.Column(db.String(50), index=True, unique=True)
 	password = db.Column(db.String(16))
 	mail = db.Column(db.String(50))
-	isAdmin = db.Column(db.Boolean)
-	isClosed = db.Column(db.Boolean)
+	is_admin = db.Column(db.Boolean)
+	is_ban = db.Column(db.Boolean)
 
 	questionnaires = db.relationship("Questionnaire", backref='user', lazy='dynamic')
 	quesanswers = db.relationship("QuesAnswer", backref='user', lazy='dynamic')
@@ -34,6 +34,7 @@ class Questionnaire(db.Model):
 	create_time = db.Column(db.DateTime)
 	schema = db.Column(db.PickleType)
 	author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+	is_ban = db.Column(db.Boolean)
 
 	releases = db.relationship("Release", backref='questionnaire', lazy='dynamic')
 	quesanswers = db.relationship("QuesAnswer", backref='questionnaire', lazy='dynamic')
@@ -44,7 +45,7 @@ class Release(db.Model):
 	start_time = db.Column(db.DateTime)
 	end_time = db.Column(db.DateTime)
 	security = db.Column(db.PickleType)
-	isclose = db.Column(db.Boolean)
+	is_closed = db.Column(db.Boolean)
 
 class QuesAnswer(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
