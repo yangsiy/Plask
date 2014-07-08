@@ -1,0 +1,57 @@
+.plask-sidenav {
+    position: fixed;
+    margin-top: 100px;
+    margin-bottom: 20px;
+    margin-left: -60px;
+}
+
+.plask-sidebar .nav > li > a {
+    display: block;
+    padding: 4px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #999
+}
+
+.plask-sidebar .nav > li > a:hover, .plask-sidebar .nav > li > a:focus {
+    padding-left: 19px;
+    color: #000;
+    text-decoration: none;
+    background-color: transparent;
+    border-left: 1px solid #000
+}
+
+.plask-sidebar .nav > .active > a, .plask-sidebar .nav > .active:hover > a, .plask-sidebar .nav > .active:focus > a {
+    padding-left: 18px;
+    font-weight: 700;
+    color: #000;
+    background-color: transparent;
+    border-left: 2px solid #000
+}
+
+.plask-sidebar .nav .nav {
+    padding-bottom: 10px
+}
+
+.plask-sidebar .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 30px;
+    font-size: 12px;
+    font-weight: 400
+}
+
+.plask-sidebar .nav .nav > li > a:hover, .plask-sidebar .nav .nav > li > a:focus {
+    padding-left: 29px
+}
+
+.plask-sidebar .nav .nav > .active > a, .plask-sidebar .nav .nav > .active:hover > a, .plask-sidebar .nav .nav > .active:focus > a {
+    padding-left: 28px;
+    font-weight: 500
+}
+
+
+h2[id] {
+    padding-top: 80px;
+    margin-top: -40px;
+}

@@ -100,7 +100,11 @@
   });
 </script>
 
+<script type="text/javascript">
+  $('.plask-sidebar').scrollspy();
+</script>
 {% endblock %}
+
 
 {% block content %}
 
@@ -110,116 +114,139 @@
   {% endif %}
 {% endwith %}
 
-<h1>Administrator</h1>
-<hr/>
 
-<div class="col-md-12" style="margin-bottom:50px">
-  <div class="col-md-6 scrollLoading" id="container_0"
-       style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
-  <div class="col-md-6 scrollLoading" id="container_1"
-       style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+<div class="col-md-1">
+  <div id="plask-sidebar" class="plask-sidebar hidden-print hidden-xs hidden-sm">
+    <ul class="nav plask-sidenav">
+      <li>
+        <a href="#overview"><span class="glyphicon glyphicon-stats"></span>&nbsp;Overview</a>
+      </li>
+      <li>
+        <a href="#all_users"><span class="glyphicon glyphicon-user"></span>&nbsp;All users</a>
+      </li>
+      <li>
+        <a href="#all_questionnaires"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;All ques.</a>
+      </li>
+    </ul>
+  </div>
 </div>
 
-<hr/>
 
-<h2>All users</h2>
+<div class="col-md-11">
+  
+  <h1>Administrator</h1>
+  <hr/>
 
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th>
-      <span>Username</span>
-    </th>
-    <th>
-      <span>Status</span>
-    </th>
-    <th>
-      <span>Operation</span>
-    </th>
-  </tr>
-  </thead>
+  <h2 id="overview" class="page-header">Overview</h2>
 
-  <tbody>
-  {% for u in users %}
-  <tr>
-  <td>
-    <a href="/user/{{ u.username }}">{{ u.username }}
-    </a>
-  </td>
+  <div class="row" style="margin-bottom:40px">
+    <div class="col-md-6 scrollLoading" id="container_0"
+         style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+    <div class="col-md-6 scrollLoading" id="container_1"
+         style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+  </div>
 
-  <td>
-    {% if u.is_ban %}
-      <span style="color:red">Banned</span>
-    {% else %}
-      <span>Normal</span>
-    {% endif %}
-  </td>
+  <br/>
 
-  <td>
-    {% if not u.is_admin %}
+  <h2 id="all_users" class="page-header">All users</h2>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>
+        <span>Username</span>
+      </th>
+      <th>
+        <span>Status</span>
+      </th>
+      <th>
+        <span>Operation</span>
+      </th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for u in users %}
+    <tr>
+    <td>
+      <a href="/user/{{ u.username }}">{{ u.username }}
+      </a>
+    </td>
+
+    <td>
       {% if u.is_ban %}
-        <a class="btn btn-xs btn-success" href="/administrator/unban_user/{{ u.id }}">Unban</a>
+        <span style="color:red">Banned</span>
       {% else %}
-        <a class="btn btn-xs btn-danger" href="/administrator/ban_user/{{ u.id }}">Ban</a>
+        <span>Normal</span>
       {% endif %}
-    {% endif %}
-  </td>
-  </tr>
-  {% endfor %}
-  </tbody>
-</table>
+    </td>
 
-<br/>
+    <td>
+      {% if not u.is_admin %}
+        {% if u.is_ban %}
+          <a class="btn btn-xs btn-success" href="/overview/unban_user/{{ u.id }}">Unban</a>
+        {% else %}
+          <a class="btn btn-xs btn-danger" href="/overview/ban_user/{{ u.id }}">Ban</a>
+        {% endif %}
+      {% endif %}
+    </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
 
-<h2>All questionnaires</h2>
+  <br/>
 
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th>
-      <span>Title</span>
-    </th>
-    <th>
-      <span>Create time</span>
-    </th>
-    <th>
-      <span>Status</span>
-    </th>
-    <th>
-      <span>Operation</span>
-    </th>
-  </tr>
-  </thead>
+  <h2 id="all_questionnaires" class="page-header">All questionnaires</h2>
 
-  <tbody>
-  {% for q in questionnaires %}
-  <tr>
-  <td>
-    <a href="/questionnaire/{{ q.id }}">{{ q.title }}</a>
-  </td>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>
+        <span>Title</span>
+      </th>
+      <th>
+        <span>Create time</span>
+      </th>
+      <th>
+        <span>Status</span>
+      </th>
+      <th>
+        <span>Operation</span>
+      </th>
+    </tr>
+    </thead>
 
-  <td>
-    <p>{{ q.create_time.strftime("%Y-%m-%d %H:%M:%S") }}</p>
-  </td>
+    <tbody>
+    {% for q in questionnaires %}
+    <tr>
+    <td>
+      <a href="/questionnaire/{{ q.id }}">{{ q.title }}</a>
+    </td>
 
-  <td>
-    {% if q.is_ban %}
-      <span style="color:red">Banned</span>
-    {% else %}
-      <span>Normal</span>
-    {% endif %}
-  </td>
+    <td>
+      <p>{{ q.create_time.strftime("%Y-%m-%d %H:%M:%S") }}</p>
+    </td>
 
-  <td>
-    {% if q.is_ban %}
-      <a class="btn btn-xs btn-success" href="/administrator/unban_questionnaire/{{ q.id }}">Unban</a>
-    {% else %}
-      <a class="btn btn-xs btn-danger" href="/administrator/ban_questionnaire/{{ q.id }}">Ban</a>
-    {% endif %}
-  </td>
-  </tr>
-  {% endfor %}
-  </tbody>
-</table>
+    <td>
+      {% if q.is_ban %}
+        <span style="color:red">Banned</span>
+      {% else %}
+        <span>Normal</span>
+      {% endif %}
+    </td>
+
+    <td>
+      {% if q.is_ban %}
+        <a class="btn btn-xs btn-success" href="/overview/unban_questionnaire/{{ q.id }}">Unban</a>
+      {% else %}
+        <a class="btn btn-xs btn-danger" href="/overview/ban_questionnaire/{{ q.id }}">Ban</a>
+      {% endif %}
+    </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+</div>
 
 {% endblock %}
