@@ -12,7 +12,7 @@ import pickle
 def questionnaire(questionnaire_id):
     q = Questionnaire.query.get(questionnaire_id)
     if q == None:
-      pass
+      return "ERROR!"
     else:
       if q.get_status() == 'Banned':
         return render_template('message.html',
@@ -46,19 +46,22 @@ def questionnaire(questionnaire_id):
           special_participants = ', '.join(security['limit_participants'])
       state = q.get_status()
 
-    return render_template('questionnaire.html',
-        questionnaire_id = questionnaire_id,
-        title = title,
-        subject = subject,
-        description = description,
-        state = state,
-        start_time = start_time,
-        end_time = end_time,
-        is_allow_anonymous = is_allow_anonymous,
-        limit_num_participants = limit_num_participants,
-        limit_num_ip = limit_num_ip,
-        special_participants = special_participants,
-        q_id = questionnaire_id)
+      ques_list = get_ques_list(q)
+
+      return render_template('questionnaire_report.html',
+          questionnaire_id = questionnaire_id,
+          title = title,
+          subject = subject,
+          description = description,
+          state = state,
+          start_time = start_time,
+          end_time = end_time,
+          is_allow_anonymous = is_allow_anonymous,
+          limit_num_participants = limit_num_participants,
+          limit_num_ip = limit_num_ip,
+          special_participants = special_participants,
+          q_id = questionnaire_id,
+          ques_list = ques_list)
 
 @app.route('/questionnaire/<int:questionnaire_id>/release', methods = ['GET', 'POST'])
 @login_required
@@ -152,3 +155,40 @@ def close(questionnaire_id):
       flash("Close successfully")
   
     return redirect(url_for('questionnaire', questionnaire_id = questionnaire_id))
+
+def get_ques_list(q):
+    schema = pickle.loads(q.schema)
+    ques_list = []
+    for i in range(len(schema)):
+        each = schema[i]
+        dic = {}
+        dic['description'] = each['description']
+        dic['type'] = each['type']
+        if each['type'] == '3':
+            dic['option_list'] = []
+        elif each['type'] == '2':
+            dic['option_list'] = ['true', 'false']
+            dic['num_list'] = [0,0]
+        else:
+            dic['option_list'] = each['options']
+            dic['num_list'] = []
+            for option in dic['option_list']:
+                dic['num_list'].append(0)
+
+        quesanswers = q.quesanswers.all()
+        for quesanswer in quesanswers:
+            answers = quesanswer.probanswers.filter_by(prob_id = i)
+            if each['type'] == '3':
+                for answer in answers:
+                    dic['option_list'].append(answer.ans)
+            elif each['type'] == '2':
+                for answer in answers:
+                    if answer.ans=='1':
+                        dic['num_list'][0] = dic['num_list'][0] + 1;
+                    else:
+                        dic['num_list'][1] = dic['num_list'][1] + 1;
+            else:
+                for answer in answers:
+                    dic['num_list'][int(answer.ans)] = dic['num_list'][int(answer.ans)] + 1
+        ques_list.append(dic)
+    return ques_list

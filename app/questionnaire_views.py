@@ -124,7 +124,8 @@ def fill(q_id):
 
     if request.method == 'GET':
         schema = pickle.loads(q.schema)
-        return render_template('questionnaire_fill.html', 
+        return render_template('questionnaire_fill.html',
+            g = g, 
             schema = schema,
             title = q.title,
             subject = q.subject,
@@ -161,3 +162,115 @@ def fill(q_id):
         return render_template('fill_success.html',
                 g = g,
                 message = 'Thank you for your paticipation')
+
+@app.route('/questionnaire/<int:q_id>/preview')
+def preview(q_id):
+    q = Questionnaire.query.get(q_id)
+    if not q:
+        return "ERROR!"
+
+    if q.get_status() == 'Banned':
+        return render_template('message.html',
+                message = 'Sorry, the questionnaire is banned')
+
+    schema = pickle.loads(q.schema)
+    return render_template('questionnaire_preview.html',
+            g = g,
+            id = q.id,
+            schema = schema,
+            title = q.title,
+            subject = q.subject,
+            description = q.description)
+
+@app.route('/questionnaire/<int:q_id>/modify', methods = ['GET', 'POST'])
+@login_required
+def modify(q_id):
+    q = Questionnaire.query.get(q_id)
+    if not q:
+        return "ERROR!"
+
+    if q.get_status() == 'Banned':
+        return render_template('message.html',
+                message = 'Sorry, the questionnaire is banned')
+
+    if q.quesanswers.count() > 0:
+        return render_template('message.html',
+                message = 'Sorry, the questionnaire already has answers. Please consider creating a new one')
+
+    if request.method == 'POST':
+        q_title = request.form['title']
+        q_subject = request.form['subject']
+        q_description = request.form['description']
+        q.title = q_title
+        q.subject = q_subject
+        q.description = q_description
+        db.session.add(q)
+        db.session.commit()
+        return redirect(url_for('modify_question',q_id=q.id))
+    
+    return render_template('questionnaire_modify.html',
+            g = g,
+            title = q.title,
+            subject = q.subject,
+            description = q.description)
+
+@app.route('/questionnaire/<int:q_id>/modify_question',methods = ['GET','POST'])
+@login_required
+def modify_question(q_id):
+    def get_questions():
+        questions = []
+        current_index = 0
+        while True:
+            ques_form = 'ques_' + str(current_index)  #example: ques_1
+            if ques_form+'.type' in request.form:
+                current_question = {
+                                    "type": request.form[ques_form + '.type'],  #example:ques_7.type 1单选 2多选3TF4大题（似乎）
+                                    "description": request.form[ques_form + '.description'],    #example:ques_9.description
+                                    "options": get_options(ques_form)
+                                   }
+                questions.append(current_question)
+                current_index += 1
+            else: break
+        return questions
+    
+    def get_options(ques_form):
+        options = []
+        option_index = 0
+        while True:
+            option = ques_form + '.option_' + str(option_index)  #example: ques_3.option_3 'C.wow'
+            if option in request.form: 
+                options.append(request.form[option])
+                option_index += 1
+            else: break
+        return options
+                
+    q = Questionnaire.query.get(q_id)
+    if not q:
+        return "ERROR!"
+
+    if q.get_status() == 'Banned':
+        return render_template('message.html',
+                message = 'Sorry, the questionnaire is banned')
+
+    if q.quesanswers.count() > 0:
+        return render_template('message.html',
+                message = 'Sorry, the questionnaire already has answers. Please consider creating a new one')
+
+    if request.method == 'POST':
+        questions = get_questions()
+        dumped_questions = pickle.dumps(questions, protocol = 2)
+        q.schema = dumped_questions
+        q.create_time = datetime.now()
+        q.author_id = g.user.id
+
+        db.session.add(q)
+        db.session.commit()
+        return render_template('create_success.html',
+                g = g,
+                message = 'Questionnaire Modified Successfully',
+                q_id = q_id)
+    
+    schema = pickle.loads(q.schema)
+    return render_template('questionnaire_modify_question.html',
+            g = g,
+            schema = schema)

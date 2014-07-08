@@ -1,14 +1,15 @@
-{% extends "base.html" %}
+{% extends "questionnaire.html" %}
 
-{% block content %}
+{% block report %}
 
 <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.scrollLoading.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/highcharts.js') }}"></script>
 <script type="text/javascript">
 
     var options =
-        [{% for i in range(0,ques_report.ques_list|length) %}
+        [{% for i in range(0,ques_list|length) %}
         {
-        {% if ques_report.ques_list[i].type!=3 %}
+        {% if ques_list[i].type!='3' %}
         chart: 
         {
        
@@ -19,13 +20,13 @@
 	    type:'pie'
         },
         title: {
-            text: '{{ques_report.ques_list[i].description}}'
+            text: '{{ques_list[i].description}}'
         },
         tooltip: {
     	    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
         },
          xAxis: {
-                categories: [{% for j in ques_report.ques_list[i].option_list %}"{{j}}",{% endfor %}],
+                categories: [{% for j in ques_list[i].option_list %}"{{j}}",{% endfor %}],
                 title: {
                     text: null
                 }
@@ -59,8 +60,8 @@
             name: 'questionnaire share',
             data: [
 
-                {% for j in range(0,ques_report.ques_list[i].option_list|length) %}
-                ['{{ques_report.ques_list[i].option_list[j]}}',{{ques_report.ques_list[i].num_list[j]}}],
+                {% for j in range(0,ques_list[i].option_list|length) %}
+                ['{{ques_list[i].option_list[j]}}',{{ques_list[i].num_list[j]}}],
                 {% endfor %}
 
             ]
@@ -93,51 +94,59 @@
 	});
 </script>
 
-{% for i in range(0,ques_report.ques_list|length) %}
+{% for i in range(0,ques_list|length) %}
+<hr />
 <div id="ques_{{i}}">
-{% if ques_report.ques_list[i].type==3 %}
+{% if ques_list[i].type=='3' %}
 <table class="table table-bordered table-striped" style="text-align:center">
+  <thead>
   <tr>
-  <td>{{ques_report.ques_list[i].description}}
+  <td>{{ques_list[i].description}}
   </td>
-
   </tr>
-  {% for j in range(0,ques_report.ques_list[i].option_list|length) %}
+  </thead>
+  <tbody>
+  {% for j in range(0,ques_list[i].option_list|length) %}
    <tr>
-  <td>{{ques_report.ques_list[i].option_list[j]}}
+  <td>{{ques_list[i].option_list[j]}}
   </td>
 
   </tr>
 
   {% endfor %}
+  </tbody>
 </table>
 
 
 {% else %}
-<button class="change">pie</button>
-<button class="change">bar</button>
-<button class="change">line</button>
-<button class="change">column</button>
+<button class="change btn btn-large btn-default">pie</button>
+<button class="change btn btn-large btn-default">bar</button>
+<button class="change btn btn-large btn-default">line</button>
+<button class="change btn btn-large btn-default">column</button>
 
 <div class="scrollLoading" id="container_{{i}}" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
 
 
 <table class="table table-bordered table-striped">
+  <thead>
   <tr>
-  <td>{{ques_report.ques_list[i].description}}
+  <td>{{ques_list[i].description}}
   </td>
   <td>sum of the answers
   </td>
   </tr>
-  {% for j in range(0,ques_report.ques_list[i].option_list|length) %}
+  </thead>
+  <tbody>
+  {% for j in range(0,ques_list[i].option_list|length) %}
    <tr>
-  <td>{{ques_report.ques_list[i].option_list[j]}}
+  <td>{{ques_list[i].option_list[j]}}
   </td>
-  <td>{{ques_report.ques_list[i].num_list[j]}}
+  <td>{{ques_list[i].num_list[j]}}
   </td>
   </tr>
 
   {% endfor %}
+  </tbody>
 </table>
 {% endif %}
 </div>
