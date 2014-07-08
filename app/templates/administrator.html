@@ -108,13 +108,6 @@
 
 {% block content %}
 
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <div class="alert alert-info">{{ messages[-1] }}</div>
-  {% endif %}
-{% endwith %}
-
-
 <div class="col-md-1">
   <div id="plask-sidebar" class="plask-sidebar hidden-print hidden-xs hidden-sm">
     <ul class="nav plask-sidenav">
@@ -168,7 +161,7 @@
     {% for u in users %}
     <tr>
     <td>
-      <a href="/user/{{ u.username }}">{{ u.username }}
+      <a href="{{url_for('user', username = u.username )}}">{{ u.username }}
       </a>
     </td>
 
@@ -183,9 +176,9 @@
     <td>
       {% if not u.is_admin %}
         {% if u.is_ban %}
-          <a class="btn btn-xs btn-success" href="/overview/unban_user/{{ u.id }}">Unban</a>
+          <a class="btn btn-xs btn-success" href="{{url_for('unban_user', userid = u.id )}}">Unban</a>
         {% else %}
-          <a class="btn btn-xs btn-danger" href="/overview/ban_user/{{ u.id }}">Ban</a>
+          <a class="btn btn-xs btn-danger" href="{{url_for('ban_user', userid = u.id )}}">Ban</a>
         {% endif %}
       {% endif %}
     </td>
@@ -220,7 +213,7 @@
     {% for q in questionnaires %}
     <tr>
     <td>
-      <a href="/questionnaire/{{ q.id }}">{{ q.title }}</a>
+      <a href="{{url_for('questionnaire', questionnaire_id = q.id )}}">{{ q.title }}</a>
     </td>
 
     <td>
@@ -237,9 +230,9 @@
 
     <td>
       {% if q.is_ban %}
-        <a class="btn btn-xs btn-success" href="/overview/unban_questionnaire/{{ q.id }}">Unban</a>
+        <a class="btn btn-xs btn-success" href="{{url_for('unban_questionnaire', qid = q.id )}}">Unban</a>
       {% else %}
-        <a class="btn btn-xs btn-danger" href="/overview/ban_questionnaire/{{ q.id }}">Ban</a>
+        <a class="btn btn-xs btn-danger" href="{{url_for('ban_questionnaire', qid = q.id )}}">Ban</a>
       {% endif %}
     </td>
     </tr>

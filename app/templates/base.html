@@ -9,10 +9,12 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/toastr.css') }}">
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
     <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/sidebar.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/toastr.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/base.js') }}"></script>
     {% block head %}{% endblock %}
 </head>
@@ -52,6 +54,19 @@
         </div>
     </div>
 </div>
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <script type="text/javascript">
+        (function() {
+          toastr.options = {
+            positionClass: 'toast-center-center'
+          };
+          toastr.success('{{ messages[-1] }}', 'Plask');
+        }).call(this);
+    </script>
+    {% endif %}
+{% endwith %}
 
 <div class="container maindiv">
 
