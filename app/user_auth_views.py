@@ -1,5 +1,5 @@
 #coding=utf-8
-from flask import render_template, flash, redirect, url_for, g
+from flask import render_template, flash, redirect, url_for, g, request
 from app import app, lm, db
 from forms import LoginForm, RegisterForm
 from flask.ext.login import login_user, logout_user, current_user, login_required
@@ -44,9 +44,9 @@ def login():
 			login_user(user)
 			flash("Login successfully")
 			if user.is_admin == True:
-				return redirect(url_for('administrator', username = user.username))
+				return redirect(request.args.get('next') or url_for('administrator', username = user.username))
 			else:
-				return redirect(url_for('user', username = user.username))
+				return redirect(request.args.get('next') or url_for('user', username = user.username))
 		form.password.data = ''
 		flash("Login failed")
 	
