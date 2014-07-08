@@ -32,7 +32,7 @@ def index():
 def login():
 	if g.user is not None and g.user.is_authenticated():
 		if g.user.is_admin == True:
-			return redirect(url_for('administrator', username = g.user.username))
+			return redirect(url_for('administrator'))
 		else:
 			return redirect(url_for('user', username = g.user.username))
 
@@ -44,7 +44,7 @@ def login():
 			login_user(user)
 			flash("Login successfully")
 			if user.is_admin == True:
-				return redirect(url_for('administrator', username = user.username))
+				return redirect(url_for('administrator'))
 			else:
 				return redirect(url_for('user', username = user.username))
 		form.password.data = ''

@@ -1,5 +1,107 @@
 {% extends "base.html" %}
 
+{% block head %}
+<script type="text/javascript" src="{{ url_for('static', filename='js/highcharts.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.scrollLoading.js') }}"></script>
+<script type="text/javascript">
+  var options =
+      [{
+        chart: 
+        {
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false,
+          renderTo:'container_0',
+          type:'line'
+        },
+        title: {
+            text: 'The number of the questionnaires per day in a week'
+        },
+        tooltip: {
+          pointFormat: '{series.name}: <b>{point.y}</b>'
+        },
+        xAxis: {
+          categories: [{% for (d, n) in questionnaires_week %}"{{d.strftime('%m-%d')}}",{% endfor %}],
+          title: {
+              text: null
+          }
+        },
+        yAxis: {
+          min: 0,
+          title: {
+              text: 'Number ',
+              align: 'high'
+          },
+          labels: {
+              // overflow: 'justify'
+          }
+        },
+
+        plotOptions: {
+        },
+        series: [{
+            // type: 'pie',
+            name: 'Number of questionnaires',
+            data: [
+                {% for (d, n) in questionnaires_week %}{{n}},{% endfor %}
+            ]
+          }]
+      },{
+        chart: 
+        {
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false,
+          renderTo:'container_1',
+          type:'line'
+        },
+        title: {
+          text: 'The number of answer sheets per day in a week'
+        },
+        tooltip: {
+          pointFormat: '{series.name}: <b>{point.y}</b>'
+        },
+         xAxis: {
+            categories: [{% for (d, n) in answer_week %}"{{d.strftime('%m-%d')}}",{% endfor %}],
+            title: {
+                text: null
+            }
+          },
+          yAxis: {
+              min: 0,
+              title: {
+                  text: 'Number ',
+                  align: 'high'
+              },
+              labels: {
+                  // overflow: 'justify'
+              }
+          },
+
+        plotOptions: {
+        },
+        series: [{
+            // type: 'pie',
+            name: 'Number of answers',
+            data: [
+                {% for (d, n) in answer_week %}{{n}},{% endfor %}
+            ]
+          }]
+      }];
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".scrollLoading").scrollLoading({
+      callback: function(id) {
+            new Highcharts.Chart(options[id]);
+        }
+    });
+  });
+</script>
+
+{% endblock %}
+
 {% block content %}
 
 {% with messages = get_flashed_messages() %}
@@ -11,67 +113,14 @@
 <h1>Administrator</h1>
 <hr/>
 
-<h2>The number of the questionnaires per day in a week:</h2>
+<div class="col-md-12" style="margin-bottom:50px">
+  <div class="col-md-6 scrollLoading" id="container_0"
+       style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+  <div class="col-md-6 scrollLoading" id="container_1"
+       style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+</div>
 
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th>
-      <span>Date</span>
-    </th>
-    <th>
-      <span>Number</span>
-    </th>
-  </tr>
-  </thead>
-
-  <tbody>
-  {% for (d, n) in questionnaires_week %}
-  <tr>
-  <td>
-    {{ d }}
-  </td>
-
-  <td>
-    {{ n }}
-  </td>
-  </tr>
-  {% endfor %}
-  </tbody>
-</table>
-
-<br/>
-
-<h2>The number of answer sheets per day in a week:</h2>
-
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th>
-      <span>Date</span>
-    </th>
-    <th>
-      <span>Number</span>
-    </th>
-  </tr>
-  </thead>
-
-  <tbody>
-  {% for (d, n) in answer_week %}
-  <tr>
-  <td>
-    {{ d }}
-  </td>
-
-  <td>
-    {{ n }}
-  </td>
-  </tr>
-  {% endfor %}
-  </tbody>
-</table>
-
-<br/>
+<hr/>
 
 <h2>All users</h2>
 
