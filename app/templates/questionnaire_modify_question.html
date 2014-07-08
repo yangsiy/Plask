@@ -1,83 +1,59 @@
 <!-- <html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>new_questionnaire</title> -->
-{% extends "base.html" %}
+{% extends "workflow.html" %}
 
-{% block content %}
+{% block content_step %}
+  <h1 class="page-header">Step 2/2 : Add Questions</h1>
 
-<script type="text/javascript" src="{{ url_for('static', filename='js/js/new_questionnaire.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/js/jquery.js') }}"></script>
-<script type="text/javascript" src="/static/js/new_questionnaire.js"></script>
-<!-- <head>
-	<script type="text/javascript" src="/static/js/new_questionnaire.js"></script>
-	<script type="text/javascript" src="/static/js/jquery.js"></script>
-</head>
-<body> -->
-	<input type="button" onclick="add_question(0)" value="Single choice"/>
-	<input type="button" onclick="add_question(1)" value="Multiple choice"/>
-	<input type="button" onclick="add_question(2)" value="True or false"/>
-	<input type="button" onclick="add_question(3)" value="Essay"/>
-	<form method="POST">
-	<div id="ques_list">
-	<input id="ques.id" name="ques.id" type="hidden" value="id"/>
+  <form method="POST">
+    <div id="ques_list">
+    <input id="ques.id" name="ques.id" type="hidden" value="id"/>
 	{% for i in range(0,schema|length) %}
-		<div id="ques_{{i}}.div">
-			<input id="ques_{{i}}.type" name="ques_{{i}}.type" type="hidden" value="{{schema[i].type}}"/>
-			<input id="ques_{{i}}.description" name="ques_{{i}}.description" type="text" value="{{schema[i].des}}"/>
-			<input type="button" value="delete" onclick="delete_question(this)"/>
-			<input type="button" value="up" onclick="move_question(this,0)"/>
-			<input type="button" value="down" onclick="move_question(this,1)"/>
-			{% if schema[i].type==0 %}
+		<div id="ques_{{i}}.div" class="form-group row well" onmouseover="show_buttons(this,0)" onmouseout="hide_buttons(this,0)">
+			<div class="row">
+				<input id="ques_{{i}}.type" name="ques_{{i}}.type" type="Hidden" value="0">
+				<input id="ques_{{i}}.description" name="ques_{{i}}.description" type="text" class="col-md-6" placeholder="Enter the question description">
+				<div class="ques_button" style="display:none">
+					<span class="pull-right btn glyphicon glyphicon-trash" onclick="delete_question(this)"></span>
+					<span class="pull-right btn glyphicon glyphicon glyphicon-arrow-down" onclick="move_question(this,1)"></span>
+					<span class="pull-right btn glyphicon glyphicon glyphicon-arrow-up" onclick="move_question(this,0)"></span>
+					<span class="pull-right btn glyphicon glyphicon-plus" onclick="add_option(this,0)"></span>
+				</div>
+			</div>
+			{% if schema[i].type<2 %}
 			<ul>
-				<li>
-					<input type="button" onclick="add_option(this,0)" value="new_option"/>
+				{% for j in range(0,schema[i].opt|length) %}
+				<li onmouseover="show_buttons(this,1)" onmouseout="hide_buttons(this,1)">
+					<input type="text" id="ques_{{i}}.option_{{j}}" name="ques_{{i}}.option_{{j}}" value="{{schema[i].opt[j]}}"><div class="pull-right option_button" style="display:none">
+						<span class="btn glyphicon glyphicon-arrow-up" onclick="move_option(this,0)"></span>
+						<span class="btn glyphicon glyphicon-arrow-down" onclick="move_option(this,1)"></span>
+						<span class="btn glyphicon glyphicon-trash" onclick="delete_option(this)"></span>
+					</div>
 				</li>
-			{% for j in range(0,schema[i].opt|length) %}
-				<li>
-					<input type="radio"/>
-					<input id="ques_{{i}}.option_{{j}}" name="ques_{{i}}.option_{{j}}" type="text" value="{{schema[i].opt[j]}}"/>
-					<input type="button" value="delete" onclick="delete_option(this)"/>
-					<input type="button" value="up" onclick="move_option(this,0)"/>
-					<input type="button" value="down" onclick="move_option(this,1)"/>
-				</li>
-			{% endfor %}
+				{% endfor %}
 			</ul>
-			{% elif schema[i].type==1 %}
-			<ul>
-				<li>
-					<input type="button" onclick="add_option(this,1)" value="new_option"/>
-				</li>
-			{% for j in range(0,schema[i].opt|length) %}
-				<li>
-					<input type="checkbox"/>
-					<input id="ques_{{i}}.option_{{j}}" name="ques_{{i}}.option_{{j}}" type="text" value="{{schema[i].opt[j]}}"/>
-					<input type="button" value="delete" onclick="delete_option(this)"/>
-					<input type="button" value="up" onclick="move_option(this,0)"/>
-					<input type="button" value="down" onclick="move_option(this,1)"/>
-				</li>
-			{% endfor %}
-			</ul>
-			{% elif schema[i].type==2 %}
-			<ul>
-				<li>
-					<input type="radio"/>
-					<label>true</label>
-				</li>
-				<li>
-					<input type="radio"/>
-					<label>false</label>
-				</li>
-			</ul>
-			{% elif schema[i].type==3 %}
-			<br/><input type="text" readonly="true" />
 			{% endif %}
 		</div>
 	{% endfor %}
 	</div>
-	<input type="submit" class="btn btn-success" value="submit"/>
+    <button class="btn btn-default" type="submit">Submit</button>
+  </form>
 
-	</form>
-<!-- </body>
-</html> -->
-
-	{% endblock %}
+  <div class="col-sm-3 col-md-2 sidebar-right">
+    <ul class="nav nav-stacked">
+      <li>
+        <button class="btn btn-default" onclick="add_question(0)">Single choice</button>
+      </li>
+      <li>
+        <button class="btn btn-default" onclick="add_question(1)">Multiple choice</button>
+      </li>
+      <li>
+      <button class="btn btn-default" onclick="add_question(2)">True or false</button>
+      </li>
+      <li>
+        <button class="btn btn-default" onclick="add_question(3)">Essay</button>
+      </li>
+    </ul>
+  </div>
+{% endblock %}
