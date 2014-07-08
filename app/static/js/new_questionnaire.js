@@ -79,7 +79,7 @@ function add_question(type){
 }
 
 function delete_question(obj){
-  count=obj.parentNode.parentNode.parentNode.id[5];
+  count=obj.parentNode.parentNode.parentNode.id.split('_')[1].split('.')[0];
   var current_question=document.getElementById("ques_"+count+".div");
   current_question.parentNode.removeChild(current_question);
   count++;
@@ -116,7 +116,7 @@ function delete_question(obj){
 }
 
 function move_question(obj,direction){
-  var count=obj.parentNode.parentNode.parentNode.id[5];
+  var count=obj.parentNode.parentNode.parentNode.id.split('_')[1].split('.')[0];
   var next_count=count;
   if(direction==1){
     next_count++;
@@ -199,8 +199,9 @@ function move_question(obj,direction){
 }
 
 function add_option(obj,type){
-  var count=obj.parentNode.parentNode.parentNode.id[5];
-  var ul=obj.parentNode.nextSibling;
+  var count=obj.parentNode.parentNode.parentNode.id.split('_')[1].split('.')[0];
+  console.log(count);
+  var ul=obj.parentNode.parentNode.nextSibling;
   console.log(ul);
   var ocount=0;
   var radio;
@@ -212,7 +213,7 @@ function add_option(obj,type){
   li.setAttribute("onmouseout","hide_buttons(this,1)");
 	li.innerHTML="<input type=\"text\" id=\"ques_"+
     count+".option_"+ocount+"\" name=\"ques_"+count+".option_"+ocount+"\" value=\"new option\"/>"+
-    "<div class=\"pull-right option_button\">"+
+    "<div style=\"display:none\" class=\"pull-right option_button\">"+
     "<span class=\"btn glyphicon glyphicon-arrow-up\" onclick=\"move_option(this,0)\"></span>"+
 	"<span class=\"btn glyphicon glyphicon-arrow-down\" onclick=\"move_option(this,1)\"></span>"+
     "<span class=\"btn glyphicon glyphicon-trash\" onclick=\"delete_option(this)\"></span></div>";
@@ -223,8 +224,8 @@ function delete_option(obj){
   var option=obj.parentNode.previousSibling;
   var li=option.parentNode;
   var ul=li.parentNode;
-  var ques_count=option.id[5];
-  var option_count=option.id[14];
+  var ques_count=option.id.split('_')[1].split('.')[0];
+  var option_count=option.id.split('_')[2];
   ul.removeChild(li);
 
   option_count++;
@@ -239,8 +240,8 @@ function delete_option(obj){
 
 function move_option(obj,direction){
 	var option=obj.parentNode.previousSibling;
-	var ques_count=option.id[5];
-	var option_count=option.id[14];
+	var ques_count=option.id.split('_')[1].split('.')[0];
+	var option_count=option.id.split('_')[2];
 	var next_count=option_count;
 	if(direction==1){
 		next_count++;
