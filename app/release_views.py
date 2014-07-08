@@ -48,7 +48,7 @@ def questionnaire(questionnaire_id):
 
       ques_list = get_ques_list(q)
 
-      return render_template('questionnaire.html',
+      return render_template('questionnaire_report.html',
           questionnaire_id = questionnaire_id,
           title = title,
           subject = subject,
@@ -158,5 +158,37 @@ def close(questionnaire_id):
 
 def get_ques_list(q):
     schema = pickle.loads(q.schema)
-    for each in schema:
-      
+    ques_list = []
+    for i in range(len(schema)):
+        each = schema[i]
+        dic = {}
+        dic['description'] = each['description']
+        dic['type'] = each['type']
+        if each['type'] == '3':
+            dic['option_list'] = []
+        elif each['type'] == '2':
+            dic['option_list'] = ['true', 'false']
+            dic['num_list'] = [0,0]
+        else:
+            dic['option_list'] = each['options']
+            dic['num_list'] = []
+            for option in dic['option_list']:
+                dic['num_list'].append(0)
+
+        quesanswers = q.quesanswers.all()
+        for quesanswer in quesanswers:
+            answers = quesanswer.probanswers.filter_by(prob_id = i)
+            if each['type'] == '3':
+                for answer in answers:
+                    dic['option_list'].append(answer.ans)
+            elif each['type'] == '2':
+                for answer in answers:
+                    if answer.ans=='1':
+                        dic['num_list'][0] = dic['num_list'][0] + 1;
+                    else:
+                        dic['num_list'][1] = dic['num_list'][1] + 1;
+            else:
+                for answer in answers:
+                    dic['num_list'][int(answer.ans)] = dic['num_list'][int(answer.ans)] + 1
+        ques_list.append(dic)
+    return ques_list

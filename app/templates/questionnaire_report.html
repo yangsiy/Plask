@@ -3,12 +3,13 @@
 {% block report %}
 
 <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.scrollLoading.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/highcharts.js') }}"></script>
 <script type="text/javascript">
 
     var options =
         [{% for i in range(0,ques_list|length) %}
         {
-        {% if ques_list[i].type!=3 %}
+        {% if ques_list[i].type!='3' %}
         chart: 
         {
        
@@ -94,14 +95,17 @@
 </script>
 
 {% for i in range(0,ques_list|length) %}
+<hr />
 <div id="ques_{{i}}">
-{% if ques_list[i].type==3 %}
+{% if ques_list[i].type=='3' %}
 <table class="table table-bordered table-striped" style="text-align:center">
+  <thead>
   <tr>
   <td>{{ques_list[i].description}}
   </td>
-
   </tr>
+  </thead>
+  <tbody>
   {% for j in range(0,ques_list[i].option_list|length) %}
    <tr>
   <td>{{ques_list[i].option_list[j]}}
@@ -110,25 +114,29 @@
   </tr>
 
   {% endfor %}
+  </tbody>
 </table>
 
 
 {% else %}
-<button class="change">pie</button>
-<button class="change">bar</button>
-<button class="change">line</button>
-<button class="change">column</button>
+<button class="change btn btn-large btn-default">pie</button>
+<button class="change btn btn-large btn-default">bar</button>
+<button class="change btn btn-large btn-default">line</button>
+<button class="change btn btn-large btn-default">column</button>
 
 <div class="scrollLoading" id="container_{{i}}" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
 
 
 <table class="table table-bordered table-striped">
+  <thead>
   <tr>
   <td>{{ques_list[i].description}}
   </td>
   <td>sum of the answers
   </td>
   </tr>
+  </thead>
+  <tbody>
   {% for j in range(0,ques_list[i].option_list|length) %}
    <tr>
   <td>{{ques_list[i].option_list[j]}}
@@ -138,6 +146,7 @@
   </tr>
 
   {% endfor %}
+  </tbody>
 </table>
 {% endif %}
 </div>
