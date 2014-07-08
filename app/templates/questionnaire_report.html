@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.scrollLoading.js') }}"></script>
+<script type="text/javascript">
+
+    var options =
+        [{% for i in range(0,ques_report.ques_list|length) %}
+        {
+        {% if ques_report.ques_list[i].type!=3 %}
+        chart: 
+        {
+       
+	    plotBackgroundColor: null,
+	    plotBorderWidth: null,
+	    plotShadow: false,
+	    renderTo:'container_{{i}}',
+	    type:'pie'
+        },
+        title: {
+            text: '{{ques_report.ques_list[i].description}}'
+        },
+        tooltip: {
+    	    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+         xAxis: {
+                categories: [{% for j in ques_report.ques_list[i].option_list %}"{{j}}",{% endfor %}],
+                title: {
+                    text: null
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Population ',
+                    align: 'high'
+                },
+                labels: {
+                    // overflow: 'justify'
+                }
+            },
+
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                }
+            }
+        },
+        series: [{
+            // type: 'pie',
+            name: 'questionnaire share',
+            data: [
+
+                {% for j in range(0,ques_report.ques_list[i].option_list|length) %}
+                ['{{ques_report.ques_list[i].option_list[j]}}',{{ques_report.ques_list[i].num_list[j]}}],
+                {% endfor %}
+
+            ]
+        	}]
+        	{% endif %}
+    	},
+    	{% endfor %}
+    ];
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".scrollLoading").scrollLoading({
+			callback: function(id) {
+        		new Highcharts.Chart(options[id]);
+    		}
+		});
+		 
+		$("button.change").click(function(){
+			var type = $(this).html();
+			var change=$(this).parent().attr("id").split('_')[1];
+			if(type == "pie") {
+				options[change].tooltip.pointFormat = '{series.name}: <b>{point.percentage:.1f}%</b>';
+			}else {
+				options[change].tooltip.pointFormat = '{series.name}: <b>{point.y}</b>';
+			}
+			options[change].chart.type = type;
+			new Highcharts.Chart(options[change]);
+		});
+	});
+</script>
+
+{% for i in range(0,ques_report.ques_list|length) %}
+<div id="ques_{{i}}">
+{% if ques_report.ques_list[i].type==3 %}
+<table class="table table-bordered table-striped" style="text-align:center">
+  <tr>
+  <td>{{ques_report.ques_list[i].description}}
+  </td>
+
+  </tr>
+  {% for j in range(0,ques_report.ques_list[i].option_list|length) %}
+   <tr>
+  <td>{{ques_report.ques_list[i].option_list[j]}}
+  </td>
+
+  </tr>
+
+  {% endfor %}
+</table>
+
+
+{% else %}
+<button class="change">pie</button>
+<button class="change">bar</button>
+<button class="change">line</button>
+<button class="change">column</button>
+
+<div class="scrollLoading" id="container_{{i}}" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+
+
+<table class="table table-bordered table-striped">
+  <tr>
+  <td>{{ques_report.ques_list[i].description}}
+  </td>
+  <td>sum of the answers
+  </td>
+  </tr>
+  {% for j in range(0,ques_report.ques_list[i].option_list|length) %}
+   <tr>
+  <td>{{ques_report.ques_list[i].option_list[j]}}
+  </td>
+  <td>{{ques_report.ques_list[i].num_list[j]}}
+  </td>
+  </tr>
+
+  {% endfor %}
+</table>
+{% endif %}
+</div>
+<!-- <div id="container_pie" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div> -->
+
+
+  {% endfor %}
+{% endblock %}
