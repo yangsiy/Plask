@@ -76,8 +76,14 @@
     <dt>Special participants</dt>
     <dd>{{ special_participants }}</dd>
 </dl>
+<dl class="dl-horizontal">
+    <dt>URL: </dt>
+    <dd><a id="Url_Change" href="http://192.168.43.164:5000/questionnaire/{{q_id}}/fill">http://192.168.43.164:5000/questionnaire/{{q_id}}/fill</a></dd>
+</dl>
 {% endif %}
 
+<a class="btn btn-large btn-default" href="{{ questionnaire_id }}/preview">Preview</a>
+<a class="btn btn-large btn-default" href="{{ questionnaire_id }}/modify">Modify</a>
 {% if state == 'In creating' %}
 <a class="btn btn-large btn-default" href="{{ questionnaire_id }}/release">Release</a>
 {% endif %}
@@ -87,5 +93,19 @@
 {% if state == 'In releasing' or state == 'In reopening' %}
 <a class="btn btn-large btn-default" href="{{ questionnaire_id }}/close">Close</a>
 {% endif %}
+
+{% block report %}{% endblock %}
+
+<script>
+    window.onload=function(){
+    
+        var test="http://"+document.location.host;
+        test+="/questionnaire/{{q_id}}/fill";
+        
+        document.getElementById("Url_Change").setAttribute("href",test);
+
+        document.getElementById("Url_Change").innerHTML=test;
+    }
+</script>
 
 {% endblock %}

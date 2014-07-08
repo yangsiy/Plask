@@ -1,14 +1,14 @@
-{% extends "base.html" %}
+{% extends "questionnaire.html" %}
 
-{% block content %}
+{% block report %}
 
 <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.scrollLoading.js') }}"></script>
 <script type="text/javascript">
 
     var options =
-        [{% for i in range(0,ques_report.ques_list|length) %}
+        [{% for i in range(0,ques_list|length) %}
         {
-        {% if ques_report.ques_list[i].type!=3 %}
+        {% if ques_list[i].type!=3 %}
         chart: 
         {
        
@@ -19,13 +19,13 @@
 	    type:'pie'
         },
         title: {
-            text: '{{ques_report.ques_list[i].description}}'
+            text: '{{ques_list[i].description}}'
         },
         tooltip: {
     	    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
         },
          xAxis: {
-                categories: [{% for j in ques_report.ques_list[i].option_list %}"{{j}}",{% endfor %}],
+                categories: [{% for j in ques_list[i].option_list %}"{{j}}",{% endfor %}],
                 title: {
                     text: null
                 }
@@ -59,8 +59,8 @@
             name: 'questionnaire share',
             data: [
 
-                {% for j in range(0,ques_report.ques_list[i].option_list|length) %}
-                ['{{ques_report.ques_list[i].option_list[j]}}',{{ques_report.ques_list[i].num_list[j]}}],
+                {% for j in range(0,ques_list[i].option_list|length) %}
+                ['{{ques_list[i].option_list[j]}}',{{ques_list[i].num_list[j]}}],
                 {% endfor %}
 
             ]
@@ -93,18 +93,18 @@
 	});
 </script>
 
-{% for i in range(0,ques_report.ques_list|length) %}
+{% for i in range(0,ques_list|length) %}
 <div id="ques_{{i}}">
-{% if ques_report.ques_list[i].type==3 %}
+{% if ques_list[i].type==3 %}
 <table class="table table-bordered table-striped" style="text-align:center">
   <tr>
-  <td>{{ques_report.ques_list[i].description}}
+  <td>{{ques_list[i].description}}
   </td>
 
   </tr>
-  {% for j in range(0,ques_report.ques_list[i].option_list|length) %}
+  {% for j in range(0,ques_list[i].option_list|length) %}
    <tr>
-  <td>{{ques_report.ques_list[i].option_list[j]}}
+  <td>{{ques_list[i].option_list[j]}}
   </td>
 
   </tr>
@@ -124,16 +124,16 @@
 
 <table class="table table-bordered table-striped">
   <tr>
-  <td>{{ques_report.ques_list[i].description}}
+  <td>{{ques_list[i].description}}
   </td>
   <td>sum of the answers
   </td>
   </tr>
-  {% for j in range(0,ques_report.ques_list[i].option_list|length) %}
+  {% for j in range(0,ques_list[i].option_list|length) %}
    <tr>
-  <td>{{ques_report.ques_list[i].option_list[j]}}
+  <td>{{ques_list[i].option_list[j]}}
   </td>
-  <td>{{ques_report.ques_list[i].num_list[j]}}
+  <td>{{ques_list[i].num_list[j]}}
   </td>
   </tr>
 

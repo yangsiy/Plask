@@ -12,7 +12,7 @@ import pickle
 def questionnaire(questionnaire_id):
     q = Questionnaire.query.get(questionnaire_id)
     if q == None:
-      pass
+      return "ERROR!"
     else:
       if q.get_status() == 'Banned':
         return render_template('message.html',
@@ -46,19 +46,22 @@ def questionnaire(questionnaire_id):
           special_participants = ', '.join(security['limit_participants'])
       state = q.get_status()
 
-    return render_template('questionnaire.html',
-        questionnaire_id = questionnaire_id,
-        title = title,
-        subject = subject,
-        description = description,
-        state = state,
-        start_time = start_time,
-        end_time = end_time,
-        is_allow_anonymous = is_allow_anonymous,
-        limit_num_participants = limit_num_participants,
-        limit_num_ip = limit_num_ip,
-        special_participants = special_participants,
-        q_id = questionnaire_id)
+      ques_list = get_ques_list(q)
+
+      return render_template('questionnaire.html',
+          questionnaire_id = questionnaire_id,
+          title = title,
+          subject = subject,
+          description = description,
+          state = state,
+          start_time = start_time,
+          end_time = end_time,
+          is_allow_anonymous = is_allow_anonymous,
+          limit_num_participants = limit_num_participants,
+          limit_num_ip = limit_num_ip,
+          special_participants = special_participants,
+          q_id = questionnaire_id,
+          ques_list = ques_list)
 
 @app.route('/questionnaire/<int:questionnaire_id>/release', methods = ['GET', 'POST'])
 @login_required
@@ -152,3 +155,8 @@ def close(questionnaire_id):
       flash("Close successfully")
   
     return redirect(url_for('questionnaire', questionnaire_id = questionnaire_id))
+
+def get_ques_list(q):
+    schema = pickle.loads(q.schema)
+    for each in schema:
+      

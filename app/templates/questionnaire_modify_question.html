@@ -13,7 +13,7 @@
 		<div id="ques_{{i}}.div" class="form-group row well" onmouseover="show_buttons(this,0)" onmouseout="hide_buttons(this,0)">
 			<div class="row">
 				<input id="ques_{{i}}.type" name="ques_{{i}}.type" type="Hidden" value="0">
-				<input id="ques_{{i}}.description" name="ques_{{i}}.description" type="text" class="col-md-6" placeholder="Enter the question description">
+				<input id="ques_{{i}}.description" name="ques_{{i}}.description" type="text" class="col-md-6" placeholder="Enter the question description" value="{{schema[i].description}}">
 				<div class="ques_button" style="display:none">
 					<span class="pull-right btn glyphicon glyphicon-trash" onclick="delete_question(this)"></span>
 					<span class="pull-right btn glyphicon glyphicon glyphicon-arrow-down" onclick="move_question(this,1)"></span>
@@ -21,11 +21,11 @@
 					<span class="pull-right btn glyphicon glyphicon-plus" onclick="add_option(this,0)"></span>
 				</div>
 			</div>
-			{% if schema[i].type<2 %}
+			{% if schema[i].type == '0' or schema[i].type == '1' %}
 			<ul>
-				{% for j in range(0,schema[i].opt|length) %}
+				{% for j in range(0,schema[i].options|length) %}
 				<li onmouseover="show_buttons(this,1)" onmouseout="hide_buttons(this,1)">
-					<input type="text" id="ques_{{i}}.option_{{j}}" name="ques_{{i}}.option_{{j}}" value="{{schema[i].opt[j]}}"><div class="pull-right option_button" style="display:none">
+					<input type="text" id="ques_{{i}}.option_{{j}}" name="ques_{{i}}.option_{{j}}" value="{{schema[i].options[j]}}"><div class="pull-right option_button" style="display:none">
 						<span class="btn glyphicon glyphicon-arrow-up" onclick="move_option(this,0)"></span>
 						<span class="btn glyphicon glyphicon-arrow-down" onclick="move_option(this,1)"></span>
 						<span class="btn glyphicon glyphicon-trash" onclick="delete_option(this)"></span>
