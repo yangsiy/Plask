@@ -24,6 +24,12 @@ def before_request():
 
 @app.route('/')
 def index():
+	if g.user is not None and g.user.is_authenticated():
+		if g.user.is_admin == True:
+			return redirect(url_for('administrator'))
+		else:
+			return redirect(url_for('user', username = g.user.username))
+	
 	return render_template("index.html")
 
 
@@ -73,7 +79,7 @@ def register():
 			db.session.commit()
 			login_user(user);
 			flash("Register successfully")
-			return redirect(url_for('index'))
+			return redirect(url_for('user', username = user.username))
 		form.password.data = ''
 		form.password_again.data = ''
 		flash("Passwords are not the same")
