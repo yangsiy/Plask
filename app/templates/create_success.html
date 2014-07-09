@@ -1,6 +1,8 @@
 {% extends "message.html" %}
 
 {% block message_action %}
-	<input type="button" onclick="location.href='{{url_for('release', questionnaire_id=q_id)}}'" value="Release Now"/>
-	<input type="button" onclick="location.href='{{url_for('questionnaire', questionnaire_id=q_id)}}'" value="Questionnaire Dashboard"/>
+
+	<a class="btn btn-default" href="{{url_for('release', questionnaire_id=q_id)}}">Release Now</a>
+	<a class="btn btn-default" href="{{url_for('questionnaire', questionnaire_id=q_id)}}">Questionnaire Dashboard</a>
+
 {% endblock %}

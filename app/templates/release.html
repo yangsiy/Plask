@@ -1,11 +1,16 @@
 {% extends "base.html" %}
 
 {% block head %}
+
 <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-datetimepicker.css') }}">
 <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-datetimepicker.js') }}"></script>
+
 {% endblock %}
 
+
 {% block content %}
+
+<div class="col-md-10 col-md-offset-1">
 
 <h1>Release</h1>
 <br/>
@@ -70,6 +75,7 @@
         </div>
     </div>
 </form>
+</div>
 
 <script type="text/javascript">
     $('.form_datetime').datetimepicker({
