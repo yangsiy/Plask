@@ -3,21 +3,32 @@
 {% block content %}
 <script type="text/javascript" src="{{ url_for('static', filename='js/js/new_questionnaire.js') }}"></script>
 
+<div class="col-md-1">
+  <div id="plask-sidebar" class="plask-sidebar hidden-print hidden-xs hidden-sm">
+    <ul class="nav plask-sidenav">
+      <li>
+        <a href="#questionnaire_created"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;Created</a>
+      </li>
+      <li>
+        <a href="#questionnaire_answered"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;Answered</a>
+      </li>
+    </ul>
+  </div>
+</div>
 
+<div class="col-md-11">
     
 	<form method="POST">
 
     {% if g.user == user %}
-        <h3>Welcome, {{user.username}}</h3>
+        <h3>Welcome, {{user.username}} <a class="btn btn-primary btn-m pull-right" role="button" href="{{url_for('create')}}">Create Questionnaire</a></h3>
     {% else %}
         <h3>{{user.username}}({{user.mail}})</h3>
     {% endif %}
-    
 
-    <div ><h1>Questionnaire Created:
-    	{%if g.user == user %}
-    	    <a class="btn btn-primary btn-lg pull-right" role="button" href="{{url_for('create')}}">Create Questionnaire</a>
-    	{% endif %}</h1></div>
+ 
+    <div><h2 id="questionnaire_created">Questionnaire Created:</h2>
+    </div>
 
 
 
@@ -35,7 +46,7 @@
 
 			<td ><h4>Status</h4></td>
 			<td  class="alignc"><h4>Replies</h4></td>
-			<td ><h4>Manipulation</h4></td>
+			<td ><h4>Information</h4></td>
 			</tr>
 			</thead>
 
@@ -61,19 +72,7 @@
 			</td>
 			<td class="alignc" id="rspd_count_53b14bc8f7405b3c14ecd22e" pid="53b14bc8f7405b3c14ecd22e">{{ques_list_created[i].quesanswers.count()}}</td>
 			<td>
-
-
-
-			<a href="#" class="previewb" target="_blank" title="preview"><span class="glyphicon glyphicon-search"></span></a>
-			<a href="#" class="analysis" title="analysis"><span class="glyphicon glyphicon-stats"></span></a>
-
-			<a href="#"  class="editor" title="modify" ><span class="glyphicon glyphicon-edit"></span></a>
-
-			<a href="#" class="deletebtn ml2" title="delete"><span class="glyphicon glyphicon-trash"></span></a>
-
-
-
-
+                <a class="btn btn-xs btn-default" href="{{url_for('questionnaire', questionnaire_id=ques_list_created[i].id)}}">Details</a>
 
 			</td>
 
@@ -88,7 +87,7 @@
 	</div>
 
 	<br/>
-	    <h1>Questionnaire Answered:</h1>
+	    <h2 id="questionnaire_answered">Questionnaire Answered:</h2>
 	<div id="ques_list_filled">
 		<table id="proj_list" class="table table-striped">
 			<thead>
@@ -100,7 +99,7 @@
 
 
 			<td  class="col-md-4"><h4>Status</h4></td>
-			<td  class="col-md-4"><h4>Manipulation</h4></td>
+			<td  class="col-md-4"><h4>Information</h4></td>
 			</tr>
 			</thead>
 			<tbody val="ttt">
@@ -119,10 +118,7 @@
 			{{ans.questionnaire.get_status()}}
 			</td>
 			<td class="col-md-4 center">
-
-			<a href="" class="editor center"  title="preview"><span class="glyphicon glyphicon-search"></span></a>
-
-			<a href="#" class="analysis center" title="analysis"><span class="glyphicon glyphicon-stats"></span></a>
+                <a class="btn btn-xs btn-default" href="{{url_for('questionnaire', questionnaire_id=ans.questionnaire.id)}}">Details</a>
 			</td>
 
 			</tr>
@@ -132,6 +128,8 @@
 	</div>
 	</form>
 
+</div>
 {% endblock %}
+
 
 

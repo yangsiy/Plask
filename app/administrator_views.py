@@ -55,9 +55,9 @@ def ban_user(userid):
     else:
         u = User.query.get(userid)
         if not u:
-            flash("No such user")
+            flash("No such user",'error')
         elif u.is_ban:
-            flash("The user has been banned")
+            flash("The user has been banned",'error')
         else:
             u.is_ban = True
             db.session.add(u)
@@ -74,9 +74,9 @@ def unban_user(userid):
     else:
         u = User.query.get(userid)
         if not u:
-            flash("No such user")
+            flash("No such user",'error')
         elif not u.is_ban:
-            flash("The user has been unbanned")
+            flash("The user has been unbanned",'error')
         else:
             u.is_ban = False
             db.session.add(u)
@@ -93,9 +93,9 @@ def ban_questionnaire(qid):
     else:
         q = Questionnaire.query.get(qid)
         if not q:
-            flash("No such questionnaire")
+            flash("No such questionnaire",'error')
         elif q.is_ban:
-            flash("The questionnaire has been banned")
+            flash("The questionnaire has been banned",'error')
         else:
             q.is_ban = True
             db.session.add(q)
@@ -112,9 +112,9 @@ def unban_questionnaire(qid):
     else:
         q = Questionnaire.query.get(qid)
         if not q:
-            flash("No such questionnaire")
+            flash("No such questionnaire",'error')
         elif not q.is_ban:
-            flash("The questionnaire has been unbanned")
+            flash("The questionnaire has been unbanned",'error')
         else:
             q.is_ban = False
             db.session.add(q)

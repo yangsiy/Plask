@@ -95,7 +95,9 @@
 </script>
 
 {% for i in range(0,ques_list|length) %}
+{% if i > 0 %}
 <hr />
+{% endif %}
 <div id="ques_{{i}}">
 {% if ques_list[i].type=='3' %}
 <table class="table table-bordered table-striped" style="text-align:center">
