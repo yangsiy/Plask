@@ -25,9 +25,14 @@ function add_question(type){
   new_question_description.id="ques_"+count+".description";
   new_question_description.name="ques_"+count+".description";
   new_question_description.type="text";
-  new_question_description.setAttribute("class", "col-md-6");
+  new_question_description.setAttribute("class", "form-control");
   new_question_description.placeholder="Enter the question description";
-  new_question_div_head.appendChild(new_question_description);
+
+  var new_question_description_div=document.createElement("div");
+  new_question_description_div.setAttribute("class", "col-md-6");
+  new_question_description_div.appendChild(new_question_description);
+
+  new_question_div_head.appendChild(new_question_description_div);
  
   var new_question_div_button=document.createElement("div");
   new_question_div_button.setAttribute("class","ques_button");
@@ -50,28 +55,29 @@ function add_question(type){
   new_question_div_button.appendChild(new_question_up);
  
   if (type <2) {
-	  var new_question_add=document.createElement("span");
-	  new_question_add.setAttribute("class", "pull-right btn glyphicon glyphicon-plus");
-	  new_question_add.setAttribute("onclick","add_option(this,"+type+")");
-	  new_question_div_button.appendChild(new_question_add);
-	}
+    var new_question_add=document.createElement("span");
+    new_question_add.setAttribute("class", "pull-right btn glyphicon glyphicon-plus");
+    new_question_add.setAttribute("onclick","add_option(this,"+type+")");
+    new_question_div_button.appendChild(new_question_add);
+  }
 
   var new_option_ul=document.createElement("ul");
+  new_option_ul.setAttribute("class", "form-inline");
   new_question_div.appendChild(new_option_ul);
 
   if(type<2){
     new_option_ul.innerHTML=
-    "<li onmouseover=\"show_buttons(this,1)\" onmouseout=\"hide_buttons(this,1)\"><input type=\"text\" id=\"ques_"+
+    "<li onmouseover=\"show_buttons(this,1)\" onmouseout=\"hide_buttons(this,1)\"><input class=\"form-control\" type=\"text\" id=\"ques_"+
     count+".option_0\" name=\"ques_"+count+".option_0\" value=\"new option\"/>"+
     "<div class=\"pull-right option_button\" style=\"display:none\">"+
     "<span class=\"btn glyphicon glyphicon-arrow-up\" onclick=\"move_option(this,0)\"></span>"+
-	"<span class=\"btn glyphicon glyphicon-arrow-down\" onclick=\"move_option(this,1)\"></span>"+
+    "<span class=\"btn glyphicon glyphicon-arrow-down\" onclick=\"move_option(this,1)\"></span>"+
     "<span class=\"btn glyphicon glyphicon-trash\" onclick=\"delete_option(this)\"></span></div></li>"+
-    "<li onmouseover=\"show_buttons(this,1)\" onmouseout=\"hide_buttons(this,1)\"><input type=\"text\" id=\"ques_"+
+    "<li onmouseover=\"show_buttons(this,1)\" onmouseout=\"hide_buttons(this,1)\"><input class=\"form-control\" type=\"text\" id=\"ques_"+
     count+".option_1\" name=\"ques_"+count+".option_1\" value=\"new option\"/>"+
     "<div class=\"pull-right option_button\" style=\"display:none\">"+
     "<span class=\"btn glyphicon glyphicon-arrow-up\" onclick=\"move_option(this,0)\"></span>"+
-	"<span class=\"btn glyphicon glyphicon-arrow-down\" onclick=\"move_option(this,1)\"></span>"+
+  "<span class=\"btn glyphicon glyphicon-arrow-down\" onclick=\"move_option(this,1)\"></span>"+
     "<span class=\"btn glyphicon glyphicon-trash\" onclick=\"delete_option(this)\"></span></div></li>";
   }
 
@@ -195,7 +201,7 @@ function move_question(obj,direction){
       }
   }
   if(direction==0)$(current_question_div).insertBefore($(next_question_div));
-	else $(next_question_div).insertBefore($(current_question_div));
+  else $(next_question_div).insertBefore($(current_question_div));
 }
 
 function add_option(obj,type){
@@ -211,13 +217,13 @@ function add_option(obj,type){
   var li=document.createElement("li");
   li.setAttribute("onmouseover","show_buttons(this,1)");
   li.setAttribute("onmouseout","hide_buttons(this,1)");
-	li.innerHTML="<input type=\"text\" id=\"ques_"+
+  li.innerHTML="<input class=\"form-control\" type=\"text\" id=\"ques_"+
     count+".option_"+ocount+"\" name=\"ques_"+count+".option_"+ocount+"\" value=\"new option\"/>"+
     "<div style=\"display:none\" class=\"pull-right option_button\">"+
     "<span class=\"btn glyphicon glyphicon-arrow-up\" onclick=\"move_option(this,0)\"></span>"+
-	"<span class=\"btn glyphicon glyphicon-arrow-down\" onclick=\"move_option(this,1)\"></span>"+
+  "<span class=\"btn glyphicon glyphicon-arrow-down\" onclick=\"move_option(this,1)\"></span>"+
     "<span class=\"btn glyphicon glyphicon-trash\" onclick=\"delete_option(this)\"></span></div>";
-	ul.appendChild(li);
+  ul.appendChild(li);
 }
 
 function delete_option(obj){
@@ -239,27 +245,27 @@ function delete_option(obj){
 }
 
 function move_option(obj,direction){
-	var option=obj.parentNode.previousSibling;
-	var ques_count=option.id.split('_')[1].split('.')[0];
-	var option_count=option.id.split('_')[2];
-	var next_count=option_count;
-	if(direction==1){
-		next_count++;
-	}
-	else{
-		next_count--;
-	} 
-	var current_option=document.getElementById("ques_"+ques_count+".option_"+option_count);
-	var next_option=document.getElementById("ques_"+ques_count+".option_"+next_count);
-	if(current_option==null||next_option==null)return;
-	current_option.id="ques_"+ques_count+".option_"+next_count;
-	current_option.name="ques_"+ques_count+".option_"+next_count;
-	next_option.id="ques_"+ques_count+".option_"+option_count;
-	next_option.name="ques_"+ques_count+".option_"+option_count;
-	var current_li=$(current_option.parentNode);
-	var next_li=$(next_option.parentNode);
-	if(direction==0)current_li.insertBefore(next_li);
-	else next_li.insertBefore(current_li);
+  var option=obj.parentNode.previousSibling;
+  var ques_count=option.id.split('_')[1].split('.')[0];
+  var option_count=option.id.split('_')[2];
+  var next_count=option_count;
+  if(direction==1){
+    next_count++;
+  }
+  else{
+    next_count--;
+  } 
+  var current_option=document.getElementById("ques_"+ques_count+".option_"+option_count);
+  var next_option=document.getElementById("ques_"+ques_count+".option_"+next_count);
+  if(current_option==null||next_option==null)return;
+  current_option.id="ques_"+ques_count+".option_"+next_count;
+  current_option.name="ques_"+ques_count+".option_"+next_count;
+  next_option.id="ques_"+ques_count+".option_"+option_count;
+  next_option.name="ques_"+ques_count+".option_"+option_count;
+  var current_li=$(current_option.parentNode);
+  var next_li=$(next_option.parentNode);
+  if(direction==0)current_li.insertBefore(next_li);
+  else next_li.insertBefore(current_li);
 }
 
 function show_buttons(obj,type){
