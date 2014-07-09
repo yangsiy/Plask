@@ -39,7 +39,9 @@
             {% if g.user %}
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/">{{ g.user.username }}</a></li>
+                {% if not g.user.is_admin %}
                 <li><a href="/questionnaire/create"><span class="glyphicon glyphicon-edit"></span></a></li>
+                {% endif %}
                 <li><a href="/logout">Logout</a></li>
             </ul>
             {% else %}
