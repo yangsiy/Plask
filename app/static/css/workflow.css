@@ -54,3 +54,12 @@
 .main .page-header {
   margin-top: 0;
 }
+
+#ques_list li {
+  margin-top: 4px;
+}
+
+#ques_list > div > div > input[id] {
+  margin-left: 20px;
+  margin-top: 10px;
+}
