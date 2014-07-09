@@ -2,8 +2,14 @@
 
 {% block report %}
 
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.scrollLoading.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/highcharts.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+<!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"/> -->
+
 <script type="text/javascript">
 
     var options =
@@ -17,7 +23,11 @@
 	    plotBorderWidth: null,
 	    plotShadow: false,
 	    renderTo:'container_{{i}}',
+	    {% if ques_list[i].type!='1' %}
 	    type:'pie'
+	    {% else %}
+	    type:'bar'
+	    {% endif %}
         },
         title: {
             text: '{{ques_list[i].description}}'
@@ -80,9 +90,11 @@
     		}
 		});
 		 
-		$("button.change").click(function(){
+		$("a.change").click(function(){
 			var type = $(this).html();
-			var change=$(this).parent().attr("id").split('_')[1];
+			//$(this).parent().parent().prev().html()=type;
+			var change=$(this).parent().parent().attr("id").split('_')[1];
+			document.getElementById("chart_menu"+change).innerHTML=type+"<span class=\"caret\"></span>";
 			if(type == "pie") {
 				options[change].tooltip.pointFormat = '{series.name}: <b>{point.percentage:.1f}%</b>';
 			}else {
@@ -106,7 +118,17 @@
   </tr>
   </thead>
   <tbody>
+  	{% if not ques_list[i]["option_list"] %}
+     <tr>
+  	
+  <td>No answer yet.
+  </td>
+
+  </tr>
+  	{% endif %}
+
   {% for j in range(0,ques_list[i].option_list|length) %}
+
    <tr>
   <td>{{ques_list[i].option_list[j]}}
   </td>
@@ -119,10 +141,21 @@
 
 
 {% else %}
-<button class="change btn btn-large btn-default">pie</button>
-<button class="change btn btn-large btn-default">bar</button>
-<button class="change btn btn-large btn-default">line</button>
-<button class="change btn btn-large btn-default">column</button>
+
+
+<div class="btn-group">
+  <button id="chart_menu{{i}}" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="width:102px;">
+    Chart Style<span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu" id="chart_{{i}}">
+    <li><a  class="change">pie</a></li>
+    <li><a  class="change">bar</a></li>
+    <li><a  class="change">line</a></li>
+    
+    <li><a class="change">column</a></li>
+  </ul>
+</div>
+
 
 <div class="scrollLoading" id="container_{{i}}" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
 
