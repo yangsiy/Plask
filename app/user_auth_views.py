@@ -53,7 +53,7 @@ def login():
 			else:
 				return redirect(request.args.get('next') or url_for('user', username = user.username))
 		form.password.data = ''
-		flash("Login failed")
+		flash("Login failed",'error')
 	
 	return render_template('login.html',
 		g = g,
@@ -82,7 +82,7 @@ def register():
 			return redirect(url_for('user', username = user.username))
 		form.password.data = ''
 		form.password_again.data = ''
-		flash("Passwords are not the same")
+		flash("Passwords are not the same",'error')
 
 	return render_template('register.html',
 		g = g,

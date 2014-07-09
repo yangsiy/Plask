@@ -134,7 +134,7 @@ def release(questionnaire_id):
                 q_id = questionnaire_id,
                 message = 'Questionnaire Created Successfully')
 
-    flash("Start time is later then end time")
+    flash("Start time is later then end time",'error')
     return render_template('release.html')
 
 @app.route('/questionnaire/<int:questionnaire_id>/close', methods = ['GET'])
@@ -147,7 +147,7 @@ def close(questionnaire_id):
         release = r
         break
     if release == None:
-      flash("The release has been closed")
+      flash("The release has been closed",'error')
     else:
       release.is_closed = 1
       db.session.add(release)
