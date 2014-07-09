@@ -11,130 +11,127 @@ import pickle
 @login_required
 def questionnaire(questionnaire_id):
     q = Questionnaire.query.get(questionnaire_id)
-    if q == None:
-      return "ERROR!"
-    else:
-      if q.get_status() == 'Banned':
-        return render_template('message.html',
+    if not q:
+        return "ERROR!"
+    elif q.get_status() == 'Banned':
+            return render_template('message.html',
                 message = 'Sorry, the questionnaire is banned')
-      title = q.title
-      subject = q.subject
-      description = q.description
+    else:
+        title = q.title
+        subject = q.subject
+        description = q.description
 
-      release = None
-      count = 0
-      for r in q.releases:
-        count += 1
-        if not r.is_closed:
-          release = r
-          break
+        release = None
+        count = 0
+        for r in q.releases:
+            count += 1
+            if not r.is_closed:
+                release = r
+                break
 
-      start_time = None
-      end_time = None
-      is_allow_anonymous = None
-      limit_num_participants = None
-      limit_num_ip = None
-      special_participants = ''
-      if release:
-        start_time = r.start_time
-        end_time = r.end_time
-        security = pickle.loads(r.security)
-        is_allow_anonymous = security['anonymous']
-        limit_num_participants = security['limit_per_user']
-        limit_num_ip = security['limit_per_ip']
+        start_time = None
+        end_time = None
+        is_allow_anonymous = None
+        limit_num_participants = None
+        limit_num_ip = None
+        special_participants = ''
+        if release:
+            start_time = r.start_time
+            end_time = r.end_time
+            security = pickle.loads(r.security)
+            is_allow_anonymous = security['anonymous']
+            limit_num_participants = security['limit_per_user']
+            limit_num_ip = security['limit_per_ip']
         if security['limit_participants']:
-          special_participants = ', '.join(security['limit_participants'])
-      state = q.get_status()
+            special_participants = ', '.join(security['limit_participants'])
+        state = q.get_status()
 
-      ques_list = get_ques_list(q)
+        ques_list = get_ques_list(q)
 
-      return render_template('questionnaire_report.html',
-          questionnaire_id = questionnaire_id,
-          title = title,
-          subject = subject,
-          description = description,
-          state = state,
-          start_time = start_time,
-          end_time = end_time,
-          is_allow_anonymous = is_allow_anonymous,
-          limit_num_participants = limit_num_participants,
-          limit_num_ip = limit_num_ip,
-          special_participants = special_participants,
-          q_id = questionnaire_id,
-          ques_list = ques_list)
+        return render_template('questionnaire_report.html',
+            questionnaire_id = questionnaire_id,
+            title = title,
+            subject = subject,
+            description = description,
+            state = state,
+            start_time = start_time,
+            end_time = end_time,
+            is_allow_anonymous = is_allow_anonymous,
+            limit_num_participants = limit_num_participants,
+            limit_num_ip = limit_num_ip,
+            special_participants = special_participants,
+            q_id = questionnaire_id,
+            ques_list = ques_list)
 
 @app.route('/questionnaire/<int:questionnaire_id>/release', methods = ['GET', 'POST'])
 @login_required
 def release(questionnaire_id):
     def get_security():
-      def to_int(string):
-        try: return int(string)
-        except ValueError: return None
+        def to_int(string):
+            try: return int(string)
+            except ValueError: return None
         
-      security = {}
+        security = {}
 
-      if 'is_allow_anonymous' not in request.form:
-        is_allow_anonymous = False
-      else:
-        is_allow_anonymous = True
-
-      if 'limit_num_participants' not in request.form:
-        limit_num_participants = None
-      else:
-        if not request.form['limit_num_participants']:
-          limit_num_participants = None
+        if 'is_allow_anonymous' not in request.form:
+            is_allow_anonymous = False
         else:
-          limit_num_participants = to_int(request.form['limit_num_participants'])
+            is_allow_anonymous = True
 
-      if 'limit_num_ip' not in request.form:
-        limit_num_ip = None
-      else:
-        if not request.form['limit_num_ip']:
-          limit_num_ip = None
+        if 'limit_num_participants' not in request.form:
+            limit_num_participants = None
+        elif not request.form['limit_num_participants']:
+            limit_num_participants = None
         else:
-          limit_num_ip = to_int(request.form['limit_num_ip'])
+            limit_num_participants = to_int(request.form['limit_num_participants'])
 
-      if 'special_participants' not in request.form:
-        special_participants = None
-      else:
-        data = request.form['special_participants']
-        if not data:
-          special_participants = None
+        if 'limit_num_ip' not in request.form:
+            limit_num_ip = None
+        elif not request.form['limit_num_ip']:
+              limit_num_ip = None
         else:
-          special_participants = data.split(',')
-          for i in special_participants:
-            i = i.strip()
-              
+            limit_num_ip = to_int(request.form['limit_num_ip'])
 
-      security['anonymous'] = is_allow_anonymous
-      security['limit_per_user'] = limit_num_participants
-      security['limit_per_ip'] = limit_num_ip
-      security['limit_participants'] = special_participants
-      
-      return security
+        if 'special_participants' not in request.form:
+            special_participants = None
+        else:
+            data = request.form['special_participants']
+            if not data:
+                special_participants = None
+            else:
+                special_participants = data.split(',')
+                for i in special_participants:
+                    i = i.strip()
+                  
+
+        security['anonymous'] = is_allow_anonymous
+        security['limit_per_user'] = limit_num_participants
+        security['limit_per_ip'] = limit_num_ip
+        security['limit_participants'] = special_participants
+          
+        return security
 
     if request.method == 'POST':
-      start_time = request.form['start_time']
-      end_time = request.form['end_time']
+        start_time = request.form['start_time']
+        end_time = request.form['end_time']
 
-      if start_time <  end_time:
-        security = get_security()
-        dumped_security = pickle.dumps(security, protocol = 2)
-        release = Release(ques_id = questionnaire_id,
-                          start_time = datetime.strptime(start_time, '%Y-%m-%d %H:%M:%S'),
-                          end_time = datetime.strptime(end_time, '%Y-%m-%d %H:%M:%S'),
-                          security = dumped_security,
-                          is_closed = False)
-        db.session.add(release)
-        db.session.commit()
-        flash("Release successfully")
-        #return redirect(url_for('questionnaire', questionnaire_id = questionnaire_id))
-        return render_template('release_success.html',
+        if start_time <  end_time:
+            security = get_security()
+            dumped_security = pickle.dumps(security, protocol = 2)
+            release = Release(ques_id = questionnaire_id,
+                start_time = datetime.strptime(start_time, '%Y-%m-%d %H:%M:%S'),
+                end_time = datetime.strptime(end_time, '%Y-%m-%d %H:%M:%S'),
+                security = dumped_security,
+                is_closed = False)
+            db.session.add(release)
+            db.session.commit()
+            return render_template('release_success.html',
                 g = g,
                 q_id = questionnaire_id,
-                message = 'Questionnaire Created Successfully')
+                message = 'Release successfully')
+        else:
+            flash("Start time is later then end time",'error')
 
-    flash("Start time is later then end time",'error')
     return render_template('release.html')
 
 @app.route('/questionnaire/<int:questionnaire_id>/close', methods = ['GET'])
@@ -143,16 +140,16 @@ def close(questionnaire_id):
     q = Questionnaire.query.get(questionnaire_id)
     release = None
     for r in q.releases:
-      if r.is_closed == 0:
-        release = r
-        break
-    if release == None:
-      flash("The release has been closed",'error')
+        if not r.is_closed:
+            release = r
+            break
+    if not release:
+        flash("The release has been closed",'error')
     else:
-      release.is_closed = 1
-      db.session.add(release)
-      db.session.commit()
-      flash("Close successfully")
+        release.is_closed = True
+        db.session.add(release)
+        db.session.commit()
+        flash("Close successfully")
   
     return redirect(url_for('questionnaire', questionnaire_id = questionnaire_id))
 
