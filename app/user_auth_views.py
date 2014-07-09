@@ -1,5 +1,5 @@
 #coding=utf-8
-from flask import render_template, flash, redirect, url_for, g
+from flask import render_template, flash, redirect, url_for, g, request
 from app import app, lm, db
 from forms import LoginForm, RegisterForm
 from flask.ext.login import login_user, logout_user, current_user, login_required
@@ -24,6 +24,12 @@ def before_request():
 
 @app.route('/')
 def index():
+	if g.user is not None and g.user.is_authenticated():
+		if g.user.is_admin == True:
+			return redirect(url_for('administrator'))
+		else:
+			return redirect(url_for('user', username = g.user.username))
+	
 	return render_template("index.html")
 
 
@@ -43,9 +49,9 @@ def login():
 			login_user(user)
 			flash("Login successfully")
 			if user.is_admin == True:
-				return redirect(url_for('administrator'))
+				return redirect(request.args.get('next') or url_for('administrator'))
 			else:
-				return redirect(url_for('user', username = user.username))
+				return redirect(request.args.get('next') or url_for('user', username = user.username))
 		form.password.data = ''
 		flash("Login failed")
 	
@@ -73,7 +79,7 @@ def register():
 			db.session.commit()
 			login_user(user);
 			flash("Register successfully")
-			return redirect(url_for('index'))
+			return redirect(url_for('user', username = user.username))
 		form.password.data = ''
 		form.password_again.data = ''
 		flash("Passwords are not the same")
