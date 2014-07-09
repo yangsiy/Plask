@@ -73,7 +73,7 @@ def register():
 			db.session.commit()
 			login_user(user);
 			flash("Register successfully")
-			return redirect(url_for('index'))
+			return redirect(url_for('user', username = user.username))
 		form.password.data = ''
 		form.password_again.data = ''
 		flash("Passwords are not the same")
