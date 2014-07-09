@@ -42,8 +42,8 @@ def questionnaire(questionnaire_id):
             is_allow_anonymous = security['anonymous']
             limit_num_participants = security['limit_per_user']
             limit_num_ip = security['limit_per_ip']
-        if security['limit_participants']:
-            special_participants = ', '.join(security['limit_participants'])
+            if security['limit_participants']:
+                special_participants = ', '.join(security['limit_participants'])
         state = q.get_status()
 
         ques_list = get_ques_list(q)
