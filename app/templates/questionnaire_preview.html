@@ -1,53 +1,62 @@
 {% extends "base.html" %}
 
+{% block head %}
+<style type="text/css">
+	.maindiv {
+		max-width: 70%;
+	}
+</style>
+{% endblock %}
+
 {% block content %}
-	<h1>{{title}}</h1>
-	<h3>{{subject}}</h3>
-	<h5>{{description}}</h5>
-	<hr>
-	<form method="POST">
+<h1>[{{subject}}] {{title}}</h1>
+<p>{{description}}</p>
+<hr/>
+<form method="POST">
 	<div id="ques_list">
 	{% for i in range(0,schema|length) %}
 		<div>
-			<label>{{i+1}}.</label><label>{{schema[i].description}}</label>
+			<label>{{i+1}}.&nbsp;</label><label>{{schema[i].description}}</label>
 			{% if schema[i].type=='0' %}
-			<ul>
+			<ul style="list-style-type:none">
 			{% for j in range(0,schema[i].options|length) %}
 				<li>
 					<input type="radio" value="{{j}}" disabled="disabled"/>
-					<label>{{schema[i].options[j]}}</label>
+					{{schema[i].options[j]}}
 				</li>
 			{% endfor %}
 			</ul>
 			{% elif schema[i].type=='1' %}
-			<ul>
+			<ul style="list-style-type:none">
 			{% for j in range(0,schema[i].options|length) %}
 				<li>
 					<input type="checkbox" value="1" disabled="disabled"/>
-					<label>{{schema[i].options[j]}}</label>
+					{{schema[i].options[j]}}
 				</li>
 			{% endfor %}
 			</ul>
 			{% elif schema[i].type=='2' %}
-			<ul>
+			<ul style="list-style-type:none">
 				<li>
 					<input type="radio" value="1" disabled="disabled"/>
-					<label>true</label>
+					True
 				</li>
 				<li>
 					<input type="radio" value="0" disabled="disabled"/>
-					<label>false</label>
+					False
 				</li>
 			</ul>
 			{% elif schema[i].type=='3' %}
-			<br/><input type="text" disabled="disabled"/>
+			<div class="row">
+				<div class="col-md-6">
+					<textarea rows="8" class="form-control" name="ques_{{i}}.ans" disabled="disabled"></textarea>
+				</div>
+			</div>
 			{% endif %}
 		</div>
 	{% endfor %}
 	</div>
 	</form>
-	<a class="btn btn-default" href="{{url_for('modify',q_id=id)}}">Modify</a>
-
-		{% endblock %}
-<!-- </body>
-</html> -->
+	<br/><br/>
+	<a class="btn btn-primary col-md-1" href="{{url_for('modify',q_id=id)}}">Modify</a>
+{% endblock %}

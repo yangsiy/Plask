@@ -1,50 +1,64 @@
 {% extends "base.html" %}
 
+{% block head %}
+<style type="text/css">
+	.maindiv {
+		max-width: 70%;
+	}
+</style>
+{% endblock %}
+
 {% block content %}
-	<h1>{{title}}</h1>
-	<h3>{{subject}}</h3>
-	<h5>{{description}}</h5>
-	<hr>
-	<form method="POST">
+<h1>[{{subject}}] {{title}}</h1>
+<p>{{description}}</p>
+<hr/>
+<form method="POST">
 	<div id="ques_list">
 	{% for i in range(0,schema|length) %}
 		<div id="ques_{{i}}.div">
-			<label>{{i+1}}.</label><label id="ques_{{i}}.description">{{schema[i].description}}</label>
+			<label>{{i+1}}.&nbsp;</label><label id="ques_{{i}}.description">{{schema[i].description}}</label>
 			{% if schema[i].type=='0' %}
-			<ul>
+			<ul style="list-style-type:none">
 			{% for j in range(0,schema[i].options|length) %}
 				<li>
 					<input type="radio" name="ques_{{i}}.ans" value="{{j}}"/>
-					<label>{{schema[i].options[j]}}</label>
+					{{schema[i].options[j]}}
 				</li>
 			{% endfor %}
 			</ul>
 			{% elif schema[i].type=='1' %}
-			<ul>
+			<ul style="list-style-type:none">
 			{% for j in range(0,schema[i].options|length) %}
 				<li>
 					<input type="checkbox" name="ques_{{i}}.ans_{{j}}" value="1"/>
-					<label>{{schema[i].options[j]}}</label>
+					{{schema[i].options[j]}}
 				</li>
 			{% endfor %}
 			</ul>
 			{% elif schema[i].type=='2' %}
-			<ul>
+			<ul style="list-style-type:none">
 				<li>
 					<input type="radio" name="ques_{{i}}.ans" value="1"/>
-					<label>true</label>
+					True
 				</li>
 				<li>
 					<input type="radio" name="ques_{{i}}.ans" value="0"/>
-					<label>false</label>
+					False
 				</li>
 			</ul>
 			{% elif schema[i].type=='3' %}
-			<br/><input type="text" name="ques_{{i}}.ans"/>
+			<div class="row">
+				<div class="col-md-6">
+					<textarea rows="8" class="form-control" name="ques_{{i}}.ans"></textarea>
+				</div>
+			</div>
 			{% endif %}
 		</div>
 	{% endfor %}
 	</div>
-	<input type="submit" value="submit"/>
-	</form>
+	<br/><br/>
+	<button class="btn btn-primary col-md-1" type="submit">
+		Submit
+	</button>
+</form>
 {% endblock %}
