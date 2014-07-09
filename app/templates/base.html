@@ -52,7 +52,7 @@
     </div>
 </div>
 
-{% with messages = get_flashed_messages() %}
+{% with messages = get_flashed_messages(category_filter=["message"]) %}
     {% if messages %}
     <script type="text/javascript">
         (function() {
@@ -60,6 +60,19 @@
             positionClass: 'toast-center-center'
           };
           toastr.success('{{ messages[-1] }}', 'Plask');
+        }).call(this);
+    </script>
+    {% endif %}
+{% endwith %}
+
+{% with errors = get_flashed_messages(category_filter=["error"]) %}
+    {% if errors %}
+    <script type="text/javascript">
+        (function() {
+          toastr.options = {
+            positionClass: 'toast-center-center'
+          };
+          toastr.error('{{ errors[-1] }}', 'Plask');
         }).call(this);
     </script>
     {% endif %}

@@ -5,24 +5,25 @@
 
 {% block content_step %}
   <h1 class="page-header">Step 2/2 : Add Questions</h1>
-
+  
+<div class="col-sm-9 col-md-10">
   <form method="POST">
     <div id="ques_list">
     <input id="ques.id" name="ques.id" type="hidden" value="id"/>
 	{% for i in range(0,schema|length) %}
 		<div id="ques_{{i}}.div" class="form-group row well" onmouseover="show_buttons(this,0)" onmouseout="hide_buttons(this,0)">
 			<div class="row">
-				<input id="ques_{{i}}.type" name="ques_{{i}}.type" type="Hidden" value="0">
+				<input id="ques_{{i}}.type" name="ques_{{i}}.type" type="Hidden" value='{{ schema[i].type }}'>
 				<input id="ques_{{i}}.description" name="ques_{{i}}.description" type="text" class="col-md-6" placeholder="Enter the question description" value="{{schema[i].description}}">
 				<div class="ques_button" style="display:none">
 					<span class="pull-right btn glyphicon glyphicon-trash" onclick="delete_question(this)"></span>
 					<span class="pull-right btn glyphicon glyphicon glyphicon-arrow-down" onclick="move_question(this,1)"></span>
 					<span class="pull-right btn glyphicon glyphicon glyphicon-arrow-up" onclick="move_question(this,0)"></span>
+          {% if schema[i].type == '0' or schema[i].type == '1' %}
 					<span class="pull-right btn glyphicon glyphicon-plus" onclick="add_option(this,0)"></span>
+          {% endif %}
 				</div>
-			</div>
-			{% if schema[i].type == '0' or schema[i].type == '1' %}
-			<ul>
+			</div>{% if schema[i].type == '0' or schema[i].type == '1' %}<ul>
 				{% for j in range(0,schema[i].options|length) %}
 				<li onmouseover="show_buttons(this,1)" onmouseout="hide_buttons(this,1)">
 					<input type="text" id="ques_{{i}}.option_{{j}}" name="ques_{{i}}.option_{{j}}" value="{{schema[i].options[j]}}"><div class="pull-right option_button" style="display:none">
@@ -37,8 +38,9 @@
 		</div>
 	{% endfor %}
 	</div>
-    <button class="btn btn-default" type="submit">Submit</button>
+    <button class="btn btn-primary" type="submit">Submit</button>
   </form>
+</div>
 
   <div class="col-sm-3 col-md-2 sidebar-right">
     <ul class="nav nav-stacked">
