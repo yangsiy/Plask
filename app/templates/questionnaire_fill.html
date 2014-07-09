@@ -2,6 +2,12 @@
 
 {% block head %}
 <style type="text/css">
+	body {
+		background-color: #EFEFEF;
+	}
+	p[id] {
+		font-size: 16px;
+	}
 	.maindiv {
 		max-width: 70%;
 	}
@@ -9,14 +15,15 @@
 {% endblock %}
 
 {% block content %}
+<div class="well" style="background-color: white;padding: 60px">
 <h1>[{{subject}}] {{title}}</h1>
-<p>{{description}}</p>
-<hr/>
+<p id="description">{{description}}</p>
+<hr style="border:0;background-color:#357ebd;height:1px;">
 <form method="POST">
 	<div id="ques_list">
 	{% for i in range(0,schema|length) %}
 		<div id="ques_{{i}}.div">
-			<label>{{i+1}}.&nbsp;</label><label id="ques_{{i}}.description">{{schema[i].description}}</label>
+			<p id="ques_{{i}}.description">{{i+1}}.&nbsp;{{schema[i].description}}</p>
 			{% if schema[i].type=='0' %}
 			<ul style="list-style-type:none">
 			{% for j in range(0,schema[i].options|length) %}
@@ -57,8 +64,9 @@
 	{% endfor %}
 	</div>
 	<br/><br/>
-	<button class="btn btn-primary col-md-1" type="submit">
+	<button class="btn btn-primary col-md-2" type="submit">
 		Submit
 	</button>
 </form>
+</div>
 {% endblock %}
