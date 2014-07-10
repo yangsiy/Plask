@@ -2,8 +2,8 @@
 
 {% block message_action %}
 	{% if g.user %}
-		<input type="button" onclick="location.href='{{url_for('user',username=g.user.username)}}'" value="User Dashboard"/>
+    <a class="btn btn-default" href="{{url_for('user',username=g.user.username)}}">User Dashboard</a>
 	{% else %}
-		<input type="button" onclick="location.href='{{url_for('register')}}'" value="Register"/>
+    <a class="btn btn-warning" href="{{url_for('register')}}">Register</a>
 	{% endif %}
 {% endblock %}
