@@ -144,11 +144,20 @@ def fill(q_id):
         for prob_id in range(len(questions)):
             if questions[prob_id]['type'] in ['0','2','3']:
                 #single-selection, true/false ,or essay question
-                p_ans = ProbAnswer(ques_ans_id = ans.id,
-                                    prob_id = prob_id,
-                                    ans = request.form['ques_' + str(prob_id) + '.ans'],  #example: ques_3.ans 2(that is, C)
-                                    )
-                db.session.add(p_ans)
+                if ('ques_' + str(prob_id) + '.ans') not in request.form:
+                    flash('Please fill in the blank', 'error')
+                    return render_template('questionnaire_fill.html',
+                        g = g, 
+                        schema = questions,
+                        title = q.title,
+                        subject = q.subject,
+                        description = q.description)
+                else:
+                    p_ans = ProbAnswer(ques_ans_id = ans.id,
+                                        prob_id = prob_id,
+                                        ans = request.form['ques_' + str(prob_id) + '.ans'],  #example: ques_3.ans 2(that is, C)
+                                        )
+                    db.session.add(p_ans)
             elif questions[prob_id]['type'] == '1':
                 #multi-selection
                 for choice_id in range(len(questions[prob_id]["options"])):
