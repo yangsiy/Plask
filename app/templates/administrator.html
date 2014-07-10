@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
 {% block head %}
+<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}"/>
+<script type="text/javascript" src="{{ url_for('static', filename='js/sidebar.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/highcharts.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.scrollLoading.js') }}"></script>
 <script type="text/javascript">
@@ -100,9 +102,6 @@
   });
 </script>
 
-<script type="text/javascript">
-  $('.plask-sidebar').scrollspy();
-</script>
 {% endblock %}
 
 

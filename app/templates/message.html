@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<h1>{{message}}</h1>
+<div class="col-md-10 col-md-offset-1">
+	<h1 style="color:#FFFFFF">{{message}}</h1>
 	<br>
 	{% block message_action %}{% endblock %}
+</div>
 {% endblock %}

@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}"/>
+<script type="text/javascript" src="{{ url_for('static', filename='js/sidebar.js') }}"></script>
+{% endblock %}
+
 {% block content %}
-<script type="text/javascript" src="{{ url_for('static', filename='js/js/new_questionnaire.js') }}"></script>
 
 <div class="container-fluid">
 <div class="col-md-10 col-md-offset-1">
