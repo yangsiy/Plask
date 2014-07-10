@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container-fluid" style="background-color:#FFFFFF">
+<div class="container-fluid">
 <div class="col-md-10 col-md-offset-1">
     <div class="row">
         <div class="col-md-8">
-            <h1>{{ title }}</h1>
+            <h1 style="color:#FFFFFF">{{ title }}</h1>
         </div>
         <div class="col-md-4" style="margin-top:28px">
             <a class="btn btn-large btn-default" href="{{ questionnaire_id }}/preview">Preview</a>
@@ -24,7 +24,7 @@
 
     <br/>
     <div class="row">
-        <div class="col-md-10 col-md-offset-1 panel panel-default" style="background-color:rgba(238, 238, 238, 0.31)">
+        <div class="col-md-10 col-md-offset-1 panel panel-default" style="background-color:rgba(255, 255, 255, 0.4)">
         <div class="panel-body">
         <div class="row">
             <div class="col-md-10">
@@ -58,7 +58,7 @@
     {% if state == 'In releasing' or state == 'In reopening' %}
     <div class="row">
         <div class="col-md-12">
-            <h2>Current Release</h2>
+            <h2 style="color:#FFFFFF">Current Release</h2>
         </div>
     </div>
 
@@ -66,7 +66,7 @@
 
     
     <div class="row">
-        <div class="col-md-10 col-md-offset-1 panel panel-default" style="background-color:rgba(238, 238, 238, 0.31)">
+        <div class="col-md-10 col-md-offset-1 panel panel-default" style="background-color:rgba(255, 255, 255, 0.4)">
         <div class="panel-body">
         <div class="col-md-8">
         <dl class="dl-horizontal">
@@ -103,7 +103,7 @@
     </div>
     {% endif %}
 
-<h2>Report</h2>
+<h2 style="color:#FFFFFF">Report</h2>
 <br />
 {% block report %}{% endblock %}
 
