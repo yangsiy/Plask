@@ -4,6 +4,13 @@
 {% extends "workflow.html" %}
 
 {% block content_step %}
+<script type="text/javascript" >
+$(document).ready(function(){
+	$("#sidebarli1").attr("class","list-group-item");
+	$("#sidebarli2").attr("class","list-group-item active");
+});
+</script>
+
   <h1 class="page-header">Step 2/2 : Add Questions</h1>
   
 <div class="col-sm-9 col-md-10">
@@ -11,12 +18,38 @@
     <div id="ques_list">
     <input id="ques.id" name="ques.id" type="hidden" value="id"/>
 	{% for i in range(0,schema|length) %}
+
 		<div id="ques_{{i}}.div" class="form-group row well" onmouseover="show_buttons(this,0)" onmouseout="hide_buttons(this,0)">
+				<div style="font-size:13px; margin-left:5px;margin-top:-10px;margin-bottom:10px;">
+				  {% if schema[i].type=='0' %}
+				  <b>Single Choice</b>
+				  {% elif schema[i].type=='1' %}
+				  <b>Multiple Choice</b>
+				  {% elif shema[i].type=='2' %}
+				  <b>True or False </b>
+				  {% else %}
+				  <b>Essay</b>
+				  {% endif %}
+				 </div>
 			<div class="row">
 				<input id="ques_{{i}}.type" name="ques_{{i}}.type" type="Hidden" value='{{ schema[i].type }}'>
         <div class="col-md-6">
 				  <input id="ques_{{i}}.description" name="ques_{{i}}.description" type="text" class="form-control" placeholder="Enter the question description" value="{{schema[i].description}}">
-        </div>
+
+
+
+        </div><!-- 
+        		<div class="col-md-3">
+				  {% if schema[i].type=='0' %}
+				  <p>Single</p>
+				  {% elif schema[i].type=='1' %}
+				  <p>Multi </p>
+				  {% elif shema[i].type=='2' %}
+				  <p>T/F </p>
+				  {% else %}
+				  <p>Essay</p>
+				  {% endif %}
+				 </div> -->
 				<div class="ques_button" style="display:none">
 					<span class="pull-right btn glyphicon glyphicon-trash" onclick="delete_question(this)"></span>
 					<span class="pull-right btn glyphicon glyphicon glyphicon-arrow-down" onclick="move_question(this,1)"></span>
@@ -45,18 +78,18 @@
 </div>
 
   <div class="col-sm-3 col-md-2 sidebar-right">
-    <ul class="nav nav-stacked">
+    <ul class="nav nav-stacked" style="margin-top:30px">
       <li>
-        <button class="btn btn-default" onclick="add_question(0)">Single choice</button>
+        <button class="btn btn-default btn-block" onclick="add_question(0)">Single Choice</button>
       </li>
       <li>
-        <button class="btn btn-default" onclick="add_question(1)">Multiple choice</button>
+        <button class="btn btn-default btn-block" onclick="add_question(1)">Multiple Choice</button>
       </li>
       <li>
-      <button class="btn btn-default" onclick="add_question(2)">True or false</button>
+      <button class="btn btn-default btn-block" onclick="add_question(2)">True or False</button>
       </li>
       <li>
-        <button class="btn btn-default" onclick="add_question(3)">Essay</button>
+        <button class="btn btn-default btn-block" onclick="add_question(3)">Essay</button>
       </li>
     </ul>
   </div>

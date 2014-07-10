@@ -2,13 +2,10 @@
 
 {% block report %}
 
-<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.scrollLoading.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/highcharts.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/exporting.js') }}"></script>
 
-<!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"/> -->
 
 <script type="text/javascript">
 
@@ -33,7 +30,8 @@
             text: '{{ques_list[i].description}}'
         },
         tooltip: {
-    	    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    	    pointFormat: {% if ques_list[i].type!='1' %}'{series.name}: <b>{point.percentage:.1f}%</b>'
+    	    {% else %}'{series.name}: <b>{point.y}%</b>'{% endif %}
         },
          xAxis: {
                 categories: [{% for j in ques_list[i].option_list %}"{{j}}",{% endfor %}],
@@ -44,7 +42,7 @@
             yAxis: {
                 min: 0,
                 title: {
-                    text: 'Population ',
+                    text: 'Number ',
                     align: 'high'
                 },
                 labels: {
@@ -67,7 +65,7 @@
         },
         series: [{
             // type: 'pie',
-            name: 'questionnaire share',
+            name: 'sum of the answers',
             data: [
 
                 {% for j in range(0,ques_list[i].option_list|length) %}
