@@ -223,7 +223,7 @@
     </td>
 
     <td>
-      <p>{{ q.create_time.strftime("%Y-%m-%d %H:%M:%S") }}</p>
+      <span>{{q.create_time.strftime("%Y-%m-%d %H:%M") if q.create_time else "Not yet"}}</span>
     </td>
 
     <td>
