@@ -96,4 +96,4 @@ def register():
 
 	return render_template('register.html',
 		g = g,
-		form = formi)
+		form = form)
