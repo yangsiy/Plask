@@ -1,6 +1,12 @@
 {% extends "workflow.html" %}
 
 {% block content_step %}
+<script type="text/javascript" >
+$(document).ready(function(){
+  $("#sidebarli1").attr("class","list-group-item");
+  $("#sidebarli2").attr("class","list-group-item active");
+});
+</script>
   <h1 class="page-header" style="color:#FFFFFF">Step 2/2 : Add Questions</h1>
 
   <div class="col-sm-9 col-md-10">
@@ -14,13 +20,13 @@
   <div class="col-sm-3 col-md-2 sidebar-right">
     <ul class="nav nav-stacked">
       <li>
-        <button class="btn btn-default" onclick="add_question(0)">Single choice</button>
+        <button class="btn btn-default" onclick="add_question(0)">Single Choice</button>
       </li>
       <li>
-        <button class="btn btn-default" onclick="add_question(1)">Multiple choice</button>
+        <button class="btn btn-default" onclick="add_question(1)">Multiple Choice</button>
       </li>
       <li>
-      <button class="btn btn-default" onclick="add_question(2)">True or false</button>
+      <button class="btn btn-default" onclick="add_question(2)">True or False</button>
       </li>
       <li>
         <button class="btn btn-default" onclick="add_question(3)">Essay</button>

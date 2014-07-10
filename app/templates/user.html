@@ -3,16 +3,16 @@
 {% block content %}
 <script type="text/javascript" src="{{ url_for('static', filename='js/js/new_questionnaire.js') }}"></script>
 
-<div class="container-fluid" style="background-color:#FFFFFF">
+<div class="container-fluid">
 <div class="col-md-10 col-md-offset-1">
 <div class="col-md-1">
   <div id="plask-sidebar" class="plask-sidebar hidden-print hidden-xs hidden-sm">
     <ul class="nav plask-sidenav">
       <li>
-        <a href="#questionnaire_created"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;Created</a>
+        <a href="#questionnaire_created" style="color:#FFFFFF"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;Created</a>
       </li>
       <li>
-        <a href="#questionnaire_answered"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;Answered</a>
+        <a href="#questionnaire_answered" style="color:#FFFFFF"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;Answered</a>
       </li>
     </ul>
   </div>
@@ -23,18 +23,19 @@
 	<form method="POST">
 
     {% if g.user == user %}
-        <h3 style="margin-top:25px">Welcome, {{user.username}} <a class="btn btn-primary btn-m pull-right" role="button" href="{{url_for('create')}}" style="margin-top:-5px">Create Questionnaire</a></h3>
+        <h3 style="margin-top:25px; color:#FFFFFF">Welcome, {{user.username}} <a class="btn btn-success btn-m pull-right" role="button" href="{{url_for('create')}}" style="margin-top:-5px">Create Questionnaire</a></h3>
     {% else %}
         <h3>{{user.username}}({{user.mail}})</h3>
     {% endif %}
 
  
-    <div><h2 id="questionnaire_created">Questionnaire Created:</h2>
+    <div><h2 id="questionnaire_created" style="color:#FFFFFF">Questionnaire Created:</h2>
     </div>
 
 
 
 	<div id="ques_list_created">
+		<div class="panel panel-default">
 		<table id="proj_list" class="table table-striped">
 			<thead>
 			<tr class="thead_td" class="row fluid">
@@ -84,11 +85,12 @@
 			{% endfor %}
 			</tbody>
 		</table>
+		</div>
 	</div>
 
-	<br/>
-	    <h2 id="questionnaire_answered">Questionnaire Answered:</h2>
+	    <h2 id="questionnaire_answered" style="color:#FFFFFF">Questionnaire Answered:</h2>
 	<div id="ques_list_filled">
+		<div class="panel panel-default">
 		<table id="proj_list" class="table table-striped">
 			<thead>
 			<tr class="row fluid">
@@ -120,11 +122,11 @@
 			<td class="col-md-4 center">
                 <a class="btn btn-xs btn-default" href="{{url_for('questionnaire', questionnaire_id=ans.questionnaire.id)}}">Details</a>
 			</td>
-
 			</tr>
 			{% endfor %}
 			</tbody>
 		</table>
+		</div>
 	</div>
 	</form>
 
