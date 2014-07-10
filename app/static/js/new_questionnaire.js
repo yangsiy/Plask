@@ -26,6 +26,7 @@ function add_question(type){
   new_question_description.name="ques_"+count+".description";
   new_question_description.type="text";
   new_question_description.setAttribute("class", "form-control");
+  new_question_description.setAttribute("required", "required");
   new_question_description.placeholder="Enter the question description";
 
   var new_question_description_div=document.createElement("div");
@@ -68,13 +69,13 @@ function add_question(type){
   if(type<2){
     new_option_ul.innerHTML=
     "<li onmouseover=\"show_buttons(this,1)\" onmouseout=\"hide_buttons(this,1)\"><input class=\"form-control\" type=\"text\" id=\"ques_"+
-    count+".option_0\" name=\"ques_"+count+".option_0\" value=\"new option\"/>"+
+    count+".option_0\" name=\"ques_"+count+".option_0\" placeholder=\"New option\" required/>"+
     "<div class=\"pull-right option_button\" style=\"display:none\">"+
     "<span class=\"btn glyphicon glyphicon-arrow-up\" onclick=\"move_option(this,0)\"></span>"+
     "<span class=\"btn glyphicon glyphicon-arrow-down\" onclick=\"move_option(this,1)\"></span>"+
     "<span class=\"btn glyphicon glyphicon-trash\" onclick=\"delete_option(this)\"></span></div></li>"+
     "<li onmouseover=\"show_buttons(this,1)\" onmouseout=\"hide_buttons(this,1)\"><input class=\"form-control\" type=\"text\" id=\"ques_"+
-    count+".option_1\" name=\"ques_"+count+".option_1\" value=\"new option\"/>"+
+    count+".option_1\" name=\"ques_"+count+".option_1\" placeholder=\"New option\" required/>"+
     "<div class=\"pull-right option_button\" style=\"display:none\">"+
     "<span class=\"btn glyphicon glyphicon-arrow-up\" onclick=\"move_option(this,0)\"></span>"+
   "<span class=\"btn glyphicon glyphicon-arrow-down\" onclick=\"move_option(this,1)\"></span>"+
@@ -218,7 +219,7 @@ function add_option(obj,type){
   li.setAttribute("onmouseover","show_buttons(this,1)");
   li.setAttribute("onmouseout","hide_buttons(this,1)");
   li.innerHTML="<input class=\"form-control\" type=\"text\" id=\"ques_"+
-    count+".option_"+ocount+"\" name=\"ques_"+count+".option_"+ocount+"\" value=\"new option\"/>"+
+    count+".option_"+ocount+"\" name=\"ques_"+count+".option_"+ocount+"\" placeholder=\"New option\" required/>"+
     "<div style=\"display:none\" class=\"pull-right option_button\">"+
     "<span class=\"btn glyphicon glyphicon-arrow-up\" onclick=\"move_option(this,0)\"></span>"+
   "<span class=\"btn glyphicon glyphicon-arrow-down\" onclick=\"move_option(this,1)\"></span>"+

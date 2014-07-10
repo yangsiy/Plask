@@ -28,7 +28,7 @@
 			</div>{% if schema[i].type == '0' or schema[i].type == '1' %}<ul class="form-inline">
 				{% for j in range(0,schema[i].options|length) %}
 				<li onmouseover="show_buttons(this,1)" onmouseout="hide_buttons(this,1)">
-					<input class="form-control" type="text" id="ques_{{i}}.option_{{j}}" name="ques_{{i}}.option_{{j}}" value="{{schema[i].options[j]}}"><div class="pull-right option_button" style="display:none">
+					<input class="form-control" type="text" id="ques_{{i}}.option_{{j}}" name="ques_{{i}}.option_{{j}}"placeholder="New option"  value="{{schema[i].options[j]}}"><div class="pull-right option_button" style="display:none">
 						<span class="btn glyphicon glyphicon-arrow-up" onclick="move_option(this,0)"></span>
 						<span class="btn glyphicon glyphicon-arrow-down" onclick="move_option(this,1)"></span>
 						<span class="btn glyphicon glyphicon-trash" onclick="delete_option(this)"></span>

@@ -2,13 +2,8 @@
 
 {% block report %}
 
-<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.scrollLoading.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/highcharts.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-
-<!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"/> -->
 
 <script type="text/javascript">
 
@@ -191,8 +186,6 @@
 </div>
 {% endif %}
 </div>
-<!-- <div id="container_pie" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div> -->
-
 
   {% endfor %}
 {% endblock %}
