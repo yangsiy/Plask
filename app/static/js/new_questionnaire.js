@@ -1,3 +1,7 @@
+console.log("test");
+
+
+
 function add_question(type){
   var base_div=document.getElementById("ques_list");
   var new_question_div=document.createElement("div");
@@ -232,16 +236,12 @@ function add_option(obj,type){
   var li=document.createElement("li");
   li.setAttribute("onmouseover","show_buttons(this,1)");
   li.setAttribute("onmouseout","hide_buttons(this,1)");
-<<<<<<< HEAD
+
   li.setAttribute("class","row");
   li.innerHTML="<input class=\"col-md-7 form-control\" type=\"text\" id=\"ques_"+
-    count+".option_"+ocount+"\" name=\"ques_"+count+".option_"+ocount+"\" placeholder=\"new option\"/>"+
+    count+".option_"+ocount+"\" name=\"ques_"+count+".option_"+ocount+"\" placeholder=\"new option\" required/>"+
     "<div style=\"display:none\" class=\"col-md-5 option_button\">"+
-=======
-  li.innerHTML="<input class=\"form-control\" type=\"text\" id=\"ques_"+
-    count+".option_"+ocount+"\" name=\"ques_"+count+".option_"+ocount+"\" placeholder=\"New option\" required/>"+
-    "<div style=\"display:none\" class=\"pull-right option_button\">"+
->>>>>>> db64ae0e5586719cad99d28ec2e9c9eb809675f1
+
     "<span class=\"btn glyphicon glyphicon-arrow-up\" onclick=\"move_option(this,0)\"></span>"+
   "<span class=\"btn glyphicon glyphicon-arrow-down\" onclick=\"move_option(this,1)\"></span>"+
     "<span class=\"btn glyphicon glyphicon-trash\" onclick=\"delete_option(this)\"></span></div>";

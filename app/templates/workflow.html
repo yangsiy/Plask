@@ -2,15 +2,15 @@
 
 {% block head %}
   <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/workflow.css') }}">
-  <script type="text/javascript" src="/static/js/new_questionnaire.js"></script>
+  <script type="text/javascript" src="{{ url_for('static',filename='js/new_questionnaire.js') }}"></script>
 {% endblock %}
 
 {% block content %}
 
       <div class="container-fluid">
         <div class="row">
-          <div class="col-sm-3 col-md-2 sidebar">
-            <ul class="list-group" style="margin-top:32px;line-height:15px;">
+          <div class="col-sm-3 col-md-2 sidebar" style="background:none; ">
+            <ul class="list-group" style="margin-top:32px;line-height:15px;position:relative">
               <li class="list-group-item">
                 <b style="font-family:Menlo;font-size:18px;line-height:30px">Step Tips:</b>
               </li>
@@ -22,7 +22,7 @@
               </li>
             </ul>
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <div class="col-sm-9  col-md-10  main">
           {% block content_step %}{% endblock %}
         </div>
       </div>
