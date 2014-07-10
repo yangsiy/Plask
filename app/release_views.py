@@ -178,6 +178,7 @@ def get_ques_list(q):
             if each['type'] == '3':
                 for answer in answers:
                     dic['option_list'].append(answer.ans)
+                print str(dic['option_list'])
             elif each['type'] == '2':
                 for answer in answers:
                     if answer.ans=='1':
@@ -188,4 +189,5 @@ def get_ques_list(q):
                 for answer in answers:
                     dic['num_list'][int(answer.ans)] = dic['num_list'][int(answer.ans)] + 1
         ques_list.append(dic)
+
     return ques_list

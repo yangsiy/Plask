@@ -27,8 +27,8 @@ a:hover {
 html,
 body {
   height: 100%;
-  background-color: #333;
-  background: url(/static/img/plask_back_pic.jpg);
+  background-color: rgba(111,84,153,0.92);
+  /*background: url(/static/img/plask_back_pic_v3.jpg);*/
   -webkit-background-size: 100% 100%;
   -moz-background-size: 100% 100%;
   -o-background-size: 100% 100%;
@@ -54,6 +54,7 @@ body {
 .site-wrapper-inner {
   display: table-cell;
   vertical-align: top;
+  background-color: rgba(111,84,153,0.92);
 }
 .cover-container {
   margin-right: auto;
@@ -225,6 +226,7 @@ body {
 
 /* Padding for spacing */
 .inner {
+  /*margin-top: -100px;*/
   padding: 30px;
 }
 
@@ -388,6 +390,7 @@ body {
 
 /* Padding for spacing */
 .inner {
+  margin-top: -100px;
   padding: 30px;
 }
 
@@ -396,7 +399,7 @@ body {
  * Header
  */
 .masthead-brand {
-  margin-top: 10px;
+  margin-top: 110px;
   margin-bottom: 10px;
 }
 
@@ -414,6 +417,7 @@ body {
   color: #fff; /* IE8 proofing */
   color: rgba(255,255,255,.75);
   border-bottom: 2px solid transparent;
+  margin-top: 100px;
 }
 .masthead-nav > li > a:hover,
 .masthead-nav > li > a:focus {
