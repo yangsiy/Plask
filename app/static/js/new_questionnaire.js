@@ -63,19 +63,20 @@ function add_question(type){
 
   var new_option_ul=document.createElement("ul");
   new_option_ul.setAttribute("class", "form-inline");
+  new_option_ul.style.listStyleType="none";
   new_question_div.appendChild(new_option_ul);
 
   if(type<2){
     new_option_ul.innerHTML=
-    "<li onmouseover=\"show_buttons(this,1)\" onmouseout=\"hide_buttons(this,1)\"><input class=\"form-control\" type=\"text\" id=\"ques_"+
-    count+".option_0\" name=\"ques_"+count+".option_0\" value=\"new option\"/>"+
-    "<div class=\"pull-right option_button\" style=\"display:none\">"+
+    "<li class=\"row\" onmouseover=\"show_buttons(this,1)\" onmouseout=\"hide_buttons(this,1)\"><input class=\"col-md-7 form-control\" type=\"text\" id=\"ques_"+
+    count+".option_0\" name=\"ques_"+count+".option_0\" placeholder=\"new option\"/>"+
+    "<div class=\"col-md-5 option_button\" style=\"display:none\">"+
     "<span class=\"btn glyphicon glyphicon-arrow-up\" onclick=\"move_option(this,0)\"></span>"+
     "<span class=\"btn glyphicon glyphicon-arrow-down\" onclick=\"move_option(this,1)\"></span>"+
     "<span class=\"btn glyphicon glyphicon-trash\" onclick=\"delete_option(this)\"></span></div></li>"+
-    "<li onmouseover=\"show_buttons(this,1)\" onmouseout=\"hide_buttons(this,1)\"><input class=\"form-control\" type=\"text\" id=\"ques_"+
-    count+".option_1\" name=\"ques_"+count+".option_1\" value=\"new option\"/>"+
-    "<div class=\"pull-right option_button\" style=\"display:none\">"+
+    "<li class=\"row\" onmouseover=\"show_buttons(this,1)\" onmouseout=\"hide_buttons(this,1)\"><input class=\"col-md-7 form-control\" type=\"text\" id=\"ques_"+
+    count+".option_1\" name=\"ques_"+count+".option_1\" placeholder=\"new option\"/>"+
+    "<div class=\"col-md-5 option_button\" style=\"display:none\">"+
     "<span class=\"btn glyphicon glyphicon-arrow-up\" onclick=\"move_option(this,0)\"></span>"+
   "<span class=\"btn glyphicon glyphicon-arrow-down\" onclick=\"move_option(this,1)\"></span>"+
     "<span class=\"btn glyphicon glyphicon-trash\" onclick=\"delete_option(this)\"></span></div></li>";
@@ -217,9 +218,10 @@ function add_option(obj,type){
   var li=document.createElement("li");
   li.setAttribute("onmouseover","show_buttons(this,1)");
   li.setAttribute("onmouseout","hide_buttons(this,1)");
-  li.innerHTML="<input class=\"form-control\" type=\"text\" id=\"ques_"+
-    count+".option_"+ocount+"\" name=\"ques_"+count+".option_"+ocount+"\" value=\"new option\"/>"+
-    "<div style=\"display:none\" class=\"pull-right option_button\">"+
+  li.setAttribute("class","row");
+  li.innerHTML="<input class=\"col-md-7 form-control\" type=\"text\" id=\"ques_"+
+    count+".option_"+ocount+"\" name=\"ques_"+count+".option_"+ocount+"\" placeholder=\"new option\"/>"+
+    "<div style=\"display:none\" class=\"col-md-5 option_button\">"+
     "<span class=\"btn glyphicon glyphicon-arrow-up\" onclick=\"move_option(this,0)\"></span>"+
   "<span class=\"btn glyphicon glyphicon-arrow-down\" onclick=\"move_option(this,1)\"></span>"+
     "<span class=\"btn glyphicon glyphicon-trash\" onclick=\"delete_option(this)\"></span></div>";
