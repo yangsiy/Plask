@@ -5,6 +5,11 @@
 <script type="text/javascript" src="{{ url_for('static', filename='js/sidebar.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/highcharts.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.scrollLoading.js') }}"></script>
+<style type="text/css">
+  h1, h2, p {
+    color: white;
+  }
+</style>
 <script type="text/javascript">
   var options =
       [{
@@ -141,6 +146,7 @@
   <br/>
 
   <h2 id="all_users" class="page-header">All users</h2>
+  <div class="panel panel-default">
   <table class="table table-striped">
     <thead>
     <tr>
@@ -185,11 +191,12 @@
     {% endfor %}
     </tbody>
   </table>
+  </div>
 
   <br/>
 
   <h2 id="all_questionnaires" class="page-header">All questionnaires</h2>
-
+  <div class="panel panel-default">
   <table class="table table-striped">
     <thead>
     <tr>
@@ -238,6 +245,7 @@
     {% endfor %}
     </tbody>
   </table>
+  </div>
 
 </div>
 
