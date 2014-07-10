@@ -1,9 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+<div class="container-fluid" style="background-color:#FFFFFF">
+<div class="col-md-10 col-md-offset-1">
     <div class="row">
         <div class="col-md-8">
             <h1>{{ title }}</h1>
@@ -25,7 +24,7 @@
 
     <br/>
     <div class="row">
-        <div class="col-md-10 col-md-offset-1 panel panel-default">
+        <div class="col-md-10 col-md-offset-1 panel panel-default" style="background-color:rgba(238, 238, 238, 0.31)">
         <div class="panel-body">
         <div class="row">
             <div class="col-md-10">
@@ -67,9 +66,13 @@
 
     
     <div class="row">
-        <div class="col-md-10 col-md-offset-1 panel panel-default">
+        <div class="col-md-10 col-md-offset-1 panel panel-default" style="background-color:rgba(238, 238, 238, 0.31)">
         <div class="panel-body">
         <div class="col-md-8">
+        <dl class="dl-horizontal">
+            <dt>URL: </dt>
+            <dd><a id="Url_Change" href="http://192.168.43.164:5000/questionnaire/{{q_id}}/fill">http://192.168.43.164:5000/questionnaire/{{q_id}}/fill</a></dd>
+        </dl>
         <dl class="dl-horizontal">
             <dt>Start time</dt>
             <dd>{{ start_time }}</dd>
@@ -94,10 +97,6 @@
             <dt>Special participants</dt>
             <dd>{{ special_participants }}</dd>
         </dl>
-        <dl class="dl-horizontal">
-            <dt>URL: </dt>
-            <dd><a id="Url_Change" href="http://192.168.43.164:5000/questionnaire/{{q_id}}/fill">http://192.168.43.164:5000/questionnaire/{{q_id}}/fill</a></dd>
-        </dl>
         </div>
         </div>
         </div>
@@ -110,16 +109,12 @@
 
 </div>
 </div>
-</div>
 
 <script>
     window.onload=function(){
-    
         var test="http://"+document.location.host;
         test+="/questionnaire/{{q_id}}/fill";
-        
         document.getElementById("Url_Change").setAttribute("href",test);
-
         document.getElementById("Url_Change").innerHTML=test;
     }
 </script>

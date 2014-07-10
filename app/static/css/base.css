@@ -6,6 +6,7 @@ html {
 body {
     margin-bottom: 60px;
     font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei UI", "Microsoft YaHei", SimHei, simsun, sans-serif;
+    background: url(/static/img/plask_back_pic.jpg) fixed;
 }
 
 .maindiv {
@@ -14,6 +15,11 @@ body {
     padding-bottom: 40px;
     line-height: 200%;
 }
+
+.navbar-inverse {
+    background-color: #000;
+    border-color: #080808;
+};
 
 a:hover {
     text-decoration: none;
@@ -31,4 +37,5 @@ footer {
     position: absolute;
     bottom: 0;
     width: 100%;
+    color: white;
 }

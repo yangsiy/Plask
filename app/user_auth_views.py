@@ -57,7 +57,8 @@ def login():
 	
 	return render_template('login.html',
 		g = g,
-		form = form)
+		form = form,
+		islogin = True)
 
 
 @app.route('/logout')
@@ -75,8 +76,17 @@ def register():
 				username = form.username.data,
 				password = form.password.data,
 				mail = form.mail.data)
-			db.session.add(user)
-			db.session.commit()
+			try:
+				db.session.add(user)
+				db.session.commit()
+			except:
+				form.username.data = ''
+				form.password.data = ''
+				form.password_again.data = ''
+				flash("The username has been used",'error')
+				return render_template('register.html',
+						g = g,
+						form = form)
 			login_user(user);
 			flash("Register successfully")
 			return redirect(url_for('user', username = user.username))

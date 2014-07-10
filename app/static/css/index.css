@@ -28,7 +28,7 @@ html,
 body {
   height: 100%;
   background-color: rgba(111,84,153,0.92);
-  /*background: url(/static/img/plask_back_pic_v3.jpg);*/
+  background: url(/static/img/plask_back_pic.jpg);
   -webkit-background-size: 100% 100%;
   -moz-background-size: 100% 100%;
   -o-background-size: 100% 100%;
@@ -54,7 +54,8 @@ body {
 .site-wrapper-inner {
   display: table-cell;
   vertical-align: top;
-  background-color: rgba(111,84,153,0.92);
+  /*background-color: rgba(111,84,153,0.92);
+  opacity: .50;*/
 }
 .cover-container {
   margin-right: auto;

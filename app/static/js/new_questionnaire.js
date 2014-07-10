@@ -40,6 +40,7 @@ function add_question(type){
   new_question_description.name="ques_"+count+".description";
   new_question_description.type="text";
   new_question_description.setAttribute("class", "form-control");
+  new_question_description.setAttribute("required", "required");
   new_question_description.placeholder="Enter the question description";
 
   var new_question_description_div=document.createElement("div");
@@ -83,13 +84,13 @@ function add_question(type){
   if(type<2){
     new_option_ul.innerHTML=
     "<li class=\"row\" onmouseover=\"show_buttons(this,1)\" onmouseout=\"hide_buttons(this,1)\"><input class=\"col-md-7 form-control\" type=\"text\" id=\"ques_"+
-    count+".option_0\" name=\"ques_"+count+".option_0\" placeholder=\"new option\"/>"+
+    count+".option_0\" name=\"ques_"+count+".option_0\" placeholder=\"new option\" required/>"+
     "<div class=\"col-md-5 option_button\" style=\"display:none\">"+
     "<span class=\"btn glyphicon glyphicon-arrow-up\" onclick=\"move_option(this,0)\"></span>"+
     "<span class=\"btn glyphicon glyphicon-arrow-down\" onclick=\"move_option(this,1)\"></span>"+
     "<span class=\"btn glyphicon glyphicon-trash\" onclick=\"delete_option(this)\"></span></div></li>"+
     "<li class=\"row\" onmouseover=\"show_buttons(this,1)\" onmouseout=\"hide_buttons(this,1)\"><input class=\"col-md-7 form-control\" type=\"text\" id=\"ques_"+
-    count+".option_1\" name=\"ques_"+count+".option_1\" placeholder=\"new option\"/>"+
+    count+".option_1\" name=\"ques_"+count+".option_1\" placeholder=\"new option\" required/>"+
     "<div class=\"col-md-5 option_button\" style=\"display:none\">"+
     "<span class=\"btn glyphicon glyphicon-arrow-up\" onclick=\"move_option(this,0)\"></span>"+
   "<span class=\"btn glyphicon glyphicon-arrow-down\" onclick=\"move_option(this,1)\"></span>"+
@@ -231,10 +232,16 @@ function add_option(obj,type){
   var li=document.createElement("li");
   li.setAttribute("onmouseover","show_buttons(this,1)");
   li.setAttribute("onmouseout","hide_buttons(this,1)");
+<<<<<<< HEAD
   li.setAttribute("class","row");
   li.innerHTML="<input class=\"col-md-7 form-control\" type=\"text\" id=\"ques_"+
     count+".option_"+ocount+"\" name=\"ques_"+count+".option_"+ocount+"\" placeholder=\"new option\"/>"+
     "<div style=\"display:none\" class=\"col-md-5 option_button\">"+
+=======
+  li.innerHTML="<input class=\"form-control\" type=\"text\" id=\"ques_"+
+    count+".option_"+ocount+"\" name=\"ques_"+count+".option_"+ocount+"\" placeholder=\"New option\" required/>"+
+    "<div style=\"display:none\" class=\"pull-right option_button\">"+
+>>>>>>> db64ae0e5586719cad99d28ec2e9c9eb809675f1
     "<span class=\"btn glyphicon glyphicon-arrow-up\" onclick=\"move_option(this,0)\"></span>"+
   "<span class=\"btn glyphicon glyphicon-arrow-down\" onclick=\"move_option(this,1)\"></span>"+
     "<span class=\"btn glyphicon glyphicon-trash\" onclick=\"delete_option(this)\"></span></div>";
