@@ -96,17 +96,17 @@
 
 {% for i in range(0,ques_list|length) %}
 {% if i > 0 %}
-<hr />
+<br />
 {% endif %}
+
 <div id="ques_{{i}}">
 {% if ques_list[i].type=='3' %}
-<table class="table table-bordered table-striped" style="text-align:center">
-  <thead>
-  <tr>
-  <td>{{ques_list[i].description}}
-  </td>
-  </tr>
-  </thead>
+<div class="row">
+  <div class="col-md-10 col-md-offset-1 panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">{{ques_list[i].description}}</div>
+    </div>
+<table class="table table-bordered" style="text-align:center">
   <tbody>
   {% for j in range(0,ques_list[i].option_list|length) %}
    <tr>
@@ -118,16 +118,24 @@
   {% endfor %}
   </tbody>
 </table>
+</div>
+</div>
 
 
 {% else %}
+<div class="row">
+  <div class="col-md-10 col-md-offset-1 panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">{{ques_list[i].description}}</div>
+    </div>
+    <div class="panel-body">
+
 <button class="change btn btn-large btn-default">pie</button>
 <button class="change btn btn-large btn-default">bar</button>
 <button class="change btn btn-large btn-default">line</button>
 <button class="change btn btn-large btn-default">column</button>
 
 <div class="scrollLoading" id="container_{{i}}" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
-
 
 <table class="table table-bordered table-striped">
   <thead>
@@ -150,6 +158,9 @@
   {% endfor %}
   </tbody>
 </table>
+</div>
+</div>
+</div>
 {% endif %}
 </div>
 <!-- <div id="container_pie" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div> -->
