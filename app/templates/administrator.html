@@ -22,7 +22,7 @@
           type:'line'
         },
         title: {
-            text: 'The number of the questionnaires per day in a week'
+            text: 'The number of questionnaires per day in a week'
         },
         tooltip: {
           pointFormat: '{series.name}: <b>{point.y}</b>'
@@ -116,13 +116,13 @@
   <div id="plask-sidebar" class="plask-sidebar hidden-print hidden-xs hidden-sm">
     <ul class="nav plask-sidenav">
       <li>
-        <a href="#overview"><span class="glyphicon glyphicon-stats"></span>&nbsp;Overview</a>
+        <a href="#overview" style="color:#FFFFFF"><span class="glyphicon glyphicon-stats"></span>&nbsp;Overview</a>
       </li>
       <li>
-        <a href="#all_users"><span class="glyphicon glyphicon-user"></span>&nbsp;All users</a>
+        <a href="#all_users" style="color:#FFFFFF"><span class="glyphicon glyphicon-user"></span>&nbsp;All users</a>
       </li>
       <li>
-        <a href="#all_questionnaires"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;All ques.</a>
+        <a href="#all_questionnaires" style="color:#FFFFFF"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;All ques.</a>
       </li>
     </ul>
   </div>
@@ -223,7 +223,7 @@
     </td>
 
     <td>
-      <p>{{ q.create_time.strftime("%Y-%m-%d %H:%M:%S") }}</p>
+      <span>{{q.create_time.strftime("%Y-%m-%d %H:%M") if q.create_time else "Not yet"}}</span>
     </td>
 
     <td>
