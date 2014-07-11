@@ -28,7 +28,7 @@ html,
 body {
   height: 100%;
   background-color: rgba(111,84,153,0.92);
-  background: url(/static/img/plask_back_pic.jpg);
+  background: url(/static/img/plask_back_pic.jpg) fixed;
   -webkit-background-size: 100% 100%;
   -moz-background-size: 100% 100%;
   -o-background-size: 100% 100%;
