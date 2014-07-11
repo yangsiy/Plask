@@ -61,7 +61,8 @@ def questionnaire(questionnaire_id):
             limit_num_ip = limit_num_ip,
             special_participants = special_participants,
             q_id = questionnaire_id,
-            ques_list = ques_list)
+            ques_list = ques_list,
+            ques = q)
 
 @app.route('/questionnaire/<int:questionnaire_id>/release', methods = ['GET', 'POST'])
 @login_required

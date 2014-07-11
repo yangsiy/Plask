@@ -9,6 +9,7 @@
         </div>
         <div class="col-md-4" style="margin-top:28px">
             <a class="btn btn-large btn-default" href="{{ questionnaire_id }}/preview">Preview</a>
+            {% if ques.author_id == g.user.id %}
             <a class="btn btn-large btn-default" href="{{ questionnaire_id }}/modify">Modify</a>
             {% if state == 'In creating' %}
             <a class="btn btn-large btn-success" href="{{ questionnaire_id }}/release">Release</a>
@@ -18,6 +19,7 @@
             {% endif %}
             {% if state == 'In releasing' or state == 'In reopening' %}
             <a class="btn btn-large btn-danger" href="{{ questionnaire_id }}/close">Close</a>
+            {% endif %}
             {% endif %}
         </div>
     </div>

@@ -3,6 +3,7 @@ from flask.ext.wtf import Form
 from wtforms import TextField
 from wtforms import PasswordField
 from wtforms.validators import Required
+from flask_wtf.html5 import EmailField
 
 import sys
 reload(sys)

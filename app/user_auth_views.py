@@ -4,6 +4,7 @@ from app import app, lm, db
 from forms import LoginForm, RegisterForm
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from models import User
+import re
 
 import sys
 reload(sys)
@@ -71,6 +72,15 @@ def register():
 	form = RegisterForm()
 
 	if form.validate_on_submit():
+		email_re = re.compile(r'\S+@\S+.\S+')
+		if not email_re.match(form.mail.data):
+			form.password.data = ''
+			form.password_again.data = ''
+			flash("Email format invalid",'error')
+			return render_template('register.html',
+					g = g,
+					form = form)
+
 		if form.password.data == form.password_again.data:
 			user = User(
 				username = form.username.data,

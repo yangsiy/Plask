@@ -29,7 +29,7 @@
     {% if g.user == user %}
         <h3 style="margin-top:25px; color:#FFFFFF">Welcome, {{user.username}} <a class="btn btn-success btn-m pull-right" role="button" href="{{url_for('create')}}" style="margin-top:-5px">Create Questionnaire</a></h3>
     {% else %}
-        <h3>{{user.username}}({{user.mail}})</h3>
+        <h3 style="color:#FFFFFF">{{user.username}}({{user.mail}})</h3>
     {% endif %}
 
  
