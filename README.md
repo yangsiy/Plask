@@ -2,23 +2,31 @@
 
 A simple online questionnaire survey system
 
-#Dependency
+##Dependency
 
 Dependencies needed for running run.py(at the moment):
 
-Flask
+* Flask
 
-flask-login
+* flask-login
 
-sqlalchemy
+* sqlalchemy
 
-flask-sqlalchemy
+* flask-sqlalchemy
 
-sqlalchemy-migrate
+* sqlalchemy-migrate
 
-flask-wtf
+* flask-wtf
 
-#Debugging
+##Debugging
+
+For the first time running, empty sqlite database should be generated:
+
+```
+$ python db_create.py
+```
+
+Start the develpment server for debugging:
 
 ```
 $ python run.py
@@ -29,5 +37,6 @@ The system will be running on
 http://localhost:5000
 ``
 
-#License
+##License
+
 MIT
