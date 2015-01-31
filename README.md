@@ -4,7 +4,7 @@ A simple online questionnaire survey system
 
 ##Dependency
 
-Dependencies needed for running run.py(at the moment):
+Dependencies needed for running the system:
 
 * Flask
 
