@@ -17,7 +17,7 @@ def load_user(id):
 
 @app.before_request
 def before_request():
-	if current_user.is_authenticated():
+	if current_user.is_authenticated:
 		g.user = current_user
 	else:
 		g.user = None
