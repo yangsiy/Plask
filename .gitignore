@@ -17,3 +17,11 @@ db_repository
 db_repository/*
 
 *.out
+
+ques
+ques/*
+
+.idea/*
+.idea
+
+
